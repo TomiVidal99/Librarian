@@ -23,7 +23,7 @@ const RecentlyMoved = (): ReactElement => {
       className="recently_moved section"
     >
       <h3 className="section__title">Recently Moved</h3>
-      <ul className="list">
+      <ul className="list" style={{ flexDirection: 'column-reverse' }}>
         {state.recentlyMoved.map(
           (
             { name, origin, destination, time }: RecentlyMovedType,
