@@ -68,6 +68,10 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: don't have app version as state, only update once on startup.
+- [ ] FIX: when hovering checkbox the mouse is not pointer.
+- [ ] FIX: hook tray buttons with the front end.
+- [ ] FIX: when the path on the selects it's empty.
 - [x] ADD: front end for canMoveFiles state property, so the user can switch between enabling the app or no.
 - [ ] ADD: default watching and destination folders.
 - [x] ADD: icon on the settings page (mainWindow).
@@ -79,9 +83,6 @@ Project is: _in progress_.
 - [ ] ADD: better notifications.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: on filters page add buttons for depth recursion and should match uppercase, .
-- [ ] FIX: when hovering checkbox the mouse is not pointer.
-- [ ] FIX: hook tray buttons with the front end.
-- [ ] FIX: when the path on the selects it's empty.
 - [ ] CHANGE: arrow on the custom select component.
 - [x] ADD: filters selection when selecting a new destination folder.
 - [x] FIX: error when selecting a single conflicting path??.
