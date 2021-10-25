@@ -68,6 +68,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] ADD: default watching and destination folders.
 - [x] ADD: icon on the settings page (mainWindow).
 - [ ] ADD: Auto updater.
 - [ ] ADD: Auto launch.

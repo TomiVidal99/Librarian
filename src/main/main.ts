@@ -220,7 +220,6 @@ const handleMovingFileAnimatons = (): void => {
   if (tray === null) return;
   let counter = 0;
 
-  const trayIconPath = path.join(__dirname, '../../assets/icons/tray.png');
   const trayCleaningIconPath1 = path.join(
     getAssetPath('icons/tray-cleaning-1.png')
   );
@@ -242,7 +241,7 @@ const handleMovingFileAnimatons = (): void => {
   const trayCleaningAnimation: NodeJS.Timer = setInterval(() => {
     if (counter === 6) {
       clearInterval(trayCleaningAnimation);
-      tray?.setImage(trayIconPath);
+      tray?.setImage(getAssetPath('icons/tray.png'));
       tray?.setTitle(`${appName}`);
       counter = 0;
     } else {
