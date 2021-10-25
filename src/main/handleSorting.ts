@@ -129,7 +129,7 @@ export const handleNewFileDetected = (
     return;
   }
   console.log(`File: ${type}, with path: ${filepath}`);
-  if (type === 'add') {
+  if (type === 'add' && state.canMoveFiles === true) {
     const [hasItBeenSorted, destinationPath] = handleSortFile(state, filepath);
     handleFileNotifications(hasItBeenSorted, filepath, destinationPath);
   }

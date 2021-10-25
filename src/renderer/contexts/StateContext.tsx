@@ -5,7 +5,9 @@ export type StateContent = {
   setState: (c: any) => void;
 };
 
-const initialState = {
+const initialState: StateType = {
+  canMoveFiles: true,
+  autoLaunch: true,
   appVersion: 'no version',
   recentlyMoved: [],
   watchedFolders: [],

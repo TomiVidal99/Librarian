@@ -1,7 +1,7 @@
 {
   "name": "librarian",
   "productName": "Librarian",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Desktop app that organizes your archives and backs up your data.",
   "main": "./dist/main/main.js",
   "author": {

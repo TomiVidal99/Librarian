@@ -5,6 +5,8 @@ declare interface FilterType {
   id: string;
 }
 declare interface StateType {
+  canMoveFiles: boolean;
+  autoLaunch: boolean;
   recentlyMoved: RecentlyMovedType[];
   watchedFolders: WatchedFolderType[];
   destinationFolders: DestinationFolderType[];

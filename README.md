@@ -68,6 +68,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [x] ADD: front end for canMoveFiles state property, so the user can switch between enabling the app or no.
 - [ ] ADD: default watching and destination folders.
 - [x] ADD: icon on the settings page (mainWindow).
 - [ ] ADD: Auto updater.

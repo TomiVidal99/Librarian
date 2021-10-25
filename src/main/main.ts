@@ -37,6 +37,8 @@ import {
   getFolderNameFromPath,
 } from './handleSorting';
 
+const AutoLaunch = require('auto-launch');
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL DEFINITIONS ~~~~~ */
 const Store = require('electron-store');
 
@@ -52,6 +54,14 @@ if (app.isPackaged) {
   appVersion = '1.0.0';
 }
 
+// define the auto launcher
+const librarianAutoLauncher = new AutoLaunch({
+  name: appName.concat(` - ${appVersion}`),
+  path: path.join(__dirname, 'Librarian'),
+});
+
+console.log(librarianAutoLauncher);
+
 app.setName(appName);
 
 let isMainWindowShown = false;
@@ -61,6 +71,10 @@ let mainWindow: BrowserWindow | null = null;
 
 // define instance of the data storage
 const store = new Store();
+
+const storeState = (s: StateType): void => {
+  store.set('state', JSON.stringify(s));
+};
 
 let destinationFolderWindow: BrowserWindow | null = null;
 
@@ -80,6 +94,38 @@ const IPC_CHANNELS = {
   PUSH_RECENTLY_MOVED: 'get-recently-moved',
   OPEN_FOLDER: 'open-folder',
   DELETE_STATE: 'delete-state',
+};
+
+const updateAutoLaunch = (s: StateType | null): void => {
+  // console.log('updating auto launcher: ', librarianAutoLauncher);
+  if (s === null) return;
+  if (s.autoLaunch) {
+    librarianAutoLauncher
+      .isEnabled()
+      .then((enable: boolean) => {
+        if (!enable) {
+          librarianAutoLauncher.enable();
+          console.log('Enabling auto launcher...');
+        }
+        return true;
+      })
+      .catch((err: any) => {
+        throw err;
+      });
+  } else {
+    librarianAutoLauncher
+      .isEnabled()
+      .then((enable: boolean) => {
+        if (enable) {
+          librarianAutoLauncher.disable();
+          console.log('Disabling auto launcher...');
+        }
+        return true;
+      })
+      .catch((err: any) => {
+        throw err;
+      });
+  }
 };
 
 // opens and closes the settings window panel.
@@ -119,6 +165,30 @@ type HandleTrayClickType =
 const handleTrayClick = (checkbox: HandleTrayClickType): void => {
   // TODO
   console.log('TODO handle clicked tray checkbox', checkbox);
+  if (state === null) return;
+  switch (checkbox) {
+    case 'move archives':
+      state.canMoveFiles = !state.canMoveFiles;
+      break;
+    case 'notifications':
+      state.generalNotifications = !state.generalNotifications;
+      break;
+    case 'auto launch':
+      state.autoLaunch = !state.autoLaunch;
+      updateAutoLaunch(state);
+      break;
+    case 'add filter notifications':
+      state.archivesNotifications = !state.archivesNotifications;
+      break;
+    default:
+      console.error(
+        'the checkbox passed as parameter was no a type of HandleTrayClickType'
+      );
+      break;
+  }
+
+  // update the local storage
+  storeState(state);
 };
 
 const handleAppQuit = () => {
@@ -182,6 +252,29 @@ const createTrayMenu = (language: string, version: string): Menu => {
   ]);
 };
 
+// updates the state of all the checkboxes of the tray context menu.
+const updateTrayMenu = (
+  moveArchives: boolean,
+  autoLaunch: boolean,
+  generalNotifications: boolean,
+  newArchiveNotification: boolean,
+  language: string,
+  version: string
+): void => {
+  const contextMenu = createTrayMenu(
+    'Language: '.concat(language),
+    'Version: '.concat(version)
+  );
+
+  contextMenu.items[2].checked = moveArchives;
+  contextMenu.items[3].checked = autoLaunch;
+  contextMenu.items[4].checked = generalNotifications;
+  contextMenu.items[5].checked = newArchiveNotification;
+
+  // Call this again for Linux because we modified the context menu
+  tray?.setContextMenu(contextMenu);
+};
+
 // TODO: fix this, update only if the state changes
 // const shouldUpdateTrayMenu = (newState: StateType) => {
 const shouldUpdateTrayMenu = () => {
@@ -197,13 +290,14 @@ const shouldUpdateTrayMenu = () => {
 
   // console.log('updating tray menu');
 
-  const contextMenu = createTrayMenu(
-    // 'Language: '.concat(state.language),
-    // TODO: update this when adding language support
-    'Language: '.concat('en-US'),
-    'Version: '.concat(state.appVersion)
+  updateTrayMenu(
+    state.canMoveFiles,
+    state.autoLaunch,
+    state.generalNotifications,
+    state.archivesNotifications,
+    'en-US',
+    state.appVersion
   );
-  tray.setContextMenu(contextMenu);
 };
 
 // handles the animation when a file is moving, switches the icon between: tray-cleaning-1.png and tray-cleaning-2.png
@@ -275,13 +369,15 @@ const createTray = (): void => {
   // Make a change to the context menu
   // contextMenu.items[1].checked = false;
 
-  const contextMenu = createTrayMenu(
-    'Language: '.concat(state?.language ? state.language : ''),
-    'Version: '.concat(state?.appVersion ? state.appVersion : '')
+  // creates the contextMenu and sets the default values of the checkboxes
+  updateTrayMenu(
+    false,
+    false,
+    false,
+    false,
+    appName,
+    state?.appVersion ? state.appVersion : ''
   );
-
-  // Call this again for Linux because we modified the context menu
-  tray.setContextMenu(contextMenu);
 
   // only works on windows
   tray.on('click', toggleSettingsWindow);
@@ -347,14 +443,20 @@ const handleGetLocalData = async () => {
     state = await JSON.parse(storedData);
     // console.log('got stored data: ', state);
   }
+
+  // set autolauncher on init
+  updateAutoLaunch(state);
 };
 
 // updates the local state with the new one from the settings panel.
 const updateLocalData = (newState: StateType) => {
   // console.log('updating local data with new state...');
   shouldUpdateTrayMenu();
+  if (state?.autoLaunch !== newState.autoLaunch) {
+    updateAutoLaunch(newState);
+  }
   state = newState;
-  store.set('state', JSON.stringify(newState));
+  storeState(newState);
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -593,7 +695,7 @@ ipcMain.on(
     console.log('Got new updated state: ');
     // console.log('Got new updated state: ', newState);
     updateWatcher(newState, (type: string, filepath: string) => {
-      handleNewFileDetected(state, type, filepath, fileMovedNotifications);
+      handleNewFileDetected(newState, type, filepath, fileMovedNotifications);
     });
     updateLocalData(newState);
     return event;
