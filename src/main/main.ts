@@ -401,15 +401,15 @@ const createMainWindow = async () => {
 
   mainWindow = new BrowserWindow({
     // show: true,
-    //devTools: false,
+    show: false,
     width: 1024,
     height: 728,
     minWidth: 600,
     minHeight: 600,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      devTools: true,
-      // devTools: false,
+      // devTools: true,
+      devTools: false,
       nativeWindowOpen: true,
       preload: path.join(__dirname, 'preload.js'),
     },
