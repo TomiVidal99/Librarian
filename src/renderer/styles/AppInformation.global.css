@@ -1,0 +1,16 @@
+.app_information {
+  /*body*/
+  --body-fs: var(--fs-secondary);
+  --body-ff: robotolight;
+  --body-fc: var(--color-primary);
+
+  overflow: hidden;
+  transition: 0.4s;
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONTENT ~~~~~*/
+.app_information_body {
+  font-size: var(--body-fs);
+  font-weight: 300;
+  font-family: var(--body-ff);
+  color: var(--body-fc);
+}

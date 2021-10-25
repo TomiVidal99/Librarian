@@ -1,0 +1,39 @@
+.header {
+  margin: 100px 0;
+
+  /*title*/
+  --title-ff: ryeregular;
+  --title-fw: 300;
+  --title-color: #bbc6d9;
+  --title-size: 6rem;
+
+  /*description*/
+  --description-ff: roboto_slabregular;
+  --description-fw: 300;
+  --description-color: #6c7585;
+  --description-size: 2rem;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TITLE ~~~~~*/
+.header__title {
+  font-family: var(--title-ff);
+  font-size: var(--title-size);
+  color: var(--title-color);
+  font-weight: var(--title-fw);
+
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DESCRIPTION ~~~~~*/
+.header__description {
+  font-family: var(--description-ff);
+  font-size: var(--description-size);
+  color: var(--description-color);
+  font-weight: var(--description-fw);
+
+  text-align: center;
+  margin: 0.5em 0;
+  padding: 0;
+}

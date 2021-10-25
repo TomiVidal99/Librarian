@@ -1,0 +1,11 @@
+.warning_item {
+  background: linear-gradient(to left, #ffc107 40%, #fff107 100%);
+  border-radius: 2px;
+
+  padding: 0.4em 0.8em;
+  margin: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}

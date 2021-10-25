@@ -1,0 +1,30 @@
+.watched_folder {
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FOLDER ~~~~~*/
+.watched_folder__folder {
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPLETE PATH ~~~~~*/
+.watched_folder__path {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  height: 100%;
+  font-size: var(--fs-secondary);
+  color: var(--fc-darken);
+}
+.list_item:hover .watched_folder__path {
+  opacity: 1;
+}

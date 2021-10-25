@@ -1,0 +1,23 @@
+/*.filter_item {*/
+/*filter colors*/
+/*--filter-color-format: #ff5c52;*/
+/*--filter-color-name: #1547c7;*/
+/*--filter-color-regex: #c3c715;*/
+/*}*/
+
+.filter_item {
+  margin: 0;
+  padding: 2px 8px;
+}
+
+[filtertype='format'] {
+  color: var(--filter-color-format) !important;
+}
+
+[filtertype='name'] {
+  color: var(--filter-color-name);
+}
+
+[filtertype='regex'] {
+  color: var(--filter-color-regex);
+}
