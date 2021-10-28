@@ -1,6 +1,18 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 const ipcRendererMethods = {
+  getAppVersion(callback) {
+    const channel = 'get-app-version';
+    ipcRenderer
+      .invoke(channel)
+      .then((response) => {
+        callback(response);
+        return true;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
   clearState() {
     const channel = 'delete-state';
     ipcRenderer.send(channel);

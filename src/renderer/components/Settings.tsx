@@ -1,6 +1,6 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MODULES ~~~~~ */
 import { ReactElement, useReducer, useEffect } from 'react';
-import { StateContext } from 'renderer/contexts/StateContext';
+import { initialState, StateContext } from 'renderer/contexts/StateContext';
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~ */
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPONENTS ~~~~~ */
@@ -77,12 +77,6 @@ const reducer = (state: StateType, action: any) => {
   }
 };
 
-const initialState = {
-  appVersion: 'no version available',
-  recentlyMoved: [],
-  watchedFolders: [],
-  destinationFolders: [],
-} as const;
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~ */
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN ~~~~~ */
@@ -128,7 +122,6 @@ const Settings = (): ReactElement => {
   // upload state on update
   useEffect(() => {
     // TODO: fix this, should only update if the state has been change by the user
-    if (state.appVersion === initialState.appVersion) return;
     console.log('settings state has been updated: ', state);
     window.electron.ipcRenderer.uploadState(state);
   }, [state]);

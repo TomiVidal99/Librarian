@@ -68,15 +68,9 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] FIX: Recently moved filters all the files after the first three and doesn't delete the history.
-- [ ] FIX: Auto launch.
-- [ ] FIX: don't have app version as state, only update once on startup.
-- [ ] FIX: when hovering checkbox the mouse is not pointer.
 - [ ] FIX: hook tray buttons with the front end.
 - [ ] FIX: when the path on the selects it's empty.
-- [x] ADD: front end for canMoveFiles state property, so the user can switch between enabling the app or no.
 - [ ] ADD: default watching and destination folders.
-- [x] ADD: icon on the settings page (mainWindow).
 - [ ] ADD: Auto updater.
 - [ ] ADD: regex filtering.
 - [ ] ADD: more filtering options.
@@ -85,6 +79,12 @@ Project is: _in progress_.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: on filters page add buttons for depth recursion and should match uppercase, .
 - [ ] CHANGE: arrow on the custom select component.
+- [x] ADD: front end for canMoveFiles state property, so the user can switch between enabling the app or no.
+- [x] ADD: icon on the settings page (mainWindow).
+- [x] FIX: Recently moved filters all the files after the first three and doesn't delete the history.
+- [x] FIX: Auto launch.
+- [x] FIX: don't have app version as state, only update once on startup.
+- [x] FIX: when hovering checkbox the mouse is not pointer.
 - [x] ADD: filters selection when selecting a new destination folder.
 - [x] FIX: error when selecting a single conflicting path??.
 - [x] FIX: separated dispatch actions for all selected folders.

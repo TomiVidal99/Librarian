@@ -57,8 +57,6 @@ if (app.isPackaged) {
 // define the auto launcher
 const librarianAutoLauncher = new AutoLaunch({
   name: appName.concat(` - ${appVersion}`),
-  // TODO: make this only a path if developing??
-  // path: path.join(__dirname, 'Librarian'),
 });
 
 console.log(librarianAutoLauncher);
@@ -95,6 +93,7 @@ const IPC_CHANNELS = {
   PUSH_RECENTLY_MOVED: 'get-recently-moved',
   OPEN_FOLDER: 'open-folder',
   DELETE_STATE: 'delete-state',
+  SEND_APP_VERSION: 'get-app-version',
 };
 
 const updateAutoLaunch = (s: StateType | null): void => {
@@ -297,7 +296,7 @@ const shouldUpdateTrayMenu = () => {
     state.generalNotifications,
     state.archivesNotifications,
     'en-US',
-    state.appVersion
+    appVersion
   );
 };
 
@@ -371,14 +370,7 @@ const createTray = (): void => {
   // contextMenu.items[1].checked = false;
 
   // creates the contextMenu and sets the default values of the checkboxes
-  updateTrayMenu(
-    false,
-    false,
-    false,
-    false,
-    appName,
-    state?.appVersion ? state.appVersion : ''
-  );
+  updateTrayMenu(false, false, false, false, appName, appVersion);
 
   // only works on windows
   tray.on('click', toggleSettingsWindow);
@@ -721,4 +713,8 @@ ipcMain.on(IPC_CHANNELS.OPEN_FOLDER, (event: any, filepath: string) => {
 ipcMain.on(IPC_CHANNELS.DELETE_STATE, (event: any) => {
   console.log('state deleted', event);
   store.delete('state');
+});
+
+ipcMain.handle(IPC_CHANNELS.SEND_APP_VERSION, () => {
+  return appVersion;
 });

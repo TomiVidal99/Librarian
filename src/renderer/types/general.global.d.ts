@@ -10,7 +10,6 @@ declare interface StateType {
   recentlyMoved: RecentlyMovedType[];
   watchedFolders: WatchedFolderType[];
   destinationFolders: DestinationFolderType[];
-  appVersion: string;
   language: string;
   generalNotifications: boolean;
   archivesNotifications: boolean;
@@ -40,6 +39,7 @@ declare type ChannelType = string;
 
 // TODO declare better types on this interface
 declare interface IpcRendererMethodsType {
+  getAppVersion: (arg0: (arg0: string) => void) => void;
   send: (arg0: ChannelType) => void;
   clearState: () => void;
   openFolder: (arg0: ChannelType) => void;

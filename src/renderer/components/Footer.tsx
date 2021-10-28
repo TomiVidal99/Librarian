@@ -1,6 +1,5 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MODULES ~~~~~ */
-import { ReactElement, useContext } from 'react';
-import { StateContext } from 'renderer/contexts/StateContext';
+import { ReactElement, useEffect, useState } from 'react';
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~ */
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPONENTS ~~~~~ */
@@ -16,10 +15,17 @@ import '../styles/Footer.global.css';
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN CONTENT ~ */
 const Footer = (): ReactElement => {
-  const { state } = useContext(StateContext);
+  const [appVersion, setAppVersion] = useState<string>('No version available');
+
+  useEffect(() => {
+    window.electron.ipcRenderer.getAppVersion((version) => {
+      setAppVersion(version);
+    });
+  }, []);
+
   return (
     <section className="footer">
-      <p className="app_version">{state.appVersion}</p>
+      <p className="app_version">{appVersion}</p>
     </section>
   );
 };

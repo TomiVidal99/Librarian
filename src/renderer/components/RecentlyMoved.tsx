@@ -30,7 +30,7 @@ const RecentlyMoved = (): ReactElement => {
             index: number
           ) => {
             // just display the last 3 moved folders
-            if (index > 2) return null;
+            if (index < state.recentlyMoved.length - 3) return null;
 
             // if the date is string get the date from it
             let date: Date | null = null;
