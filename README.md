@@ -68,6 +68,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: Recently moved filters all the files after the first three and doesn't delete the history.
 - [ ] FIX: Auto launch.
 - [ ] FIX: don't have app version as state, only update once on startup.
 - [ ] FIX: when hovering checkbox the mouse is not pointer.
