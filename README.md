@@ -68,6 +68,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: Auto launch.
 - [ ] FIX: don't have app version as state, only update once on startup.
 - [ ] FIX: when hovering checkbox the mouse is not pointer.
 - [ ] FIX: hook tray buttons with the front end.
@@ -76,7 +77,6 @@ Project is: _in progress_.
 - [ ] ADD: default watching and destination folders.
 - [x] ADD: icon on the settings page (mainWindow).
 - [ ] ADD: Auto updater.
-- [ ] ADD: Auto launch.
 - [ ] ADD: regex filtering.
 - [ ] ADD: more filtering options.
 - [ ] ADD: languages system.

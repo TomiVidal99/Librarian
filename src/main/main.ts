@@ -57,7 +57,8 @@ if (app.isPackaged) {
 // define the auto launcher
 const librarianAutoLauncher = new AutoLaunch({
   name: appName.concat(` - ${appVersion}`),
-  path: path.join(__dirname, 'Librarian'),
+  // TODO: make this only a path if developing??
+  // path: path.join(__dirname, 'Librarian'),
 });
 
 console.log(librarianAutoLauncher);
