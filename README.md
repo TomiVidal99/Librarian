@@ -68,6 +68,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: when packaged the app version wont display the correct one (why?).
 - [ ] FIX: hook tray buttons with the front end.
 - [ ] FIX: when the path on the selects it's empty.
 - [ ] ADD: default watching and destination folders.
