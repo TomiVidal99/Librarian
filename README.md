@@ -68,6 +68,8 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: moving files not working on windows.
+- [ ] FIX: should add some logging file on production.
 - [ ] FIX: add recently moved cap (to 200?).
 - [ ] FIX: when packaged the app version wont display the correct one (why?).
 - [ ] FIX: hook tray buttons with the front end.
