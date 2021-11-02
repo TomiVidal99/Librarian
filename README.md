@@ -68,6 +68,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: configuration not persisting when rebooted. (why? it worked before).
 - [ ] FIX: moving files not working on windows.
 - [ ] FIX: should add some logging file on production.
 - [ ] FIX: add recently moved cap (to 200?).
