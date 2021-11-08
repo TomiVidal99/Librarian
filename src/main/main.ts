@@ -40,6 +40,8 @@ import {
 const AutoLaunch = require('auto-launch');
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL DEFINITIONS ~~~~~ */
+const RECENTLY_MOVED_CAP = 10 as const;
+
 const Store = require('electron-store');
 
 let appName: string = process.env.npm_package_productName
@@ -51,7 +53,7 @@ let appVersion: string = process.env.npm_package_version
 if (app.isPackaged) {
   // TODO: think a better way to do this
   appName = 'Librarian';
-  appVersion = '1.0.0';
+  appVersion = '1.1.1';
 }
 
 // define the auto launcher
@@ -690,6 +692,15 @@ ipcMain.on(
     updateWatcher(newState, (type: string, filepath: string) => {
       handleNewFileDetected(newState, type, filepath, fileMovedNotifications);
     });
+
+    // check if should remove old recentlyMoved files.
+    if (newState.recentlyMoved.length > RECENTLY_MOVED_CAP) {
+      newState.recentlyMoved.splice(
+        RECENTLY_MOVED_CAP,
+        newState.recentlyMoved.length - RECENTLY_MOVED_CAP
+      );
+    }
+
     updateLocalData(newState);
     return event;
   }

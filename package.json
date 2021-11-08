@@ -1,6 +1,6 @@
 {
   "name": "librarian",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "productName": "Librarian",
   "description": "Desktop app that organizes your archives and backs up your data.",
   "scripts": {

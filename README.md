@@ -68,11 +68,11 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] FIX: configuration not persisting when rebooted. (why? it worked before).
+- [ ] ADD: recently moved cap (to 200?).
+- [ ] FIX: configuration not persisting when rebooted.
 - [ ] FIX: moving files not working on windows.
 - [ ] FIX: should add some logging file on production.
-- [ ] FIX: add recently moved cap (to 200?).
-- [ ] FIX: when packaged the app version wont display the correct one (why?).
+- [ ] FIX: better method to handle app version when packed.
 - [ ] FIX: hook tray buttons with the front end.
 - [ ] FIX: when the path on the selects it's empty.
 - [ ] ADD: default watching and destination folders.
@@ -84,6 +84,7 @@ Project is: _in progress_.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: on filters page add buttons for depth recursion and should match uppercase, .
 - [ ] CHANGE: arrow on the custom select component.
+- [ ] FIX: improve icons and UI.
 - [x] ADD: front end for canMoveFiles state property, so the user can switch between enabling the app or no.
 - [x] ADD: icon on the settings page (mainWindow).
 - [x] FIX: Recently moved filters all the files after the first three and doesn't delete the history.
