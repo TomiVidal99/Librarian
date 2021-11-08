@@ -25,13 +25,7 @@ const RecentlyMoved = (): ReactElement => {
       <h3 className="section__title">Recently Moved</h3>
       <ul className="list" style={{ flexDirection: 'column-reverse' }}>
         {state.recentlyMoved.map(
-          (
-            { name, origin, destination, time }: RecentlyMovedType,
-            index: number
-          ) => {
-            // just display the last 3 moved folders
-            if (index < state.recentlyMoved.length - 3) return null;
-
+          ({ name, origin, destination, time }: RecentlyMovedType) => {
             // if the date is string get the date from it
             let date: Date | null = null;
             if (time !== date) {
