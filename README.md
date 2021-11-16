@@ -68,12 +68,10 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] FIX: configuration not persisting when rebooted. (why? it worked before).
+- [ ] FIX: When new filters are added check spelling (FiltersMenu.jsx).
+- [ ] FIX: better method to handle app version when packed.
 - [ ] FIX: moving files not working on windows.
 - [ ] FIX: should add some logging file on production.
-- [ ] FIX: add recently moved cap (to 200?).
-- [ ] FIX: when packaged the app version wont display the correct one (why?).
-- [ ] FIX: hook tray buttons with the front end.
 - [ ] FIX: when the path on the selects it's empty.
 - [ ] ADD: default watching and destination folders.
 - [ ] ADD: Auto updater.
@@ -84,6 +82,10 @@ Project is: _in progress_.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: on filters page add buttons for depth recursion and should match uppercase, .
 - [ ] CHANGE: arrow on the custom select component.
+- [ ] CHANGE: improve icons and UI.
+- [x] ADD: recently moved cap (to 200?).
+- [x] FIX: hook tray buttons with the front end.
+- [x] FIX: configuration not persisting when rebooted.
 - [x] ADD: front end for canMoveFiles state property, so the user can switch between enabling the app or no.
 - [x] ADD: icon on the settings page (mainWindow).
 - [x] FIX: Recently moved filters all the files after the first three and doesn't delete the history.

@@ -40,6 +40,9 @@ import {
 const AutoLaunch = require('auto-launch');
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL DEFINITIONS ~~~~~ */
+let updateCounter = 0;
+const RECENTLY_MOVED_CAP = 10 as const;
+
 const Store = require('electron-store');
 
 let appName: string = process.env.npm_package_productName
@@ -51,7 +54,7 @@ let appVersion: string = process.env.npm_package_version
 if (app.isPackaged) {
   // TODO: think a better way to do this
   appName = 'Librarian';
-  appVersion = '1.0.0';
+  appVersion = '1.1.1';
 }
 
 // define the auto launcher
@@ -59,7 +62,7 @@ const librarianAutoLauncher = new AutoLaunch({
   name: appName.concat(` - ${appVersion}`),
 });
 
-console.log(librarianAutoLauncher);
+// console.log(librarianAutoLauncher);
 
 app.setName(appName);
 
@@ -72,7 +75,8 @@ let mainWindow: BrowserWindow | null = null;
 const store = new Store();
 
 const storeState = (s: StateType): void => {
-  store.set('state', JSON.stringify(s));
+  console.log('saving state: ', s);
+  store.set('state', s);
 };
 
 let destinationFolderWindow: BrowserWindow | null = null;
@@ -419,7 +423,9 @@ export default class AppUpdater {
 // sets the data of the hole app on init with the default configuration if the user hasnt set any.
 const handleGetLocalData = async () => {
   // console.log('updating local state with initial configuration...');
-  const storedData = store.get('state');
+  const storedData: StateType = store.get('state');
+  console.log('store.get result: ', storedData);
+  console.log('destination folders array: ', storedData.destinationFolders);
   if (storedData === undefined) {
     // set the default configuration.
     const RESOURCES_PATH = app.isPackaged
@@ -430,11 +436,11 @@ const handleGetLocalData = async () => {
       'configuration/default.json'
     ));
     state = await JSON.parse(defaultConfiguration);
-    // console.log('didnt have stored data: ', state);
+    console.log('didnt have stored data: ', state);
   } else {
     // updates the configuration with the stored one.
-    state = await JSON.parse(storedData);
-    // console.log('got stored data: ', state);
+    state = storedData;
+    console.log('got stored data: ', state);
   }
 
   // set autolauncher on init
@@ -449,7 +455,12 @@ const updateLocalData = (newState: StateType) => {
     updateAutoLaunch(newState);
   }
   state = newState;
-  storeState(newState);
+
+  // only save state if it's not the first or second time updating the state.
+  if (updateCounter > 1) {
+    storeState(newState);
+  }
+  updateCounter += 1;
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -502,8 +513,8 @@ const createMainWindow = async () => {
     minHeight: 600,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      // devTools: true,
-      devTools: false,
+      devTools: true,
+      // devTools: false,
       nativeWindowOpen: true,
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -685,11 +696,20 @@ ipcMain.on(
 ipcMain.on(
   IPC_CHANNELS.GET_UPDATED_STATE,
   (event: any, newState: StateType) => {
-    console.log('Got new updated state: ');
-    // console.log('Got new updated state: ', newState);
+    // console.log('Got new updated state: ');
+    console.log('Got new updated state: ', newState);
     updateWatcher(newState, (type: string, filepath: string) => {
       handleNewFileDetected(newState, type, filepath, fileMovedNotifications);
     });
+
+    // check if should remove old recentlyMoved files.
+    if (newState.recentlyMoved.length > RECENTLY_MOVED_CAP) {
+      newState.recentlyMoved.splice(
+        RECENTLY_MOVED_CAP,
+        newState.recentlyMoved.length - RECENTLY_MOVED_CAP
+      );
+    }
+
     updateLocalData(newState);
     return event;
   }
