@@ -210,6 +210,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "ansi-regex": "^6.0.1",
     "auto-launch": "^5.0.5",
     "chokidar": "^3.5.2",
     "electron-debug": "^3.2.0",
