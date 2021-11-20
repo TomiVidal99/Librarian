@@ -141,6 +141,7 @@ const WatchedFolders = (): ReactElement => {
           buttonLabel: 'Add Folders',
           properties: ['multiSelections', 'openDirectory'],
         }}
+        parentWindow="Main"
         gotFoldersCallback={gotFolders}
       />
     </section>

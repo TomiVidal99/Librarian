@@ -10,6 +10,7 @@ import Button from './Button';
 interface SelectFoldersProps {
   buttonText: string;
   options: any;
+  parentWindow: ParentWindowType | null;
   gotFoldersCallback: (arg0: SelectedFoldersType) => void;
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~ */
@@ -17,10 +18,15 @@ interface SelectFoldersProps {
 const SelectFolders = ({
   buttonText,
   options,
+  parentWindow,
   gotFoldersCallback,
 }: SelectFoldersProps): ReactElement => {
   const handleOpenFolders = () => {
-    window.electron.ipcRenderer.selectFolders(options, gotFoldersCallback);
+    window.electron.ipcRenderer.selectFolders(
+      options,
+      parentWindow,
+      gotFoldersCallback
+    );
   };
   return <Button content={buttonText} callback={handleOpenFolders} />;
 };

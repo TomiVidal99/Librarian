@@ -1,3 +1,10 @@
+declare type ParentWindowType = 'Main' | 'FiltersMenu';
+declare type MessageBoxSyncType =
+  | 'none'
+  | 'info'
+  | 'error'
+  | 'question'
+  | 'warning';
 declare type FiltersType = 'format' | 'name' | 'regex';
 declare interface FilterType {
   type: FiltersType;
@@ -39,6 +46,8 @@ declare type ChannelType = string;
 
 // TODO declare better types on this interface
 declare interface IpcRendererMethodsType {
+  getNewUpdatedState: (arg0: (arg0: StateType) => void) => void;
+  alert: (arg0: string, arg1: string, arg2: MessageBoxSyncType) => void;
   getAppVersion: (arg0: (arg0: string) => void) => void;
   send: (arg0: ChannelType) => void;
   clearState: () => void;
@@ -46,7 +55,7 @@ declare interface IpcRendererMethodsType {
   onNewRecentlyMoved: (arg0: any) => void;
   removeWatched: () => void;
   getWatched: () => void;
-  selectFolders: (arg0: any, arg1: any) => void;
+  selectFolders: (arg0: any, arg1: ParentWindowType | null, arg2: any) => void;
   notification: (arg0: string, arg1: string) => void;
   onNewDestinationFolder: (arg0: any) => void;
   sendNewDestinationFolder: (arg0: any) => void;

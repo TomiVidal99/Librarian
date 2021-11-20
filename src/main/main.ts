@@ -40,6 +40,9 @@ import {
 const AutoLaunch = require('auto-launch');
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GLOBAL DEFINITIONS ~~~~~ */
+const isDevelopment =
+  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+
 let updateCounter = 0;
 const RECENTLY_MOVED_CAP = 10 as const;
 
@@ -75,7 +78,7 @@ let mainWindow: BrowserWindow | null = null;
 const store = new Store();
 
 const storeState = (s: StateType): void => {
-  console.log('saving state: ', s);
+  // console.log('saving state: ', s);
   store.set('state', s);
 };
 
@@ -85,6 +88,7 @@ const INDEX_PAGE_PATH: string = resolveHtmlPath('index.html');
 const FILTERS_PAGE_PATH = INDEX_PAGE_PATH.concat('#filters');
 
 const IPC_CHANNELS = {
+  ALERT: 'alert',
   NOTIFICATION: 'notification',
   SEND_INTIAL_STATE: 'get-initial-state',
   GET_UPDATED_STATE: 'upload-state',
@@ -98,11 +102,12 @@ const IPC_CHANNELS = {
   OPEN_FOLDER: 'open-folder',
   DELETE_STATE: 'delete-state',
   SEND_APP_VERSION: 'get-app-version',
+  SEND_NEW_STATE: 'get-new-state',
 };
 
 const updateAutoLaunch = (s: StateType | null): void => {
   // console.log('updating auto launcher: ', librarianAutoLauncher);
-  if (s === null) return;
+  if (s === null || isDevelopment) return;
   if (s.autoLaunch) {
     librarianAutoLauncher
       .isEnabled()
@@ -159,40 +164,6 @@ const pushRecentlyMoved = (origin: string, destination: string, time: Date) => {
     destination,
     time,
   });
-};
-
-type HandleTrayClickType =
-  | 'move archives'
-  | 'auto launch'
-  | 'notifications'
-  | 'add filter notifications';
-const handleTrayClick = (checkbox: HandleTrayClickType): void => {
-  // TODO
-  console.log('TODO handle clicked tray checkbox', checkbox);
-  if (state === null) return;
-  switch (checkbox) {
-    case 'move archives':
-      state.canMoveFiles = !state.canMoveFiles;
-      break;
-    case 'notifications':
-      state.generalNotifications = !state.generalNotifications;
-      break;
-    case 'auto launch':
-      state.autoLaunch = !state.autoLaunch;
-      updateAutoLaunch(state);
-      break;
-    case 'add filter notifications':
-      state.archivesNotifications = !state.archivesNotifications;
-      break;
-    default:
-      console.error(
-        'the checkbox passed as parameter was no a type of HandleTrayClickType'
-      );
-      break;
-  }
-
-  // update the local storage
-  storeState(state);
 };
 
 const handleAppQuit = () => {
@@ -281,24 +252,13 @@ const updateTrayMenu = (
 
 // TODO: fix this, update only if the state changes
 // const shouldUpdateTrayMenu = (newState: StateType) => {
-const shouldUpdateTrayMenu = () => {
+const shouldUpdateTrayMenu = (newState: StateType) => {
   if (tray === null || state === null) return;
-
-  // check if should update the menu
-  // TODO: make this only update when the language or the appVersion has changed.
-  // if (
-  // state.language === newState.language &&
-  // state.appVersion === newState.appVersion
-  // )
-  // return;
-
-  // console.log('updating tray menu');
-
   updateTrayMenu(
-    state.canMoveFiles,
-    state.autoLaunch,
-    state.generalNotifications,
-    state.archivesNotifications,
+    newState.canMoveFiles,
+    newState.autoLaunch,
+    newState.generalNotifications,
+    newState.archivesNotifications,
     'en-US',
     appVersion
   );
@@ -424,9 +384,10 @@ export default class AppUpdater {
 const handleGetLocalData = async () => {
   // console.log('updating local state with initial configuration...');
   const storedData: StateType = store.get('state');
-  console.log('store.get result: ', storedData);
-  console.log('destination folders array: ', storedData.destinationFolders);
+  // console.log('store.get result: ', storedData);
+  // console.log('destination folders array: ', storedData.destinationFolders);
   if (storedData === undefined) {
+    // console.log('got stored data: ', state);
     // set the default configuration.
     const RESOURCES_PATH = app.isPackaged
       ? path.join(process.resourcesPath, 'assets')
@@ -436,11 +397,11 @@ const handleGetLocalData = async () => {
       'configuration/default.json'
     ));
     state = await JSON.parse(defaultConfiguration);
-    console.log('didnt have stored data: ', state);
+    // console.log('didnt have stored data: ', state);
   } else {
     // updates the configuration with the stored one.
     state = storedData;
-    console.log('got stored data: ', state);
+    // console.log('got stored data: ', state);
   }
 
   // set autolauncher on init
@@ -449,8 +410,9 @@ const handleGetLocalData = async () => {
 
 // updates the local state with the new one from the settings panel.
 const updateLocalData = (newState: StateType) => {
-  // console.log('updating local data with new state...');
-  shouldUpdateTrayMenu();
+  console.log('updating local data with new state...');
+  console.log('The new state is: ', newState);
+  shouldUpdateTrayMenu(newState);
   if (state?.autoLaunch !== newState.autoLaunch) {
     updateAutoLaunch(newState);
   }
@@ -463,38 +425,77 @@ const updateLocalData = (newState: StateType) => {
   updateCounter += 1;
 };
 
+// sends the new updated state to the settings window
+const updateFrontEndState = (newState: StateType) => {
+  mainWindow?.webContents.send(IPC_CHANNELS.SEND_NEW_STATE, newState);
+};
+
+type HandleTrayClickType =
+  | 'move archives'
+  | 'auto launch'
+  | 'notifications'
+  | 'add filter notifications';
+const handleTrayClick = (checkbox: HandleTrayClickType): void => {
+  // TODO
+  console.log('TODO handle clicked tray checkbox', checkbox);
+  if (state === null) return;
+  switch (checkbox) {
+    case 'move archives':
+      state.canMoveFiles = !state.canMoveFiles;
+      break;
+    case 'notifications':
+      state.generalNotifications = !state.generalNotifications;
+      break;
+    case 'auto launch':
+      state.autoLaunch = !state.autoLaunch;
+      updateAutoLaunch(state);
+      break;
+    case 'add filter notifications':
+      state.archivesNotifications = !state.archivesNotifications;
+      break;
+    default:
+      console.error(
+        'the checkbox passed as parameter was no a type of HandleTrayClickType'
+      );
+      break;
+  }
+
+  // update the state in the front end
+  updateFrontEndState(state);
+
+  // saves the new state
+  storeState(state);
+};
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
 
-const isDevelopment =
-  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-
 if (isDevelopment) {
   require('electron-debug')();
 }
 
-const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
+// const installExtensions = async () => {
+// const installer = require('electron-devtools-installer');
+// const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+/// / const extensions = ['REACT_DEVELOPER_TOOLS'];
 
-  return installer
-    .default(
-      extensions.map((name) => installer[name]),
-      forceDownload
-    )
-    .catch(console.log);
-};
+// return installer
+// .default(
+/// / console.log('updating tray menu');
+// forceDownload
+// )
+// .catch(console.log);
+// };
 
 const createMainWindow = async () => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
-    await installExtensions();
-  }
+  // if (
+  // process.env.NODE_ENV === 'development' ||
+  // process.env.DEBUG_PROD === 'true'
+  // ) {
+  // await installExtensions();
+  // }
 
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'assets')
@@ -513,8 +514,8 @@ const createMainWindow = async () => {
     minHeight: 600,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      devTools: true,
-      // devTools: false,
+      // devTools: true,
+      devTools: isDevelopment,
       nativeWindowOpen: true,
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -541,6 +542,8 @@ const createMainWindow = async () => {
 
   mainWindow.on('close', (e) => {
     e.preventDefault();
+    // close the filters window if the user closes the settings window when this one it's open.
+    if (destinationFolderWindow !== null) destinationFolderWindow.close();
     toggleSettingsWindow();
   });
 
@@ -619,9 +622,36 @@ ipcMain.handle(IPC_CHANNELS.SEND_INTIAL_STATE, () => {
 // open dialog to select folders
 ipcMain.handle(
   IPC_CHANNELS.OPEN_DIALOG_SELECT_FOLDERS,
-  async (event: any, options: any) => {
+  async (event: any, options: any, parentWindow: ParentWindowType | null) => {
     console.log('event: ', event);
-    const folders = await dialog.showOpenDialog(options);
+    // console.log(parentWindow);
+    let folders: any;
+    switch (parentWindow) {
+      case 'Main':
+        if (mainWindow === null) break;
+        // console.log("The parent it's mainWindow");
+        folders = await dialog.showOpenDialog(mainWindow, { ...options });
+        break;
+
+      case 'FiltersMenu':
+        if (destinationFolderWindow === null) break;
+        // console.log("The parent it's destinationFolderWindow");
+        // i set false and true the alwaysOnTop to avoid the popping dialog getting behind the page.
+        destinationFolderWindow?.setAlwaysOnTop(false);
+        if (destinationFolderWindow !== null)
+          folders = await dialog.showOpenDialog(destinationFolderWindow, {
+            ...options,
+          });
+        destinationFolderWindow?.setAlwaysOnTop(true);
+
+        break;
+      default:
+        console.error(
+          `ERROR: Expected 'Main', 'FiltersMenu'. Got ${options.parentWindow}`
+        );
+        break;
+    }
+
     // console.log('sending folders: ', folders);
     return folders;
   }
@@ -652,7 +682,8 @@ ipcMain.on(IPC_CHANNELS.OPEN_DESTINATION_FOLDER_MENU, () => {
     minHeight: 480,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      devTools: false,
+      // devTools: true,
+      devTools: isDevelopment,
       webSecurity: false,
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -680,6 +711,20 @@ ipcMain.on(
     } else {
       console.error("mainWindow it's null", event);
     }
+  }
+);
+
+// creates an alert that pops up
+ipcMain.on(
+  IPC_CHANNELS.ALERT,
+  (
+    event: any,
+    title: string,
+    message: string,
+    type: MessageBoxSyncType
+  ): void => {
+    console.log('event: ', event);
+    dialog.showMessageBoxSync({ title, message, type });
   }
 );
 
