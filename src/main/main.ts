@@ -57,7 +57,7 @@ let appVersion: string = process.env.npm_package_version
 if (app.isPackaged) {
   // TODO: think a better way to do this
   appName = 'Librarian';
-  appVersion = '1.1.1';
+  appVersion = '1.2.1';
 }
 
 // define the auto launcher
