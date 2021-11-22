@@ -1,6 +1,16 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 const ipcRendererMethods = {
+  getNewUpdatedState(callback) {
+    const channel = 'get-new-state';
+    ipcRenderer.on(channel, (event, newState) => {
+      callback(newState);
+    });
+  },
+  alert(title, body, type) {
+    const channel = 'alert';
+    ipcRenderer.send(channel, title, body, type);
+  },
   getAppVersion(callback) {
     const channel = 'get-app-version';
     ipcRenderer
@@ -43,10 +53,10 @@ const ipcRendererMethods = {
         throw err;
       });
   },
-  selectFolders(options, callback) {
+  selectFolders(options, parentWindow, callback) {
     const channel = 'open-dialog-folders';
     ipcRenderer
-      .invoke(channel, options)
+      .invoke(channel, options, parentWindow)
       .then((res) => {
         callback(res);
         return true;

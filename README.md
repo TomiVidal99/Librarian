@@ -1,6 +1,6 @@
 # Librarian
 
-> Desktop made with Typescript, Electron.js and React.js. The gold is to have the program organize and make backup of our data by setting everything up just once.
+> Desktop made with Typescript, Electron.js, React.js, Webpack and sass. The gold is to have the program organize and make backup of our data by setting everything up just once.
 
 ## Screenshots
 
@@ -45,15 +45,15 @@ List the ready features here:
 
 ## Setup
 
-You can get the compiled version that matches your OS [_here_](https://) <!--TODO: add compiled links-->
+You can get the compiled version that matches your OS [_here_](https://drive.google.com/drive/folders/1H64d7qW_NE-Uzm5RjM3dDNjM7AF094wG?usp=sharing) <!--TODO: add compiled links-->
 
 - If you just want to make your own changes or contribute first clone this repo, inside the folder run: `yarn` and then `yarn start`
 
-- To compile for your current OS run: `yarn package`
+- To package for production (just in current OS run): `yarn package`
 
-- To compile for all OS run: `yarn package-all`
+<!--- To compile for all OS run: `yarn package-all`-->
 
-- To compile for an specific OS run: `yarn package --mac`
+- To package for production (for an specific OS ) run: `yarn package --mac`
 
 ## Project Status
 
@@ -68,6 +68,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: Check if the new path (origin and destination) doesn't aleady exist.
 - [ ] FIX: When new filters are added check spelling (FiltersMenu.jsx).
 - [ ] FIX: better method to handle app version when packed.
 - [ ] FIX: moving files not working on windows.
@@ -83,6 +84,10 @@ Project is: _in progress_.
 - [ ] ADD: on filters page add buttons for depth recursion and should match uppercase, .
 - [ ] CHANGE: arrow on the custom select component.
 - [ ] CHANGE: improve icons and UI.
+- [ ] CHANGE: Refactor functions in main.ts and organize them in more files.
+- [x] FIX: Connect the tray menu with the settings menu.
+- [x] FIX: Dialog menu popping behind the BrowserWindow.
+- [x] FIX: Add development check to set the autolaunch.
 - [x] ADD: recently moved cap (to 200?).
 - [x] FIX: hook tray buttons with the front end.
 - [x] FIX: configuration not persisting when rebooted.

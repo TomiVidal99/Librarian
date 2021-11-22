@@ -1,10 +1,17 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MODULES ~~~~~ */
-import { ChangeEvent, ReactElement, useReducer, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactElement,
+  useReducer,
+  useState,
+  useContext,
+} from 'react';
 import getRandomIds from 'renderer/utils/getRandomIds';
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~ */
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPONENTS ~~~~~ */
 import '../styles/FiltersMenu.global.css';
+import { StateContext } from '../contexts/StateContext';
 import SelectFolders from './SelectFolders';
 import Filter from './Filter';
 import NoItemsWarning from './NoItemsWarning';
@@ -145,58 +152,68 @@ const ACTIONS = {
   REMOVE_REGEXS: 'remove-regexs',
   UPDATE_FOLDER: 'update-folderpath',
 } as const;
-const reducer = (state: StateType, action: ActionType) => {
-  console.log('reducer called: ', { state, action });
+const reducer = (FiltersMenuState: StateType, action: ActionType) => {
+  console.log('reducer called: ', { FiltersMenuState, action });
   switch (action.type) {
     // updates the name filters
     case ACTIONS.UPDATE_NAMES:
       return {
-        ...state,
-        names: [...state.names, ...action.payload.names],
+        ...FiltersMenuState,
+        names: [...FiltersMenuState.names, ...action.payload.names],
       };
 
     // updates the format filters
     case ACTIONS.UPDATE_FORMATS:
       return {
-        ...state,
-        formats: [...state.formats, ...action.payload.formats],
+        ...FiltersMenuState,
+        formats: [...FiltersMenuState.formats, ...action.payload.formats],
       };
 
     case ACTIONS.UPDATE_REGEXS:
       // updates the regex filters
       return {
-        ...state,
-        regexs: [...state.regexs, ...action.payload.regexs],
+        ...FiltersMenuState,
+        regexs: [...FiltersMenuState.regexs, ...action.payload.regexs],
       };
 
     case ACTIONS.REMOVE_NAMES:
       return {
-        ...state,
-        names: [...state.names.filter(({ id }) => id !== action.payload.id)],
+        ...FiltersMenuState,
+        names: [
+          ...FiltersMenuState.names.filter(
+            ({ id }) => id !== action.payload.id
+          ),
+        ],
       };
 
     case ACTIONS.REMOVE_FORMATS:
       return {
-        ...state,
+        ...FiltersMenuState,
         formats: [
-          ...state.formats.filter(({ id }) => id !== action.payload.id),
+          ...FiltersMenuState.formats.filter(
+            ({ id }) => id !== action.payload.id
+          ),
         ],
       };
 
     case ACTIONS.REMOVE_REGEXS:
       return {
-        ...state,
-        regexs: [...state.regexs.filter(({ id }) => id !== action.payload.id)],
+        ...FiltersMenuState,
+        regexs: [
+          ...FiltersMenuState.regexs.filter(
+            ({ id }) => id !== action.payload.id
+          ),
+        ],
       };
 
     case ACTIONS.UPDATE_FOLDER:
       return {
-        ...state,
+        ...FiltersMenuState,
         folderpath: action.payload,
       };
 
     default:
-      return state;
+      return FiltersMenuState;
   }
 };
 const initialState: StateType = {
@@ -210,12 +227,13 @@ const initialState: StateType = {
 };
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN CONTENT ~ */
 const FiltersMenu = (): ReactElement => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { state } = useContext(StateContext);
+  const [FiltersMenuState, dispatch] = useReducer(reducer, initialState);
 
   // submits the destination folder with the parameters
   const handleSumbitFolder = (): void => {
     console.log('should upload the data');
-    window.electron.ipcRenderer.sendNewDestinationFolder(state);
+    window.electron.ipcRenderer.sendNewDestinationFolder(FiltersMenuState);
     window.close();
   };
 
@@ -228,6 +246,20 @@ const FiltersMenu = (): ReactElement => {
       folder,
       path: filePaths[0],
     };
+
+    // check if the folder hasn't been already added to the destination folders
+    state.destinationFolders.forEach((destinationFolder) => {
+      if (destinationFolder.path === filePaths[0]) {
+        window.electron.ipcRenderer.alert(
+          'Folder Alredy Exists',
+          `The folder path '${
+            destinationFolder.path
+          }' already exists as a destination folder. Added: ${destinationFolder.date.toLocaleString()}`,
+          'error'
+        );
+      }
+    });
+
     dispatch({ type: ACTIONS.UPDATE_FOLDER, payload: folderpath });
   };
 
@@ -235,7 +267,7 @@ const FiltersMenu = (): ReactElement => {
   const handleDeleteFilter = (type: FiltersType, id: string): void => {
     console.log(`Should delete filter with index: ${type}, ${id}`);
 
-    // TODO: for some reason a switch statement wont work here??? wtf??
+    // TODO: for some reason a switch FiltersMenuStatement wont work here??? wtf??
     if (type === 'name') {
       dispatch({ type: ACTIONS.REMOVE_NAMES, payload: { id } });
     } else if (type === 'format') {
@@ -262,7 +294,33 @@ const FiltersMenu = (): ReactElement => {
     });
   };
   const handleFilterAdded = ({ type, content, id }: FilterType) => {
-    // console.log('should add new filter: ', type, content);
+    console.log('should add new filter: ', type, content);
+
+    // ignores filters without content
+    if (content === '') {
+      window.electron.ipcRenderer.alert(
+        'Filter Error',
+        'You need to add content to the filter!',
+        'error'
+      );
+      return;
+    }
+
+    // check if the filter hasn't been added yet
+    state.destinationFolders.forEach(({ folder, date, filters }) => {
+      filters.forEach((destinationFolderFilters) => {
+        if (content.split(destinationFolderFilters.content).length > 0) {
+          window.electron.ipcRenderer.alert(
+            'The Filter Already Exists',
+            `The content you want to exclude already exists in the filter: ${folder} as ${
+              destinationFolderFilters.content
+            }, created ${date.toLocaleString()}`,
+            'error'
+          );
+        }
+      });
+    });
+
     switch (type) {
       case 'name':
         dispatch({
@@ -314,21 +372,24 @@ const FiltersMenu = (): ReactElement => {
     <div className="filters_menu">
       <h1 className="filters_menu__title">Add Filters</h1>
       <div className="destination_path_container">
-        {state.folderpath.folder !== '' ? (
+        {FiltersMenuState.folderpath.folder !== '' ? (
           <DisplayPath
-            folder={state.folderpath.folder}
-            path={state.folderpath.path}
+            folder={FiltersMenuState.folderpath.folder}
+            path={FiltersMenuState.folderpath.path}
           />
         ) : null}
         <SelectFolders
           buttonText={
-            state.folderpath.folder === '' ? 'Pick a Folder' : 'Change Folder'
+            FiltersMenuState.folderpath.folder === ''
+              ? 'Pick a Folder'
+              : 'Change Folder'
           }
           options={{
             title: 'Select a Destination Folder',
             buttonLabel: 'Select Folder',
             properties: ['openDirectory'],
           }}
+          parentWindow="FiltersMenu"
           gotFoldersCallback={gotFolders}
         />
       </div>
@@ -353,17 +414,17 @@ const FiltersMenu = (): ReactElement => {
       />
       <div className="filters_list_container">
         <ul className="filters_list">
-          {state.names.length === 0 &&
-          state.formats.length === 0 &&
-          state.regexs.length === 0 ? (
+          {FiltersMenuState.names.length === 0 &&
+          FiltersMenuState.formats.length === 0 &&
+          FiltersMenuState.regexs.length === 0 ? (
             <NoItemsWarning
               variant="filters"
               style={{ color: 'black', fontSize: 'var(--fs-secondary)' }}
             />
           ) : null}
-          {displayFilters(state.names)}
-          {displayFilters(state.formats)}
-          {displayFilters(state.regexs)}
+          {displayFilters(FiltersMenuState.names)}
+          {displayFilters(FiltersMenuState.formats)}
+          {displayFilters(FiltersMenuState.regexs)}
         </ul>
         <div className="filters_list_label">
           <div className="filter_name filter_label">BY NAME</div>
@@ -371,9 +432,9 @@ const FiltersMenu = (): ReactElement => {
           <div className="filter_regex filter_label">BY REGEX</div>
         </div>
       </div>
-      {state.names.length !== 0 ||
-      state.formats.length !== 0 ||
-      state.regexs.length !== 0 ? (
+      {FiltersMenuState.names.length !== 0 ||
+      FiltersMenuState.formats.length !== 0 ||
+      FiltersMenuState.regexs.length !== 0 ? (
         <Button content="Add This Folder" callback={handleSumbitFolder} />
       ) : null}
     </div>

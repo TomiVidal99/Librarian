@@ -1,5 +1,5 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MODULES ~~~~~ */
-import { ReactElement, useReducer, useEffect } from 'react';
+import { ReactElement, useReducer, useEffect, useState } from 'react';
 import { initialState, StateContext } from 'renderer/contexts/StateContext';
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~ */
 
@@ -82,10 +82,17 @@ const reducer = (state: StateType, action: any) => {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN ~~~~~ */
 const Settings = (): ReactElement => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [shouldUploadNewState, setShouldUploadNewState] =
+    useState<boolean>(true);
 
   // updates the state
-  const handleStateUpdate = (newState: StateType) => {
-    console.log('Updating initial state: ', newState);
+  const handleStateUpdate = (
+    newState: StateType,
+    shouldUpdateBackend: boolean
+  ) => {
+    // only update backend when the intial state it's passed to it.
+    console.log('Updating state: ', newState);
+    setShouldUploadNewState(shouldUpdateBackend);
     dispatch({ type: ACTIONS.UPDATE_STATE, payload: newState });
   };
 
@@ -109,7 +116,12 @@ const Settings = (): ReactElement => {
   useEffect(() => {
     // TODO: maybe think a better way to do this???
     setTimeout(() => {
-      window.electron.ipcRenderer.getInitialState(handleStateUpdate);
+      window.electron.ipcRenderer.getInitialState((newState: StateType) =>
+        handleStateUpdate(newState, true)
+      );
+      window.electron.ipcRenderer.getNewUpdatedState((newState: StateType) =>
+        handleStateUpdate(newState, false)
+      );
     }, 500);
     setTimeout(() => {
       window.electron.ipcRenderer.onNewDestinationFolder(
@@ -121,9 +133,13 @@ const Settings = (): ReactElement => {
 
   // upload state on update
   useEffect(() => {
-    // TODO: fix this, should only update if the state has been change by the user
-    console.log('settings state has been updated: ', state);
-    window.electron.ipcRenderer.uploadState(state);
+    if (shouldUploadNewState) {
+      console.log('Uploading new state to backend');
+      //if (shouldUploadNewState) console.log(shouldUploadNewState);
+      window.electron.ipcRenderer.uploadState(state);
+    } else {
+      setShouldUploadNewState(true);
+    }
   }, [state]);
 
   return (

@@ -32,18 +32,20 @@ const defaultOptions = {
 export const moveToDestination = (
   origin: string,
   destination: string
-): boolean => {
-  // TODO: for the moment the copy will create a new copy with an index if the origin file already exists, think a better way to do this.
-  // console.log(`Moving file: from ${origin}, to: ${destination}`);
+): boolean | string => {
   let destinationFileIndex = 1;
-  let dest: string = origin;
+  let dest: string = destination;
+
+  // console.log(`Moving file: from ${origin}, to: ${destination}`);
 
   const addIndexPattern = (filepath: string, index: number): string => {
-    return filepath.concat(` (${index})`);
+    const fileName = filepath.split('.')[filepath.split('.').length - 2];
+    const fileFormat = filepath.split('.')[filepath.split('.').length - 1];
+    return fileName.concat(` (${index})`).concat('.', fileFormat);
   };
 
-  // add index when the origin file already exists
-  if (fs.existsSync(origin)) {
+  // add index when the destination file already exists
+  if (fs.existsSync(dest)) {
     while (fs.existsSync(addIndexPattern(destination, destinationFileIndex)))
       destinationFileIndex += 1;
 
@@ -54,7 +56,7 @@ export const moveToDestination = (
     // moves the file
     fs.renameSync(origin, dest);
     console.log(`Moved from ${origin}, to: ${dest}`);
-    return true;
+    return dest;
   } catch {
     console.log(`Could not moved ${origin}`);
     return false;
@@ -78,19 +80,26 @@ export const handleSortFile = (
   let returnValue: [SortingReturnType, string] = ['not sorted', ''];
   const folderName = getFolderNameFromPath(filepath);
 
+  let foundFilterFlag = false;
   state.destinationFolders.forEach(
     (destinationFolder: DestinationFolderType) => {
       destinationFolder.filters.forEach(({ type, content }: FilterType) => {
+        // TODO: change this to add a way to select what filter type has priority: name, format or regex. Todo so should check first the prior type.
+        if (foundFilterFlag) return;
+
         if (type === 'name' && folderName.split(content).length > 1) {
           // this will return true if the file was successfully moved, else the sorting was found but the file could be moved for some system reason.
           console.log('found name filter');
+          foundFilterFlag = true;
           const response = moveToDestination(
             filepath[0] === '/' ? filepath : '/'.concat(filepath),
             path.join(destinationFolder.path, folderName)
           );
           returnValue = [
-            response ? 'moved' : 'could not be moved',
-            path.join(destinationFolder.path, folderName),
+            response !== false ? 'moved' : 'could not be moved',
+            typeof response === 'string'
+              ? response
+              : path.join(destinationFolder.path, folderName),
           ];
         }
         if (
@@ -99,13 +108,16 @@ export const handleSortFile = (
         ) {
           // got match for the format
           console.log('found format filter');
+          foundFilterFlag = true;
           const response = moveToDestination(
             filepath[0] === '/' ? filepath : '/'.concat(filepath),
             path.join(destinationFolder.path, folderName)
           );
           returnValue = [
-            response ? 'moved' : 'could not be moved',
-            path.join(destinationFolder.path, folderName),
+            response !== false ? 'moved' : 'could not be moved',
+            typeof response === 'string'
+              ? response
+              : path.join(destinationFolder.path, folderName),
           ];
         }
       });
