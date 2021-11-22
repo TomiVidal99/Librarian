@@ -4,7 +4,7 @@
 
 ## Screenshots
 
-![Example screenshot](./screenshots/screenshot.png)
+![Example screenshot](./assets/Librarian-Screenshot.png)
 
 <!-- If you have screenshots you'd like to share, include them here. -->
 

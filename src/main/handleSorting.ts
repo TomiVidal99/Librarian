@@ -18,7 +18,7 @@ const defaultOptions = {
   interval: 100,
   binaryInterval: 300,
   alwaysStat: false,
-  depth: 0,
+  depth: 1,
   awaitWriteFinish: {
     stabilityThreshold: 2000,
     pollInterval: 100,
