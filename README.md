@@ -65,7 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] .
+- [ ] Fix language not syncronizing properly with translation files.
 
 ## Contact
 

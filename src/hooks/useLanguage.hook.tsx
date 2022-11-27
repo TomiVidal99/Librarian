@@ -3,7 +3,7 @@ import ES_LANGUAGE_JSON from "../../assets/languages/es-AR.json";
 import EN_LANGUAGE_JSON from "../../assets/languages/en-US.json";
 
 export type LanguageType = "en-US" | "es-AR";
-const DEFAULT_LANGUAGE: LanguageType = "en-US" as const;
+const DEFAULT_LANGUAGE: LanguageType = "es-AR" as const;
 const DEFAULT_NO_MESSAGE_RESPONSE = "TRANSLATION NOT FOUND" as const;
 
 export const useLanguage = (): [
@@ -15,17 +15,17 @@ export const useLanguage = (): [
   const [currentLanguage, setCurrentLanguage] =
     useState<LanguageType>(DEFAULT_LANGUAGE);
   const [translations, setTranslations] = useState<any>(null);
-  const SUPPORTED_LANGUAGES: LanguageType[] = ["en-US", "es-AR"];
+  const SUPPORTED_LANGUAGES: LanguageType[] = ["es-AR", "en-US"];
 
   const switchLanguages = (language: LanguageType): void => {
     switch (language) {
       case "en-US":
         setTranslations(EN_LANGUAGE_JSON);
-        setCurrentLanguage(language);
+        setCurrentLanguage("en-US");
         break;
       case "es-AR":
         setTranslations(ES_LANGUAGE_JSON);
-        setCurrentLanguage(language);
+        setCurrentLanguage("es-AR");
         break;
     }
   };
