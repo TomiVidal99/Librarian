@@ -17,7 +17,7 @@ export const App = () => {
       }}
     >
       <div className="app-container">
-        <div className="app-section">
+        <div className="app-section section-no-border">
           <h1 className="app-title">Librarian</h1>
         </div>
         <div className="app-section">

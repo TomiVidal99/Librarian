@@ -16,11 +16,6 @@
   }
 }
 
-.language-selector > .language-selector__btn {
-  background-color: var(--color-primary);
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
 .closed .language-selector__option-list {
   display: none;
 }
@@ -36,6 +31,7 @@
   border-radius: 0;
 }
 .language-selector__option-list {
+  position: relative;
   list-style: none;
   width: 100%;
   margin: 0;
@@ -43,6 +39,8 @@
 }
 
 .language-selector__btn {
+  position: absolute;
+
   font-size: var(--fs-normal);
   text-align: center;
   text-decoration: none;
@@ -64,4 +62,15 @@
   &:hover {
     background-color: var(--color-secondary);
   }
+
+  &:focus-visible {
+    outline: 4px solid var(--color-focus);
+  }
+}
+
+.language-selector > .language-selector__btn {
+  position: relative;
+  background-color: var(--color-primary);
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }

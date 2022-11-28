@@ -10,8 +10,12 @@
   width: 100%;
   margin: 2em 0;
   padding: 1em;
-  border: 1px solid var(--color-primary);
   border-radius: 5px;
+  border: 1px solid rgba(120, 120, 120, 40);
+}
+
+.section-no-border {
+  border: none;
 }
 
 .app-title {

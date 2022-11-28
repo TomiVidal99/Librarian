@@ -20,6 +20,7 @@ html {
   --color-third: #2a2c31;
   --color-third-light: rgb(42 44 49 / 0.25);
   --color-fourth: rgb(67 81 104 / 0.18);
+  --color-focus: #686391;
 
   --fs-title: 5rem;
   --fs-big: 1.6rem;
@@ -44,3 +45,16 @@ body {
 
   background-color: var(--color-third);
 }
+
+/*scrollbar*/
+*::-webkit-scrollbar {
+  background-color: var(--color-primary-darkest);
+  width: 12px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-darken);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
+
