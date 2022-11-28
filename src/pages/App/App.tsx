@@ -17,11 +17,13 @@ export const App = () => {
       }}
     >
       <div className="app-container">
-        <div className="app">
+        <div className="app-section">
           <h1 className="app-title">Librarian</h1>
+        </div>
+        <div className="app-section">
           <Description />
         </div>
-        <div>
+        <div className="app-section">
           <LanguageSelector
             availableLanguages={supportedLanguages}
             selectedLanguageCallback={(lang) => setLanguage(lang)}

@@ -1,6 +1,7 @@
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { LanguageType } from "../../../hooks";
-
+import { Icon } from "@iconify/react";
+import arrowDropDownRounded from "@iconify/icons-material-symbols/arrow-drop-down-rounded";
 import "./styles/LanguageSelector.style.scss";
 
 interface IProps {
@@ -13,33 +14,51 @@ export const LanguageSelector = ({
   availableLanguages,
   selectedLanguageCallback,
   defaultValue,
-}: IProps) => {
+}: IProps): JSX.Element => {
+  const listRef = useRef<HTMLDivElement>();
+  const [selectedOption, setSelectedOptions] = useState<number>(
+    availableLanguages.indexOf(defaultValue)
+  );
   useEffect(() => {
-    console.log(`default language: ${defaultValue}`);
-  }, []);
+    setSelectedOptions(availableLanguages.indexOf(defaultValue));
+  }, [defaultValue]);
+  const toggleOpenSelect = (): void => {
+    listRef?.current?.classList.toggle("closed");
+  };
   const handleClick = (
-    event: MouseEvent<HTMLSelectElement, globalThis.MouseEvent>
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ): void => {
-    const options = event.target.options;
-    const lang = options[options.selectedIndex].innerHTML;
-    selectedLanguageCallback(lang);
+    const lang = (event.target as HTMLButtonElement).innerHTML;
+    setSelectedOptions(availableLanguages.indexOf(lang as LanguageType));
+    selectedLanguageCallback(lang as LanguageType);
+    toggleOpenSelect();
   };
   return (
-    <div className="language-selector-container">
-      <select
-        onClick={(e) => handleClick(e)}
-        name="language"
-        className="language-selector"
-        defaultValue={defaultValue}
-      >
-        {availableLanguages.map((lang) => {
-          return (
-            <option className="language-selector-option" key={lang}>
-              {lang}
-            </option>
-          );
-        })}
-      </select>
+    <div ref={listRef} className="language-selector-container closed">
+      <div className="language-selector">
+        <button
+          onClick={toggleOpenSelect}
+          className="language-selector__selected-option language-selector__btn"
+        >
+          <div>{availableLanguages[selectedOption]}</div>
+          <Icon inline={true} icon={arrowDropDownRounded} />
+        </button>
+        <ul className="language-selector__option-list">
+          {availableLanguages.map((lang) => {
+            if (availableLanguages.indexOf(lang) == selectedOption) return;
+            return (
+              <li className="language-selector__option" key={lang}>
+                <button
+                  className="language-selector__btn"
+                  onClick={handleClick}
+                >
+                  {lang}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 };

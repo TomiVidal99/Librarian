@@ -17,6 +17,10 @@ export const useLanguage = (): [
   const [translations, setTranslations] = useState<any>(null);
   const SUPPORTED_LANGUAGES: LanguageType[] = ["es-AR", "en-US"];
 
+  useEffect(() => {
+    console.log(`Default lang: ${currentLanguage}`);
+  });
+
   const switchLanguages = (language: LanguageType): void => {
     switch (language) {
       case "en-US":
