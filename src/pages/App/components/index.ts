@@ -1,2 +1,2 @@
-export * from "./Description"
-export * from "./LanguageSelector"
+export * from "./Description/Description"
+export * from "./Select/Select"

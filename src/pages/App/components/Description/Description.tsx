@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { LanguageContext } from "../../../state";
+import { LanguageContext } from "../../../../state";
 
 export const Description = () => {
   const { getTranslated } = useContext(LanguageContext);

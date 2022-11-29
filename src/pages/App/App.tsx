@@ -1,6 +1,7 @@
 import { LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
-import { Description, LanguageSelector } from "./components";
+import { Description } from "./components";
+import { LanguageSelector } from "./styled-components/SelectLanguage";
 
 import "./App.style.scss";
 
