@@ -8,6 +8,7 @@ import "./App.style.scss";
 export const App = () => {
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
+  const appVersion =  `${getTranslatedText("appVersion")} 2.0.0`;
   return (
     <LanguageContext.Provider
       value={{
@@ -31,6 +32,9 @@ export const App = () => {
             defaultValue={currentLanguage}
           />
         </div>
+        <footer className="footer">
+          <p className="capitalize">{appVersion}</p>
+        </footer>
       </div>
     </LanguageContext.Provider>
   );

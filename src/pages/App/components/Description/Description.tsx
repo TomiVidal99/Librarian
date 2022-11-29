@@ -5,7 +5,7 @@ export const Description = () => {
   const { getTranslated } = useContext(LanguageContext);
   return (
     <div className="description-container">
-      <p>{getTranslated("description")}</p>
+      <p className="capitalize">{getTranslated("description")}</p>
     </div>
   );
 };

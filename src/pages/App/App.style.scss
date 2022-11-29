@@ -1,14 +1,19 @@
 .app-container {
+  width: 100%;
+  min-height: 100vh;
   color: var(--color-secondary);
+  display: flex;
+  flex-direction: column;
 }
 
 .app-section {
+  max-width: clamp(400px, 60vw, 800px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
   width: 100%;
-  margin: 2em 0;
+  margin: 2em auto;
   padding: 1em;
   border-radius: 5px;
   border: 1px solid rgba(120, 120, 120, 40);
@@ -24,4 +29,16 @@
   font-family: ryeregular;
   font-weight: 100;
   text-align: center;
+}
+
+.footer {
+  margin-top: auto;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: left;
+  padding: 2em;
+  & p {
+    width: min-content;
+  }
 }
