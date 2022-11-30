@@ -4,13 +4,13 @@ import { IOriginFolder } from "../../../../models";
 import { LanguageContext } from "../../../../state";
 import { OriginFolder } from "./OriginFolder";
 
-import "./OriginFolders.style.scss";
+import "./OriginFolderList.style.scss";
 
 interface IProps {
   folders: IOriginFolder[];
 }
 
-export const OriginFolders = ({ folders }: IProps) => {
+export const OriginFolderList = ({ folders }: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
   const handleAddOriginFolder = () => {
     console.log("TODO: make this function");

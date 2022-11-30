@@ -1,6 +1,6 @@
 import { LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
-import { Description, OriginFolders, Section } from "./components";
+import { Description, OriginFolderList, Section } from "./components";
 import { LanguageSelector } from "./styled-components/SelectLanguage";
 
 import "./App.style.scss";
@@ -40,7 +40,7 @@ export const App = () => {
           <Description />
         </Section>
         <Section sectionDescription={getTranslatedText("originFoldersDescription")} sectionName={getTranslatedText("originFoldersSection")}>
-          <OriginFolders folders={originFoldersTest} />
+          <OriginFolderList folders={originFoldersTest} />
         </Section>
         <Section sectionName={getTranslatedText("generalSettingsSection")}>
           <LanguageSelector
