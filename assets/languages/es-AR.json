@@ -1,6 +1,9 @@
 {
-  "appVersion": "versión",
+  "appDescriptionSection": "descripción de la aplicación",
   "description": "descricion en español",
+  "originFoldersSection": "carpetas de origen",
   "originFoldersDescription": "éstas carpetas se examinarán para organizar sus archivos.",
-  "addFolderButton": "agregar carpeta de origin"
+  "addFolderButton": "agregar carpeta de origin",
+  "generalSettingsSection": "configuraciones generales",
+  "appVersion": "versión"
 }

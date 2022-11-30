@@ -27,8 +27,8 @@ html {
 
   --fs-title: 5rem;
   --fs-big: 1.6rem;
-  --fs-normal: 1.4rem;
-  --fs-small: 1rem;
+  --fs-normal: 1rem;
+  --fs-small: 0.85rem;
 
   /*list items*/
   --item-selected-bg: #551b13;
@@ -70,4 +70,3 @@ body {
 *::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-primary);
 }
-

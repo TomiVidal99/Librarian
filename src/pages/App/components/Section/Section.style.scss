@@ -1,0 +1,29 @@
+.app-section {
+  position: relative;
+  max-width: clamp(400px, 60vw, 800px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  width: 100%;
+  margin: 2em auto;
+  padding: 1.5em 1em;
+  border-radius: 5px;
+  border: 1px solid rgba(120, 120, 120, 40);
+
+  &::before {
+    content: attr(aria-description);
+    position: absolute;
+    top: -0.8em;
+    background-color: var(--color-third);
+    padding: 0.2em 0.4em;
+    margin: 0;
+    color: var(--color-primary-darken);
+    text-transform: uppercase;
+    font-size: var(--fs-small);
+  }
+}
+
+.section-no-border {
+  border: none;
+}

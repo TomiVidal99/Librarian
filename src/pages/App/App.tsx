@@ -1,6 +1,6 @@
 import { LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
-import { Description, OriginFolders } from "./components";
+import { Description, OriginFolders, Section } from "./components";
 import { LanguageSelector } from "./styled-components/SelectLanguage";
 
 import "./App.style.scss";
@@ -32,27 +32,27 @@ export const App = () => {
         languagesAvailables: supportedLanguages,
       }}
     >
-      <div className="app-container">
-        <div className="app-section section-no-border">
+      <main className="app-container">
+        <Section border={false}>
           <h1 className="app-title">Librarian</h1>
-        </div>
-        <div className="app-section">
+        </Section>
+        <Section sectionName={getTranslatedText("appDescriptionSection")}>
           <Description />
-        </div>
-        <div className="app-section">
+        </Section>
+        <Section sectionName={getTranslatedText("originFoldersSection")}>
           <OriginFolders folders={originFoldersTest} />
-        </div>
-        <div className="app-section">
+        </Section>
+        <Section sectionName={getTranslatedText("generalSettingsSection")}>
           <LanguageSelector
             availableLanguages={supportedLanguages}
             selectedLanguageCallback={(lang) => setLanguage(lang)}
             defaultValue={currentLanguage}
           />
-        </div>
+        </Section>
         <footer className="footer">
           <p className="capitalize">{appVersion}</p>
         </footer>
-      </div>
+      </main>
     </LanguageContext.Provider>
   );
 };
