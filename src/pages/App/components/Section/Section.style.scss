@@ -22,6 +22,9 @@
     text-transform: uppercase;
     font-size: var(--fs-small);
   }
+  &:hover::before {
+    color: var(--color-primary);
+  }
 }
 
 .section-no-border {
