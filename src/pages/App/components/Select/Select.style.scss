@@ -55,7 +55,7 @@
 
   border: none;
   border-radius: 2px;
-  background-color: #8f8b9d;
+  background-color: var(--color-primary-darken);
   margin: 0;
   padding: 0.2em 0;
   padding-left: 0.6em;
@@ -67,10 +67,6 @@
 
   &:hover {
     background-color: var(--color-secondary) !important;
-  }
-
-  &:focus-visible {
-    outline: 4px solid var(--color-focus);
   }
 }
 

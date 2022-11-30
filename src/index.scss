@@ -18,9 +18,12 @@ html {
   --color-primary-darkest: #64676d;
   --color-secondary: #fff;
   --color-third: #2a2c31;
-  --color-third-light: rgb(42 44 49 / 0.25);
-  --color-fourth: rgb(67 81 104 / 0.18);
-  --color-focus: #686391;
+
+  --color-details: #384d77;
+  --color-details-light: #384d77;
+  --color-details-darken: #384d77;
+
+  --color-focus: #475a7f;
 
   --fs-title: 5rem;
   --fs-big: 1.6rem;
@@ -43,6 +46,12 @@ body {
   margin: 0;
 
   background-color: var(--color-third);
+}
+
+// default outline when an element it's focused
+*:focus-visible {
+  outline: 4px solid var(--color-details);
+  z-index: 100;
 }
 
 // some utility classes
