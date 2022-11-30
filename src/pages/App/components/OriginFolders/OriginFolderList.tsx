@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import uuid from "react-uuid";
 import { Button } from "..";
 import { IOriginFolder } from "../../../../models";
@@ -17,9 +17,6 @@ export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
   const [selectedFolders, setSelectedFolders] = useState<string[]>([
     folders.length > 0 ? folders[0]?.id : null,
   ]);
-  useEffect(() => {
-    console.log(selectedFolders);
-  }, [selectedFolders]);
   const handleAddOriginFolder = () => {
     console.log("TODO: make this function");
   };
@@ -33,7 +30,6 @@ export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
     setSelectedFolders([]);
   };
   const handleClickedFolder = (id: string) => {
-    console.log(`from list ${id}`);
     setSelectedFolders(
       selectedFolders.includes(id)
         ? selectedFolders.filter((_id) => _id !== id)
