@@ -3,7 +3,8 @@
   "description": "descricion en español",
   "originFoldersSection": "carpetas de origen",
   "originFoldersDescription": "éstas carpetas se examinarán para organizar sus archivos.",
-  "addFolderButton": "agregar carpeta de origin",
+  "addFolderButton": "nueva carpeta",
+  "removeFoldersButton": "quitar carpeta/s",
   "generalSettingsSection": "configuraciones generales",
   "appVersion": "versión"
 }

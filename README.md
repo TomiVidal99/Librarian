@@ -65,11 +65,11 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] Add arias to buttons.
-- [ ] Make a Checkbox element.
-- [ ] Make a Button element.
-- [ ] Add navigation.
-- [ ] Fix language not syncronizing properly with translation files.
+- [ ] ADD: arias to buttons.
+- [ ] ADD: a Checkbox element.
+- [ ] ADD: navigation.
+- [ ] ADD: styled Buttons for adding and deleting (green and red).
+- [ ] FIX: language not syncronizing properly with translation files.
 - [ ] ANIMATION: for the Section when it's hovered, fill the border with a different color like a loading animation.
 
 ## Contact

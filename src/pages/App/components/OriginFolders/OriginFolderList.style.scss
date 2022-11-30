@@ -1,6 +1,8 @@
 .origin-folders-container {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
+  width: clamp(350px, 70%, 450px);
   font-size: var(--fs-normal);
   background-color: var(--color-fifth);
 }
@@ -11,16 +13,17 @@
   margin: 0;
 }
 
+.origin-folders__btns-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 1.5em 0;
+}
+
 .origin-folders__add-btn {
-  outline: none;
-  border: none;
-  padding: .6em .6em;
-  font-size: var(--fs-normal);
-  border-radius: 3px;
-  cursor: pointer;
-  text-transform: capitalize;
-  background-color: var(--color-primary);
-  &:hover {
-    background-color: var(--color-secondary);
-  }
+  background-color: var(--color-add-folder) !important;
+}
+
+.origin-folders__remove-btn {
+  background-color: var(--color-remove-folder) !important;
 }

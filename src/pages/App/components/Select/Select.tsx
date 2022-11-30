@@ -25,7 +25,7 @@ export const Select = <T extends string>({
     listRef?.current?.classList.toggle("closed");
   };
   const handleClick = (
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+    event: MouseEvent<HTMLButtonElement>
   ): void => {
     const option = (event.target as HTMLButtonElement).innerHTML;
     setSelectedOptions(availableOptions.indexOf(option as T));

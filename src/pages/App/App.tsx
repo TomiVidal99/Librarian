@@ -5,14 +5,18 @@ import { LanguageSelector } from "./styled-components/SelectLanguage";
 
 import "./App.style.scss";
 import { IOriginFolder } from "../../models";
+import uuid from "react-uuid";
+import { useState } from "react";
 
-const originFoldersTest: IOriginFolder[] = [
+const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
   {
+    id: uuid(),
     name: "temp",
     path: "/home/tomii/temp",
     date: new Date(),
   },
   {
+    id: uuid(),
     name: "Github",
     path: "/home/tomii/Github",
     date: new Date(),
@@ -23,6 +27,13 @@ export const App = () => {
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
   const appVersion = `${getTranslatedText("appVersion")} 2.0.0`;
+  const [originFolders, setOriginFolders] = useState<IOriginFolder[]>(
+    ORIGIN_FOLDERS_DEFAULT
+  );
+  const updateOriginFolderList = (newFolders: IOriginFolder[]): void => {
+    // TODO: this just be some reducer function to better handle the state
+    setOriginFolders(newFolders);
+  };
   return (
     <LanguageContext.Provider
       value={{
@@ -39,8 +50,11 @@ export const App = () => {
         <Section sectionName={getTranslatedText("appDescriptionSection")}>
           <Description />
         </Section>
-        <Section sectionDescription={getTranslatedText("originFoldersDescription")} sectionName={getTranslatedText("originFoldersSection")}>
-          <OriginFolderList folders={originFoldersTest} />
+        <Section
+          sectionDescription={getTranslatedText("originFoldersDescription")}
+          sectionName={getTranslatedText("originFoldersSection")}
+        >
+          <OriginFolderList folders={originFolders} updateFolders={updateOriginFolderList} />
         </Section>
         <Section sectionName={getTranslatedText("generalSettingsSection")}>
           <LanguageSelector

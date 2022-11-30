@@ -1,0 +1,26 @@
+.btn {
+  width: fit-content;
+  height: auto;
+
+  border: none;
+  border-radius: 2px;
+  margin: 0;
+  padding: 1em;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  background-color: var(--color-primary);
+
+  &:hover {
+    background-color: var(--color-secondary) !important;
+  }
+}
+
+.btn__content {
+  font-size: var(--fs-normal);
+  text-align: center;
+  text-decoration: none;
+}

@@ -18,12 +18,17 @@ html {
   --color-primary-darkest: #64676d;
   --color-secondary: #fff;
   --color-third: #2a2c31;
+  --color-third-darker: #1f2024;
+  --color-third-darkest: #131316;
 
   --color-details: #384d77;
   --color-details-light: #384d77;
   --color-details-darken: #384d77;
 
   --color-focus: #475a7f;
+
+  --color-add-folder: rgba(100, 255, 100);
+  --color-remove-folder: rgba(255, 100, 100);
 
   --fs-title: 5rem;
   --fs-big: 1.6rem;
@@ -37,6 +42,8 @@ html {
   --filter-color-format: #ff5c52;
   --filter-color-name: #1547c7;
   --filter-color-regex: #c3c715;
+
+  font-size: 20px;
 }
 
 body {

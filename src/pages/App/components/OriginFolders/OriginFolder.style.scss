@@ -1,27 +1,65 @@
 .folder-container {
-  background-color: rgba(22,22,22,10);
-  padding: .5em 1em;
-  margin: .4em 0;
+  position: relative;
+  background-color: var(--color-third-darker);
+  border-radius: 3px;
+
+  font-size: var(--fs-normal);
+
+  &:hover {
+    background-color: var(--color-third-darkest);
+    & .folder__path {
+      opacity: 1;
+    }
+  }
+  &::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: red;
+    right: 0;
+    transition: transform 400ms;
+  }
+}
+
+.folder-container[aria-checked="true"] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  &::before {
+    transform: translateX(100%);
+  }
+}
+
+.folder {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+
   border-radius: 3px;
 
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: row;
   gap: 2em;
 
+  border: none;
+  outline: none;
+  padding: 1em 1.5em;
+  margin: 0.4em 0;
+  background-color: inherit;
+  color: inherit;
+  font-size: inherit;
+
   & > .folder__name {
-    font-size: var(--fs-normal);
+    font-size: larger;
   }
 
   & > .folder__path {
-    font-size: var(--fs-small);
     opacity: 0;
-    transition: opacity .5s;
-  }
-
-  &:hover > .folder__path {
-    opacity: 1;
+    transition: opacity 0.5s;
   }
 
 }
