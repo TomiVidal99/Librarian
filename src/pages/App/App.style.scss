@@ -6,23 +6,6 @@
   flex-direction: column;
 }
 
-.app-section {
-  max-width: clamp(400px, 60vw, 800px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-  width: 100%;
-  margin: 2em auto;
-  padding: 1em;
-  border-radius: 5px;
-  border: 1px solid rgba(120, 120, 120, 40);
-}
-
-.section-no-border {
-  border: none;
-}
-
 .app-title {
   color: var(--color-primary);
   font-size: var(--fs-title);
