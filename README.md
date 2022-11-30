@@ -65,13 +65,14 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] ANIMATION: for the Section when it's hovered, fill the border with a different color like a loading animation.
+- [ ] Add arias to buttons.
 - [ ] Make the Section description to appear animated when it's hovered, otherwise shouldn't be visible.
 - [ ] Make a Checkbox element.
 - [ ] Make a Button element.
 - [ ] Add navigation.
 - [ ] Fix language not syncronizing properly with translation files.
 - [ ] Fix overflowing content by default.
+- [ ] ANIMATION: for the Section when it's hovered, fill the border with a different color like a loading animation.
 
 ## Contact
 
