@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import uuid from "react-uuid";
-import { Button } from "..";
+import { Badge, Button } from "..";
 import { IOriginFolder } from "../../../../models";
 import { LanguageContext } from "../../../../state";
 import { OriginFolder } from "./OriginFolder";
@@ -14,9 +14,9 @@ interface IProps {
 
 export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
-  const [selectedFolders, setSelectedFolders] = useState<string[]>([
-    folders.length > 0 ? folders[0]?.id : null,
-  ]);
+  const [selectedFolders, setSelectedFolders] = useState<string[]>(
+    folders.length > 0 ? [folders[0].id] : []
+  );
   const handleAddOriginFolder = () => {
     console.log("TODO: make this function");
   };
@@ -39,7 +39,7 @@ export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
   return (
     <div className="origin-folders-container">
       <ul className="origin-folders__list">
-        {folders.length > 0 &&
+        {folders.length > 0 ? (
           folders.map((folder) => {
             return (
               <OriginFolder
@@ -49,7 +49,13 @@ export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
                 clickCallback={handleClickedFolder}
               />
             );
-          })}
+          })
+        ) : (
+          <Badge
+            type="warning"
+            content={getTranslated("noOriginFoldersWarning")}
+          />
+        )}
       </ul>
       <div className="origin-folders__btns-container">
         <Button

@@ -11,6 +11,11 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: .6em;
 }
 
 .origin-folders__btns-container {
@@ -21,9 +26,9 @@
 }
 
 .origin-folders__add-btn {
-  background-color: var(--color-add-folder) !important;
+  background-color: var(--color-add) !important;
 }
 
 .origin-folders__remove-btn {
-  background-color: var(--color-remove-folder) !important;
+  background-color: var(--color-remove) !important;
 }

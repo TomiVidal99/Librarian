@@ -27,9 +27,7 @@ export const App = () => {
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
   const appVersion = `${getTranslatedText("appVersion")} 2.0.0`;
-  const [originFolders, setOriginFolders] = useState<IOriginFolder[]>(
-    ORIGIN_FOLDERS_DEFAULT
-  );
+  const [originFolders, setOriginFolders] = useState<IOriginFolder[]>(ORIGIN_FOLDERS_DEFAULT);
   const updateOriginFolderList = (newFolders: IOriginFolder[]): void => {
     // TODO: this just be some reducer function to better handle the state
     setOriginFolders(newFolders);
@@ -54,7 +52,10 @@ export const App = () => {
           sectionDescription={getTranslatedText("originFoldersDescription")}
           sectionName={getTranslatedText("originFoldersSection")}
         >
-          <OriginFolderList folders={originFolders} updateFolders={updateOriginFolderList} />
+          <OriginFolderList
+            folders={originFolders}
+            updateFolders={updateOriginFolderList}
+          />
         </Section>
         <Section sectionName={getTranslatedText("generalSettingsSection")}>
           <LanguageSelector

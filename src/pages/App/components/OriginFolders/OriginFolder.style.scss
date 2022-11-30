@@ -7,12 +7,15 @@
 
   &:hover {
     background-color: var(--color-third-darkest);
+    transition: transform 200ms;
+    transform: scaleX(1.03);
     & .folder__path {
       opacity: 1;
     }
   }
   &::before {
     content: "";
+    opacity: 0;
     z-index: -1;
     position: absolute;
     width: 5px;
@@ -29,6 +32,7 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   &::before {
+    opacity: 1;
     transform: translateX(100%);
   }
 }
@@ -47,7 +51,7 @@
 
   border: none;
   outline: none;
-  padding: 1em 1.5em;
+  padding: 0.6em 1em;
   margin: 0.4em 0;
   background-color: inherit;
   color: inherit;
@@ -61,5 +65,4 @@
     opacity: 0;
     transition: opacity 0.5s;
   }
-
 }

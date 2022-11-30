@@ -37,6 +37,9 @@
   padding-bottom: 0.4em;
   color: var(--color-primary);
   transition: color 300ms ease-in;
+  &:after {
+    content: ".";
+  }
 }
 
 .section-no-border {
