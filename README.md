@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] Make the Section description to appear animated when it's hovered, otherwise shouldn't be visible.
 - [ ] Make a Checkbox element.
 - [ ] Make a Button element.
 - [ ] Add navigation.
