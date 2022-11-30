@@ -71,6 +71,7 @@ Project is: _in progress_.
 - [ ] Make a Button element.
 - [ ] Add navigation.
 - [ ] Fix language not syncronizing properly with translation files.
+- [ ] Fix overflowing content by default.
 
 ## Contact
 
