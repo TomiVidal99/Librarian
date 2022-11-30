@@ -65,6 +65,9 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] Update color palette.
+- [ ] Make sections it's own component and change the div for a section, it can have border (default) or not.
+- [ ] Make the font sizes better.
 - [ ] Fix language not syncronizing properly with translation files.
 
 ## Contact
