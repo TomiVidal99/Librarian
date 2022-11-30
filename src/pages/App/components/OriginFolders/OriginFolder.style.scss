@@ -1,0 +1,27 @@
+.folder-container {
+  background-color: rgba(22,22,22,10);
+  padding: .5em 1em;
+  margin: .4em 0;
+  border-radius: 3px;
+
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: row;
+  gap: 2em;
+
+  & > .folder__name {
+    font-size: var(--fs-normal);
+  }
+
+  & > .folder__path {
+    font-size: var(--fs-small);
+    opacity: 0;
+    transition: opacity .5s;
+  }
+
+  &:hover > .folder__path {
+    opacity: 1;
+  }
+
+}

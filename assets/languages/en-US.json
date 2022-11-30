@@ -1,4 +1,6 @@
 {
   "appVersion": "version",
-  "description": "this app will organize your files by moving them to the correct folder once it has been set it up by you."
+  "description": "this app will organize your files by moving them to the correct folder once it has been set it up by you.",
+  "originFoldersDescription": "these folders will be searched for files to be sorted.",
+  "addFolderButton": "add origin folder"
 }

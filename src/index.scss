@@ -46,8 +46,8 @@ body {
 }
 
 // some utility classes
-.capitalize {
-  text-transform: capitalize;
+.capitalize::first-letter {
+  text-transform: uppercase;
 }
 
 /*scrollbar*/
