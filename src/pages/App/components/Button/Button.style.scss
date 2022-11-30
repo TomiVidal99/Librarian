@@ -14,8 +14,10 @@
 
   background-color: var(--color-primary);
 
+  opacity: .9;
+
   &:hover {
-    background-color: var(--color-secondary) !important;
+    opacity: 1;
   }
 }
 
