@@ -25,6 +25,18 @@
   &:hover::before {
     color: var(--color-primary);
   }
+
+  &:hover .app-section__description {
+    // opacity: 1;
+    color: var(--color-secondary);
+  }
+}
+
+.app-section__description {
+  font-size: var(--fs-normal);
+  padding-bottom: 0.4em;
+  color: var(--color-primary);
+  transition: color 300ms ease-in;
 }
 
 .section-no-border {

@@ -17,16 +17,12 @@ export const OriginFolders = ({ folders }: IProps) => {
   };
   return (
     <div className="origin-folders-container">
-      <div className="origin-folders__list-container">
-        <p className="origin-folders__list-description capitalize">
-          {getTranslated("originFoldersDescription")}
-        </p>
-        <ul className="origin-folders__list">
-          {folders.length > 0 && folders.map((folder) => {
+      <ul className="origin-folders__list">
+        {folders.length > 0 &&
+          folders.map((folder) => {
             return <OriginFolder key={uuid()} folder={folder} />;
           })}
-        </ul>
-      </div>
+      </ul>
       <button
         onClick={handleAddOriginFolder}
         className="origin-folders__add-btn"

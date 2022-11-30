@@ -39,7 +39,7 @@ export const App = () => {
         <Section sectionName={getTranslatedText("appDescriptionSection")}>
           <Description />
         </Section>
-        <Section sectionName={getTranslatedText("originFoldersSection")}>
+        <Section sectionDescription={getTranslatedText("originFoldersDescription")} sectionName={getTranslatedText("originFoldersSection")}>
           <OriginFolders folders={originFoldersTest} />
         </Section>
         <Section sectionName={getTranslatedText("generalSettingsSection")}>
