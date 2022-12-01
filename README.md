@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: Select should have clicked animations.
 - [ ] FIX: active outline overlapping with side bar on selected elements.
 - [ ] FIX: improve Button color palette for delete and add.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
