@@ -14,6 +14,7 @@ export interface IGlobalState {
   language: string; // TODO: Update this to a type
   generalNotifications: boolean;
   archivesNotifications: boolean;
+  appVersion: string;
 }
 
 export type IGlobalStateContext = {
@@ -30,6 +31,7 @@ export const initialState: IGlobalState = {
   language: "en-US",
   generalNotifications: true,
   archivesNotifications: true,
+  appVersion: "2.0.0",
 };
 
 // TODO: get the intial state from the JSON config file.
