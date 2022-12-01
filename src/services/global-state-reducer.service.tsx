@@ -2,7 +2,7 @@ import uuid from "react-uuid";
 import { IGlobalReducerAction, IGlobalReducerActionsType } from "../models";
 import { IGlobalState } from "../state";
 
-const ACTIONS: IGlobalReducerActionsType = {
+export const ACTIONS: IGlobalReducerActionsType = {
   UPDATE_STATE: 'update-state',
   ADD_DESTINATION_FOLDER: 'add-destination-folder',
   REMOVE_DESTINATION_FOLDERS: 'remove-destination-folders',
