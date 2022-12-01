@@ -1,14 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
 import { initialState, LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
-import { Description, OriginFolderList, Section } from "./components";
-import { LanguageSelector } from "./styled-components/SelectLanguage";
 
 import "./App.style.scss";
 import { IDestinationFolder, IOriginFolder } from "../../models";
 import uuid from "react-uuid";
 import { useEffect, useReducer } from "react";
-import { DestinationFolderList } from "./components/DestinationFolders/DestinationFolderList";
 import { ACTIONS, reducer } from "../../services";
+import { Filters, Settings } from "./pages";
+import { Route, Routes } from "react-router";
 
 const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
   {
@@ -46,87 +46,38 @@ export const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
-  const appVersion = `${getTranslatedText("appVersion")} 2.0.0`;
 
-  useEffect( () => {
+  useEffect(() => {
     dispatch({
       type: ACTIONS.ADD_ORIGIN_FOLDER,
-      payload: ORIGIN_FOLDERS_DEFAULT
-    })
+      payload: ORIGIN_FOLDERS_DEFAULT,
+    });
     dispatch({
       type: ACTIONS.ADD_DESTINATION_FOLDER,
-      payload: DESTINATION_FOLDERS_DEFAULT
-    })
+      payload: DESTINATION_FOLDERS_DEFAULT,
+    });
   }, []);
   return (
-    <LanguageContext.Provider
-      value={{
-        getLang: currentLanguage,
-        setLang: setLanguage,
-        getTranslated: getTranslatedText,
-        languagesAvailables: supportedLanguages,
-      }}
-    >
-      <main className="app-container">
-        <Section border={false}>
-          <h1 className="app-title">Librarian</h1>
-        </Section>
-        <Section sectionName={getTranslatedText("appDescriptionSection")}>
-          <Description />
-        </Section>
-        <Section
-          sectionName={getTranslatedText("originFoldersSection")}
-          sectionDescription={getTranslatedText("originFoldersDescription")}
-        >
-          <OriginFolderList
-            folders={state.originFolders}
-            addFolders={(folders) => {
-              dispatch({
-                type: ACTIONS.ADD_ORIGIN_FOLDER,
-                payload: folders,
-              });
-            }}
-            removeFolders={(folders) => {
-              dispatch({
-                type: ACTIONS.REMOVE_ORIGIN_FOLDERS,
-                payload: folders,
-              });
-            }}
+    <BrowserRouter>
+      <LanguageContext.Provider
+        value={{
+          getLang: currentLanguage,
+          setLang: setLanguage,
+          getTranslated: getTranslatedText,
+          languagesAvailables: supportedLanguages,
+        }}
+      >
+        <Routes>
+          <Route
+            path="/main_window"
+            element={<Settings state={state} dispatch={dispatch} />}
           />
-        </Section>
-        <Section
-          sectionName={getTranslatedText("destinationFoldersSection")}
-          sectionDescription={getTranslatedText(
-            "destinationFoldersDescription"
-          )}
-        >
-          <DestinationFolderList
-            folders={state.destinationFolders}
-            addFolders={(folders) => {
-              dispatch({
-                type: ACTIONS.ADD_DESTINATION_FOLDER,
-                payload: folders,
-              });
-            }}
-            removeFolders={(folders) => {
-              dispatch({
-                type: ACTIONS.REMOVE_DESTINATION_FOLDERS,
-                payload: folders,
-              });
-            }}
+          <Route
+            path="/filters_window"
+            element={<Filters state={state} dispatch={dispatch} />}
           />
-        </Section>
-        <Section sectionName={getTranslatedText("generalSettingsSection")}>
-          <LanguageSelector
-            availableLanguages={supportedLanguages}
-            selectedLanguageCallback={(lang) => setLanguage(lang)}
-            defaultValue={currentLanguage}
-          />
-        </Section>
-        <footer className="footer">
-          <p className="capitalize">{appVersion}</p>
-        </footer>
-      </main>
-    </LanguageContext.Provider>
+        </Routes>
+      </LanguageContext.Provider>
+    </BrowserRouter>
   );
 };
