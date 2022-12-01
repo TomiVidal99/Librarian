@@ -15,7 +15,7 @@ export interface IOriginFolder {
 }
 export interface IDestinationFolder {
   id: string;
-  folder: string;
+  name: string;
   path: string;
   date: Date | string;
   filters: IFilter[];

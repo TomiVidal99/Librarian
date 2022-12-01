@@ -4,9 +4,10 @@ import { Description, OriginFolderList, Section } from "./components";
 import { LanguageSelector } from "./styled-components/SelectLanguage";
 
 import "./App.style.scss";
-import { IOriginFolder } from "../../models";
+import { IDestinationFolder, IOriginFolder } from "../../models";
 import uuid from "react-uuid";
 import { useState } from "react";
+import { DestinationFolderList } from "./components/DestinationFolders/DestinationFolderList";
 
 const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
   {
@@ -23,14 +24,42 @@ const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
   },
 ];
 
+const DESTINATION_FOLDERS_DEFAULT: IDestinationFolder[] = [
+  {
+    id: uuid(),
+    name: "pdfs",
+    path: "/home/tomii/Documents/pdfs",
+    date: new Date(),
+    filters: [],
+  },
+  {
+    id: uuid(),
+    name: "documentos",
+    path: "/home/tomii/Documents",
+    date: new Date(),
+    filters: [],
+  },
+];
+
 export const App = () => {
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
   const appVersion = `${getTranslatedText("appVersion")} 2.0.0`;
-  const [originFolders, setOriginFolders] = useState<IOriginFolder[]>(ORIGIN_FOLDERS_DEFAULT);
+  const [originFolders, setOriginFolders] = useState<IOriginFolder[]>(
+    ORIGIN_FOLDERS_DEFAULT
+  );
+  const [destinationFolders, setDestinationFolders] = useState<
+    IDestinationFolder[]
+  >(DESTINATION_FOLDERS_DEFAULT);
   const updateOriginFolderList = (newFolders: IOriginFolder[]): void => {
     // TODO: this just be some reducer function to better handle the state
     setOriginFolders(newFolders);
+  };
+  const updateDestinationFolderList = (
+    newFolders: IDestinationFolder[]
+  ): void => {
+    // TODO: same as updateOriginFolderList
+    setDestinationFolders(newFolders);
   };
   return (
     <LanguageContext.Provider
@@ -49,13 +78,19 @@ export const App = () => {
           <Description />
         </Section>
         <Section
-          sectionDescription={getTranslatedText("originFoldersDescription")}
           sectionName={getTranslatedText("originFoldersSection")}
+          sectionDescription={getTranslatedText("originFoldersDescription")}
         >
           <OriginFolderList
             folders={originFolders}
             updateFolders={updateOriginFolderList}
           />
+        </Section>
+        <Section
+          sectionName={getTranslatedText("destinationFoldersSection")}
+          sectionDescription={getTranslatedText("destinationFoldersDescription")}
+        >
+          <DestinationFolderList folders={destinationFolders} updateFolders={updateDestinationFolderList} />
         </Section>
         <Section sectionName={getTranslatedText("generalSettingsSection")}>
           <LanguageSelector

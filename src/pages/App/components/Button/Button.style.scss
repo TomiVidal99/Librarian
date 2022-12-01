@@ -14,10 +14,14 @@
 
   background-color: var(--color-primary);
 
-  opacity: .9;
-
+  opacity: 0.9;
   &:hover {
     opacity: 1;
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.99);
   }
 }
 
@@ -25,4 +29,11 @@
   font-size: var(--fs-normal);
   text-align: center;
   text-decoration: none;
+}
+
+.btn-delete {
+  background-color: var(--color-remove);
+}
+.btn-add {
+  background-color: var(--color-add);
 }

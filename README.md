@@ -65,11 +65,13 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: classnames in the origin folders.
+- [ ] FIX: language not syncronizing properly with translation files.
+- [ ] ADD: theme selector (light and dark, maybe later more palettes).
 - [ ] ADD: arias to buttons.
 - [ ] ADD: a Checkbox element.
 - [ ] ADD: navigation.
 - [ ] ADD: styled Buttons for adding and deleting (green and red).
-- [ ] FIX: language not syncronizing properly with translation files.
 - [ ] ANIMATION: for the Section when it's hovered, fill the border with a different color like a loading animation.
 - [ ] ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
 

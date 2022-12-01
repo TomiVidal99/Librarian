@@ -1,4 +1,4 @@
-.folder-container {
+.destination-folder-container {
   position: relative;
   background-color: var(--color-third-darker);
   border-radius: 3px;
@@ -9,7 +9,7 @@
     background-color: var(--color-third-darkest);
     transition: transform 200ms;
     transform: scaleX(1.03);
-    & .folder__path {
+    & .destination-folder__path {
       opacity: 1;
     }
   }
@@ -26,9 +26,8 @@
     right: 0;
     transition: transform 400ms;
   }
-}
-
-.folder-container[aria-selected="true"] {
+} 
+.destination-folder-container[aria-selected="true"] {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   &::before {
@@ -37,7 +36,7 @@
   }
 }
 
-.folder {
+.destination-folder {
   width: 100%;
   height: 100%;
   cursor: pointer;
@@ -57,14 +56,15 @@
   color: inherit;
   font-size: inherit;
 
-  & > .folder__name {
+  & > .destination-folder__name {
     font-size: larger;
   }
 
-  & > .folder__path {
+  & > .destination-folder__path {
     opacity: 0;
     transition: opacity 0.5s;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
+

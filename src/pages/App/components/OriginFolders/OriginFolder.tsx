@@ -14,7 +14,7 @@ export const OriginFolder = ({
   clickCallback,
 }: IProps): JSX.Element => {
   return (
-    <li aria-checked={selected} className="folder-container">
+    <li aria-selected={selected} className="folder-container">
       <button
         onClick={() => {
           clickCallback(folder.id);

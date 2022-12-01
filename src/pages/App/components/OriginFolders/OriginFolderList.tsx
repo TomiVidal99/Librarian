@@ -60,14 +60,14 @@ export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
       <div className="origin-folders__btns-container">
         <Button
           callback={handleAddOriginFolder}
-          className="origin-folders__add-btn"
           content={getTranslated("addFolderButton")}
+          type="add"
         />
         {selectedFolders.length > 0 && (
           <Button
-            className="origin-folders__remove-btn"
             callback={handleRemovedSelectedFolders}
             content={getTranslated("removeFoldersButton")}
+            type="delete"
           />
         )}
       </div>

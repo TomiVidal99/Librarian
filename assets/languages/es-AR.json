@@ -6,6 +6,8 @@
   "noOriginFoldersWarning": "Necesitás agregar carpetas para que el programa organice los archivos, hacé click en el botón de abajo (nueva carpeta)",
   "addFolderButton": "nueva carpeta",
   "removeFoldersButton": "quitar carpeta/s",
+  "destinationFoldersSection": "carpetas de destino",
+  "destinationFoldersDescription": "a estas carpetas iran los archivos que se organicen, por lo que tendrán los filtros también",
   "generalSettingsSection": "configuraciones generales",
   "appVersion": "versión"
 }
