@@ -1,4 +1,4 @@
-import { LanguageContext } from "../../state";
+import { initialState, LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
 import { Description, OriginFolderList, Section } from "./components";
 import { LanguageSelector } from "./styled-components/SelectLanguage";
@@ -6,8 +6,9 @@ import { LanguageSelector } from "./styled-components/SelectLanguage";
 import "./App.style.scss";
 import { IDestinationFolder, IOriginFolder } from "../../models";
 import uuid from "react-uuid";
-import { useState } from "react";
+import { useEffect, useReducer } from "react";
 import { DestinationFolderList } from "./components/DestinationFolders/DestinationFolderList";
+import { ACTIONS, reducer } from "../../services";
 
 const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
   {
@@ -42,25 +43,21 @@ const DESTINATION_FOLDERS_DEFAULT: IDestinationFolder[] = [
 ];
 
 export const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
   const appVersion = `${getTranslatedText("appVersion")} 2.0.0`;
-  const [originFolders, setOriginFolders] = useState<IOriginFolder[]>(
-    ORIGIN_FOLDERS_DEFAULT
-  );
-  const [destinationFolders, setDestinationFolders] = useState<
-    IDestinationFolder[]
-  >(DESTINATION_FOLDERS_DEFAULT);
-  const updateOriginFolderList = (newFolders: IOriginFolder[]): void => {
-    // TODO: this just be some reducer function to better handle the state
-    setOriginFolders(newFolders);
-  };
-  const updateDestinationFolderList = (
-    newFolders: IDestinationFolder[]
-  ): void => {
-    // TODO: same as updateOriginFolderList
-    setDestinationFolders(newFolders);
-  };
+
+  useEffect( () => {
+    dispatch({
+      type: ACTIONS.ADD_ORIGIN_FOLDER,
+      payload: ORIGIN_FOLDERS_DEFAULT
+    })
+    dispatch({
+      type: ACTIONS.ADD_DESTINATION_FOLDER,
+      payload: DESTINATION_FOLDERS_DEFAULT
+    })
+  }, []);
   return (
     <LanguageContext.Provider
       value={{
@@ -82,15 +79,42 @@ export const App = () => {
           sectionDescription={getTranslatedText("originFoldersDescription")}
         >
           <OriginFolderList
-            folders={originFolders}
-            updateFolders={updateOriginFolderList}
+            folders={state.originFolders}
+            addFolders={(folders) => {
+              dispatch({
+                type: ACTIONS.ADD_ORIGIN_FOLDER,
+                payload: folders,
+              });
+            }}
+            removeFolders={(folders) => {
+              dispatch({
+                type: ACTIONS.REMOVE_ORIGIN_FOLDERS,
+                payload: folders,
+              });
+            }}
           />
         </Section>
         <Section
           sectionName={getTranslatedText("destinationFoldersSection")}
-          sectionDescription={getTranslatedText("destinationFoldersDescription")}
+          sectionDescription={getTranslatedText(
+            "destinationFoldersDescription"
+          )}
         >
-          <DestinationFolderList folders={destinationFolders} updateFolders={updateDestinationFolderList} />
+          <DestinationFolderList
+            folders={state.destinationFolders}
+            addFolders={(folders) => {
+              dispatch({
+                type: ACTIONS.ADD_DESTINATION_FOLDER,
+                payload: folders,
+              });
+            }}
+            removeFolders={(folders) => {
+              dispatch({
+                type: ACTIONS.REMOVE_DESTINATION_FOLDERS,
+                payload: folders,
+              });
+            }}
+          />
         </Section>
         <Section sectionName={getTranslatedText("generalSettingsSection")}>
           <LanguageSelector

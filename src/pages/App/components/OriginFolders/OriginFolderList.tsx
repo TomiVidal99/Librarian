@@ -9,24 +9,23 @@ import "./OriginFolderList.style.scss";
 
 interface IProps {
   folders: IOriginFolder[];
-  updateFolders: (arg0: IOriginFolder[]) => void;
+  removeFolders: (arg0: IOriginFolder[]) => void;
+  addFolders: (arg0: IOriginFolder[]) => void;
 }
 
-export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
+export const OriginFolderList = ({folders, addFolders, removeFolders}: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
   const [selectedFolders, setSelectedFolders] = useState<string[]>(
     folders.length > 0 ? [folders[0].id] : []
   );
   const handleAddOriginFolder = () => {
+    // TODO
     console.warn("TODO: make this function");
   };
   const handleRemovedSelectedFolders = () => {
-    console.warn("TODO: make this function");
-    updateFolders([
-      ...folders.filter((folder) => {
-        return !selectedFolders.includes(folder.id);
-      }),
-    ]);
+    removeFolders(
+      folders.filter( (f) => selectedFolders.includes(f.id))
+    )
     setSelectedFolders([]);
   };
   const handleClickedFolder = (id: string) => {

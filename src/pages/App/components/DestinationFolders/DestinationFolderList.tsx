@@ -9,30 +9,31 @@ import "./DestinationFolderList.style.scss";
 
 interface IProps {
   folders: IDestinationFolder[];
-  updateFolders: (arg0: IDestinationFolder[]) => void;
+  removeFolders: (arg0: IDestinationFolder[]) => void;
+  addFolders: (arg0: IDestinationFolder[]) => void;
 }
 
-export const DestinationFolderList = ({ folders, updateFolders }: IProps) => {
+export const DestinationFolderList = ({
+  folders,
+  removeFolders,
+  addFolders,
+}: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
   const [selectedFolders, setSelectedFolders] = useState<string[]>([]);
   const handleFolderClicked = (id: string): void => {
-    console.log(`folder clicked ${id}`);
     setSelectedFolders(
       selectedFolders.includes(id)
         ? selectedFolders.filter((_id) => _id != id)
         : [...selectedFolders, id]
     );
   };
-  const handleAddFolder = (): void => {
-    console.warn("TODO: make this function");
+  const handleAddFolder = () => {
+    // TODO
+    console.warn("TODO");
   };
-  const removeFolders = (): void => {
+  const handleRemoveFolders = () => {
+    removeFolders(folders.filter((f) => selectedFolders.includes(f.id)));
     setSelectedFolders([]);
-    updateFolders([
-      ...folders.filter((folder) => {
-        !selectedFolders.includes(folder.id);
-      }),
-    ]);
   };
   return (
     <div className="destination-folders-container">
@@ -57,7 +58,7 @@ export const DestinationFolderList = ({ folders, updateFolders }: IProps) => {
         {selectedFolders.length > 0 && (
           <Button
             content={getTranslated("removeFoldersButton")}
-            callback={removeFolders}
+            callback={handleRemoveFolders}
             type="delete"
           />
         )}
