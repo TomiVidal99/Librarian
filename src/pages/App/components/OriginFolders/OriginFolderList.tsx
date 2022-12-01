@@ -18,10 +18,10 @@ export const OriginFolderList = ({ folders, updateFolders }: IProps) => {
     folders.length > 0 ? [folders[0].id] : []
   );
   const handleAddOriginFolder = () => {
-    console.log("TODO: make this function");
+    console.warn("TODO: make this function");
   };
   const handleRemovedSelectedFolders = () => {
-    console.log("TODO: make this function");
+    console.warn("TODO: make this function");
     updateFolders([
       ...folders.filter((folder) => {
         return !selectedFolders.includes(folder.id);
