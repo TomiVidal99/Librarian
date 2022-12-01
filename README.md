@@ -65,6 +65,8 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: improve Button color palette for delete and add.
+- [ ] FIX: make the list and the items of the origin and destination folders it's own component.
 - [ ] FIX: classnames in the origin folders.
 - [ ] FIX: language not syncronizing properly with translation files.
 - [ ] ADD: theme selector (light and dark, maybe later more palettes).
