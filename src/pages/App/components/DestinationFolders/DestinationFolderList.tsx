@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { LanguageContext } from "../../../../state";
 import { Button } from "..";
-import { IDestinationFolder } from "../../../../models";
+import { IDestinationFolder, IPC_CALLS } from "../../../../models";
 import { DestinationFolder } from "./DestinationFolder";
 import uuid from "react-uuid";
 
@@ -29,7 +29,10 @@ export const DestinationFolderList = ({
   };
   const handleAddFolder = () => {
     // TODO
-    console.warn("TODO");
+    // console.warn("TODO");
+    window.api.request(IPC_CALLS.OPEN_FILTERS_WINDOW, (e: any) => {
+      console.log(`got response on component: ${e}`);
+    });
   };
   const handleRemoveFolders = () => {
     removeFolders(folders.filter((f) => selectedFolders.includes(f.id)));

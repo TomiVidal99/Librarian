@@ -76,6 +76,10 @@ export const App = () => {
             path="/filters_window"
             element={<Filters state={state} dispatch={dispatch} />}
           />
+            <Route
+            path="*"
+            element={<div>NOT FOUND</div>}
+            />
         </Routes>
       </LanguageContext.Provider>
     </BrowserRouter>
