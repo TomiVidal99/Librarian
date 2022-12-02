@@ -15,7 +15,7 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
-  request: (channel: IpcCallsType, data: any): Promise<any> => {
+  request: (channel: IpcCallsType, data: any): void => {
     // TODO: add payload argument to send
     ipcRenderer.send(channel);
   },

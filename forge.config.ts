@@ -30,6 +30,9 @@ const config: ForgeConfig = {
             html: './src/index.html',
             js: './src/renderer.ts',
             name: 'filters_window',
+            preload: {
+              js: './src/preload.ts',
+            },
           },
         ],
       },

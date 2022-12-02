@@ -1,0 +1,27 @@
+.inline-display {
+  width: 100%;
+  padding: 0.65em;
+  border: 1px solid var(--color-primary);
+  border-radius: 3px;
+  font-size: var(--fs-normal);
+
+  & p {
+    margin: 0;
+    color: var(--color-primary);
+    transition: opacity 400ms;
+  }
+
+  &:hover {
+    & .inline-display__placeholder {
+      opacity: 1;
+    }
+  }
+}
+
+.inline-display__placeholder {
+  opacity: 0.6;
+  font-style: italic;
+  &::after {
+    content: "...";
+  }
+}

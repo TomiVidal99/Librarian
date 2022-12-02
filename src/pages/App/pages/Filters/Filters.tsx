@@ -1,7 +1,11 @@
-import { useContext } from "react";
-import { IGlobalReducerAction } from "../../../../models";
+import { useContext, useState } from "react";
+import {
+  IDestinationFolder,
+  IGlobalReducerAction,
+  IPC_CALLS,
+} from "../../../../models";
 import { IGlobalState, LanguageContext } from "../../../../state";
-import { Button, Section } from "../../components";
+import { Button, InlineDisplay, Section } from "../../components";
 import { Flex } from "../../components/Flex/Flex";
 
 import "./Filters.style.scss";
@@ -13,8 +17,13 @@ interface IProps {
 
 export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
   const { getTranslated } = useContext(LanguageContext);
+  const [destinationFolder, setDestinationFolder] =
+    useState<IDestinationFolder | null>(null);
   const handlePickedDestinationFolder = () => {
     console.warn("TODO: yet to implement");
+    window.api.request(IPC_CALLS.OPEN_FOLDERS_DIALOG, () => {
+      console.log("lkdsajdla");
+    });
   };
   const handleAddDestinationFolder = () => {
     console.warn("TODO: yet to implement");
@@ -27,6 +36,10 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
         sectionDescription={getTranslated("addDestinationFolderDescription")}
       >
         <Flex>
+          <InlineDisplay
+            content={destinationFolder ? destinationFolder?.name : ""}
+            placeholder={getTranslated("destinatonFolderDisplayPlaceholder")}
+          />
           <Button
             content={getTranslated("pickDestinationFoder")}
             callback={handlePickedDestinationFolder}

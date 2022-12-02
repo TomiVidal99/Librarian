@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import uuid from "react-uuid";
 import { Badge, Button } from "..";
-import { IOriginFolder } from "../../../../models";
+import { IOriginFolder, IPC_CALLS } from "../../../../models";
 import { LanguageContext } from "../../../../state";
 import { OriginFolder } from "./OriginFolder";
 
@@ -13,7 +13,7 @@ interface IProps {
   addFolders: (arg0: IOriginFolder[]) => void;
 }
 
-export const OriginFolderList = ({folders, addFolders, removeFolders}: IProps) => {
+export const OriginFolderList = ({ folders, addFolders, removeFolders }: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
   const [selectedFolders, setSelectedFolders] = useState<string[]>(
     folders.length > 0 ? [folders[0].id] : []
@@ -21,10 +21,11 @@ export const OriginFolderList = ({folders, addFolders, removeFolders}: IProps) =
   const handleAddOriginFolder = () => {
     // TODO
     console.warn("TODO: make this function");
+    window.api.request(IPC_CALLS.OPEN_FOLDERS_DIALOG, () => { console.log("lkjsdaldkjas") });
   };
   const handleRemovedSelectedFolders = () => {
     removeFolders(
-      folders.filter( (f) => selectedFolders.includes(f.id))
+      folders.filter((f) => selectedFolders.includes(f.id))
     )
     setSelectedFolders([]);
   };
