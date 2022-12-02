@@ -1,7 +1,9 @@
+import { ReactNode } from "react";
 import "./Section.style.scss";
 
 interface IProps {
-  children: JSX.Element;
+  children: ReactNode;
+  className?: string;
   sectionName?: string;
   sectionDescription?: string;
   border?: boolean;
@@ -9,6 +11,7 @@ interface IProps {
 
 export const Section = ({
   children,
+  className = "",
   sectionName = "",
   sectionDescription,
   border: border = true,
@@ -16,7 +19,7 @@ export const Section = ({
   return (
     <section
       aria-description={sectionName}
-      className={`app-section ${border ? "" : "section-no-border"}`}
+      className={`app-section ${border ? "" : "section-no-border"} ${className}`}
     >
       {sectionDescription ? (
         <p className="app-section__description capitalize">
