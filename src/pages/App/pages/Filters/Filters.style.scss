@@ -1,0 +1,12 @@
+.filter-page {
+  min-width: clamp(400px, 90vw, 800px);
+  min-height: 90vh;
+
+  padding: 1em;
+
+  & .filter-page__add-destination-folder {
+    height: 100%;
+    margin-top: auto;
+    align-self: center;
+  }
+}

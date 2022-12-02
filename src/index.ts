@@ -33,7 +33,7 @@ const createFiltersWindow = (): void => {
   // Create the browser window.
   const filtersWindow = new BrowserWindow({
     height: 600,
-    width: 400,
+    width: 200,
   });
 
   // and load the index.html of the app.
