@@ -49,12 +49,6 @@ export const Settings = ({state, dispatch}: IProps): JSX.Element => {
       >
         <DestinationFolderList
           folders={state.destinationFolders}
-          addFolders={(folders) => {
-            dispatch({
-              type: ACTIONS.ADD_DESTINATION_FOLDER,
-              payload: folders,
-            });
-          }}
           removeFolders={(folders) => {
             dispatch({
               type: ACTIONS.REMOVE_DESTINATION_FOLDERS,

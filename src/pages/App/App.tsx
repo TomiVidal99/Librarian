@@ -47,14 +47,29 @@ export const App = () => {
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
 
+  // get destination folders from the filters window
+  useEffect(() => {
+    window.api.recieveDestinationFolder((folder: IDestinationFolder) => {
+      if (folder.name !== "") {
+        console.log("got folder: ", folder);
+      }
+      dispatch({
+        type: ACTIONS.ADD_DESTINATION_FOLDER,
+        payload: folder,
+      });
+    })
+  }, [])
+
   useEffect(() => {
     dispatch({
       type: ACTIONS.ADD_ORIGIN_FOLDER,
       payload: ORIGIN_FOLDERS_DEFAULT,
     });
-    dispatch({
-      type: ACTIONS.ADD_DESTINATION_FOLDER,
-      payload: DESTINATION_FOLDERS_DEFAULT,
+    DESTINATION_FOLDERS_DEFAULT.forEach((folder) => {
+      dispatch({
+        type: ACTIONS.ADD_DESTINATION_FOLDER,
+        payload: folder,
+      });
     });
   }, []);
   return (
@@ -76,10 +91,7 @@ export const App = () => {
             path="/filters_window"
             element={<Filters state={state} dispatch={dispatch} />}
           />
-            <Route
-            path="*"
-            element={<div>NOT FOUND</div>}
-            />
+          <Route path="*" element={<div>NOT FOUND</div>} />
         </Routes>
       </LanguageContext.Provider>
     </BrowserRouter>

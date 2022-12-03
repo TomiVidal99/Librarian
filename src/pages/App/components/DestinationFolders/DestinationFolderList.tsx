@@ -3,20 +3,17 @@ import { LanguageContext } from "../../../../state";
 import { Button } from "..";
 import { IDestinationFolder, IPC_CALLS } from "../../../../models";
 import { DestinationFolder } from "./DestinationFolder";
-import uuid from "react-uuid";
 
 import "./DestinationFolderList.style.scss";
 
 interface IProps {
   folders: IDestinationFolder[];
   removeFolders: (arg0: IDestinationFolder[]) => void;
-  addFolders: (arg0: IDestinationFolder[]) => void;
 }
 
 export const DestinationFolderList = ({
   folders,
   removeFolders,
-  addFolders,
 }: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
   const [selectedFolders, setSelectedFolders] = useState<string[]>([]);

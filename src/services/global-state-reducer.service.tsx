@@ -33,10 +33,9 @@ export const reducer = (
         originFolders: action.payload,
       };
     case ACTIONS.ADD_DESTINATION_FOLDER:
-      // console.log('adding new destination folder to the state: ', action);
       return {
         ...state,
-        destinationFolders: [...state.destinationFolders, ...action.payload],
+        destinationFolders: [...state.destinationFolders, action.payload],
         // TODO: when i make the filters page to add a destination foldere i'll see if
         // this should be kept or nah
         // destinationFolders: [
