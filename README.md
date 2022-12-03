@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: if a filters window it's opened, the user can't open another and the one opened should pop up in front.
 - [ ] FIX: notification messages.
 - [ ] FIX: Check duplicates on adding new folders.
 - [ ] FIX: Overflow of list items.
