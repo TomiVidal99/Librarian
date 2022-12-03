@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: should add pop up alerts when a folder or some other data is not correct.
 - [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
 - [ ] FIX: color contrast on filters when hovered.
 - [ ] FIX: if a filters window it's opened, the user can't open another and the one opened should pop up in front.
