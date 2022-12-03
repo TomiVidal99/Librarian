@@ -30,9 +30,9 @@ export const DestinationFolderList = ({
   const handleAddFolder = () => {
     // TODO
     // console.warn("TODO");
-    window.api.request(IPC_CALLS.OPEN_FILTERS_WINDOW, (e: any) => {
-      console.log(`got response on component: ${e}`);
-    });
+    // window.api.request(IPC_CALLS.OPEN_FILTERS_WINDOW, [(e: any) => {
+    //   console.log(`got response on component: ${e}`);
+    // }]);
   };
   const handleRemoveFolders = () => {
     removeFolders(folders.filter((f) => selectedFolders.includes(f.id)));

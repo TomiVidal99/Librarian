@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
 import uuid from "react-uuid";
 import { Badge, Button } from "..";
-import { IOriginFolder, IPC_CALLS } from "../../../../models";
+import { IOriginFolder } from "../../../../models";
 import { LanguageContext } from "../../../../state";
 import { OriginFolder } from "./OriginFolder";
 
 import "./OriginFolderList.style.scss";
+import { createOriginFolder } from "./utils";
 
 interface IProps {
   folders: IOriginFolder[];
@@ -13,20 +14,34 @@ interface IProps {
   addFolders: (arg0: IOriginFolder[]) => void;
 }
 
-export const OriginFolderList = ({ folders, addFolders, removeFolders }: IProps) => {
+export const OriginFolderList = ({
+  folders,
+  addFolders,
+  removeFolders,
+}: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
   const [selectedFolders, setSelectedFolders] = useState<string[]>(
     folders.length > 0 ? [folders[0].id] : []
   );
-  const handleAddOriginFolder = () => {
-    // TODO
-    console.warn("TODO: make this function");
-    window.api.request(IPC_CALLS.OPEN_FOLDERS_DIALOG, () => { console.log("lkjsdaldkjas") });
+  const handleAddOriginFolder = async () => {
+    // TODO: pop a warning when trying to add a folder that already exists
+    const foldersPaths = await window.api.pickAFolder(true);
+    const originFolders = foldersPaths
+      .map((folder) => createOriginFolder(folder, folders))
+      .filter((folder) => {
+        if (Array.isArray(folder)) {
+          window.api.popWarning(
+            "carpeta duplicada",
+            "kalsdjakldjakldjaldksjldaskj"
+          );
+          return false;
+        }
+        return true;
+      });
+    addFolders(originFolders);
   };
   const handleRemovedSelectedFolders = () => {
-    removeFolders(
-      folders.filter((f) => selectedFolders.includes(f.id))
-    )
+    removeFolders(folders.filter((f) => selectedFolders.includes(f.id)));
     setSelectedFolders([]);
   };
   const handleClickedFolder = (id: string) => {

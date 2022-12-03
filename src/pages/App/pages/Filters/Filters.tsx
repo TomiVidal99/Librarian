@@ -21,9 +21,9 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
     useState<IDestinationFolder | null>(null);
   const handlePickedDestinationFolder = () => {
     console.warn("TODO: yet to implement");
-    window.api.request(IPC_CALLS.OPEN_FOLDERS_DIALOG, () => {
-      console.log("lkdsajdla");
-    });
+    // window.api.request(IPC_CALLS.OPEN_FOLDERS_DIALOG, [() => {
+    //   console.log("");
+    // }]);
   };
   const handleAddDestinationFolder = () => {
     console.warn("TODO: yet to implement");

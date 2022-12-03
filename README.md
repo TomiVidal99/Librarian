@@ -65,6 +65,8 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: Check duplicates on adding new folders.
+- [ ] FIX: Overflow of list items.
 - [ ] FIX: Add shadows to button and selects.
 - [ ] FIX: Select should have clicked animations.
 - [ ] FIX: active outline overlapping with side bar on selected elements.
