@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: notification messages.
 - [ ] FIX: Check duplicates on adding new folders.
 - [ ] FIX: Overflow of list items.
 - [ ] FIX: Add shadows to button and selects.
