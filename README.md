@@ -65,6 +65,8 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
+- [ ] FIX: color contrast on filters when hovered.
 - [ ] FIX: if a filters window it's opened, the user can't open another and the one opened should pop up in front.
 - [ ] FIX: notification messages.
 - [ ] FIX: Check duplicates on adding new folders.
@@ -76,6 +78,7 @@ Project is: _in progress_.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
 - [ ] FIX: classnames in the origin folders.
 - [ ] FIX: language not syncronizing properly with translation files.
+- [ ] ADD: pop up a warning when adding more than 6 (?) filters, not adviced, maybe think of adding more folders, or using regex or format.
 - [ ] ADD: theme selector (light and dark, maybe later more palettes).
 - [ ] ADD: arias to buttons.
 - [ ] ADD: a Checkbox element.
