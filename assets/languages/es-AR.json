@@ -13,6 +13,13 @@
   "addDestinationFolderDescription": "agregá una nueva carpeta de destino a la cual irán los archivos que pasen los filtros que configures abajo",
   "destinatonFolderDisplayPlaceholder": "elegí la carpeta de destino",
   "pickDestinationFoder": "elegir carpeta",
+  "filterLabelNamePlaceholder": "name",
+  "filterLabelFormatPlaceholder": "format",
+  "filterLabelRegexPlaceholder": "expresión regular",
+  "filterInputNamePlaceholder": "trabajos",
+  "filterInputFormatPlaceholder": "pdf",
+  "filterInputRegexPlaceholder": "*imagen*",
+  "cancelDestinationFolder": "cancelar",
   "addDestinationFolder": "añadir carpeta",
   "appVersion": "versión"
 }

@@ -24,9 +24,9 @@ export const OriginFolderList = ({
     folders.length > 0 ? [folders[0].id] : []
   );
   const handleAddOriginFolder = async () => {
-    // TODO: pop a warning when trying to add a folder that already exists
+    // TODO: fix the warning message
     const foldersPaths = await window.api.pickAFolder(true);
-    const originFolders = foldersPaths
+    const originFolders: IOriginFolder[] = foldersPaths
       .map((folder) => createOriginFolder(folder, folders))
       .filter((folder) => {
         if (Array.isArray(folder)) {
@@ -37,7 +37,7 @@ export const OriginFolderList = ({
           return false;
         }
         return true;
-      });
+      }) as IOriginFolder[];
     addFolders(originFolders);
   };
   const handleRemovedSelectedFolders = () => {

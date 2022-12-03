@@ -1,23 +1,33 @@
+import { ChangeEvent, useEffect, useState } from "react";
 import "./InlineDisplay.style.scss";
 
 interface IProps {
   content: string;
   placeholder: string;
   className?: string;
+  clickCallback?: () => void;
 }
 
 export const InlineDisplay = ({
   className = "",
   content,
   placeholder,
+  clickCallback,
 }: IProps): JSX.Element => {
+  const [value, setValue] = useState<string>("");
+  useEffect(() => {
+    setValue(content);
+  }, [content]);
   return (
-    <div className={`inline-display ${className}`}>
-      {content === "" ? (
-        <p className="inline-display__placeholder capitalize">{placeholder}</p>
-      ) : (
-        <p className="inline-display__content capitalize">{content}</p>
-      )}
-    </div>
+    <input
+      className={`inline-display ${
+        content === "" ? "inline-display-empty" : "inline-display-content"
+      }
+      ${className}`}
+      placeholder={placeholder + "..."}
+      value={value}
+      onClick={clickCallback}
+      onChange={function() {}}
+    />
   );
 };

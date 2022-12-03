@@ -1,0 +1,17 @@
+.pick-filters-container {
+  margin: 2em 0;
+}
+
+.pick-filters__list {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+
+  width: 100%;
+
+  display: flex;
+  gap: 0.8em;
+  flex-wrap: wrap;
+
+}

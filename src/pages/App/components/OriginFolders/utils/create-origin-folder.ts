@@ -1,4 +1,5 @@
 import uuid from "react-uuid";
+import { getFolderName } from ".";
 import { IOriginFolder } from "../../../../../models";
 
 export type RepeatedFolderDataType = [string, string];
@@ -7,9 +8,8 @@ export const createOriginFolder = (
   path: string,
   folders: IOriginFolder[]
 ): IOriginFolder | RepeatedFolderDataType => {
-  const name = path.match(/([^\/]*)\/*$/)[1];
+  const name = getFolderName(path);
   if (doesFolderAlreadyExist(name, path, folders)) return [name, path];
-
   const newFolder: IOriginFolder = {
     id: uuid(),
     name,

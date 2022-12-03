@@ -29,12 +29,16 @@
   font-size: var(--fs-normal);
   text-align: center;
   text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
   width: max-content;
 }
 
 .btn-delete {
   background-color: var(--color-remove);
+  color: white;
 }
 .btn-add {
   background-color: var(--color-add);
+  color: white;
 }

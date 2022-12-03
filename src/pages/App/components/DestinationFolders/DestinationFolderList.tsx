@@ -28,11 +28,7 @@ export const DestinationFolderList = ({
     );
   };
   const handleAddFolder = () => {
-    // TODO
-    // console.warn("TODO");
-    // window.api.request(IPC_CALLS.OPEN_FILTERS_WINDOW, [(e: any) => {
-    //   console.log(`got response on component: ${e}`);
-    // }]);
+    window.api.request(IPC_CALLS.OPEN_FILTERS_WINDOW);
   };
   const handleRemoveFolders = () => {
     removeFolders(folders.filter((f) => selectedFolders.includes(f.id)));
@@ -44,7 +40,7 @@ export const DestinationFolderList = ({
         {folders.map((folder) => {
           return (
             <DestinationFolder
-              key={uuid()}
+              key={folder.id}
               folder={folder}
               selected={selectedFolders.includes(folder.id)}
               clickCallback={handleFolderClicked}

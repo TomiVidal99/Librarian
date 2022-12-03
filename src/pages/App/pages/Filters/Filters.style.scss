@@ -4,9 +4,11 @@
 
   padding: 1em;
 
-  & .filter-page__add-destination-folder {
+  & .filter-page__bottom-btns {
+    justify-content: space-evenly;
+    width: 100%;
     height: 100%;
-    margin-top: auto;
+    margin: auto;
     align-self: center;
   }
 }

@@ -102,7 +102,6 @@ ipcMain.handle(
 ipcMain.on(
   IPC_CALLS.POP_WARNING_MESSAGE,
   (event: IpcMainEvent, data: { title: string; body: string }) => {
-    console.log(`should create notification: ${data}`);
     const not = new Notification({ title: data.title, body: data.body });
     not.show();
   }
