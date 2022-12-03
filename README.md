@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: check that the destination folder to be added it's not used anywhere else.
 - [ ] FIX: move all filtering an processing logic to the reducer.
 - [ ] FIX: should add pop up alerts when a folder or some other data is not correct.
 - [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
