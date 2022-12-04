@@ -21,8 +21,7 @@ export const OriginFolderList = ({
   removeFolders,
 }: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
-  const [selectedFolders, setSelectedFolders] = useState<string[]>(
-    folders.length > 0 ? [folders[0].id] : []
+  const [selectedFolders, setSelectedFolders] = useState<string[]>([]
   );
   const handleAddOriginFolder = async () => {
     const foldersPaths = await window.api.pickAFolder(true);
@@ -43,7 +42,7 @@ export const OriginFolderList = ({
     addFolders(originFolders);
   };
   const handleRemovedSelectedFolders = () => {
-    removeFolders(folders.filter((f) => selectedFolders.includes(f.id)));
+    removeFolders(folders.filter((f) => !selectedFolders.includes(f.id)));
     setSelectedFolders([]);
   };
   const handleClickedFolder = (id: string) => {
