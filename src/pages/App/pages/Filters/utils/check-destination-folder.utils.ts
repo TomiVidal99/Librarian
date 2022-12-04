@@ -1,8 +1,35 @@
+import { warningAlert } from "../../../../../utils";
 import { IDestinationFolder } from "../../../../../models";
 
-export const isValidDestinationFolder = (folder: IDestinationFolder): boolean => {
-  if (folder.name === "") return false;
-  if (folder.path === "") return false;
-  if (folder.filters.length === 0) return false;
-  return true;
+interface ITextData {
+  title: string;
+  body: string;
 }
+
+export const isValidDestinationFolder = ({
+  folder,
+  noFolderText,
+  noFiltersText,
+}: {
+  folder: IDestinationFolder;
+  noFolderText: ITextData;
+  noFiltersText: ITextData;
+}): boolean => {
+  if (folder.name === "" || folder.path === "") {
+    warningAlert({
+      ...noFolderText,
+      foldername: folder.name,
+      folderpath: folder.path,
+    });
+    return false;
+  }
+  if (folder.filters.length === 0) {
+    warningAlert({
+      ...noFiltersText,
+      foldername: folder.name,
+      folderpath: folder.path,
+    });
+    return false;
+  }
+  return true;
+};
