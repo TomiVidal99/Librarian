@@ -11,6 +11,11 @@ export const ACTIONS: IGlobalReducerActionsType = {
   ADD_RECENTLY_MOVED: "get-recently-moved",
 };
 
+const updateState = (state: IGlobalState): IGlobalState => {
+  window.api.setState(state);
+  return state
+}
+
 export const reducer = (
   state: IGlobalState,
   action: IGlobalReducerAction
@@ -23,36 +28,20 @@ export const reducer = (
       };
     case ACTIONS.ADD_ORIGIN_FOLDER:
       // TODO: check if the payload it's an array or a single folder
-      return {
+      return updateState({
         ...state,
         originFolders: [...state.originFolders, ...action.payload],
-      };
+      });
     case ACTIONS.REMOVE_ORIGIN_FOLDERS:
       return {
         ...state,
         originFolders: action.payload,
       };
     case ACTIONS.ADD_DESTINATION_FOLDER:
-      return {
+      return updateState({
         ...state,
         destinationFolders: [...state.destinationFolders, action.payload],
-        // TODO: when i make the filters page to add a destination foldere i'll see if
-        // this should be kept or nah
-        // destinationFolders: [
-        //   ...state.destinationFolders,
-        //   {
-        //     id: uuid(),
-        //     name: action.payload.folder,
-        //     path: action.payload.path,
-        //     date: new Date(),
-        //     filters: [
-        //       ...action.payload.names,
-        //       ...action.payload.formats,
-        //       ...action.payload.regexs,
-        //     ],
-        //   },
-        // ],
-      };
+      });
     case ACTIONS.REMOVE_DESTINATION_FOLDERS:
       return {
         ...state,
