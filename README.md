@@ -81,6 +81,7 @@ Project is: _in progress_.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
 - [ ] FIX: classnames in the origin folders.
 - [ ] FIX: language not syncronizing properly with translation files.
+- [ ] ADD: shift + click to select multiple items in lists.
 - [ ] ADD: pop up a warning when adding more than 6 (?) filters, not adviced, maybe think of adding more folders, or using regex or format.
 - [ ] ADD: theme selector (light and dark, maybe later more palettes).
 - [ ] ADD: arias to buttons.
