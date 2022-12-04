@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { LanguageContext } from "../../../../state";
-import { Button } from "..";
+import { Badge, Button } from "..";
 import { IDestinationFolder, IPC_CALLS } from "../../../../models";
 import { DestinationFolder } from "./DestinationFolder";
 
@@ -34,7 +34,10 @@ export const DestinationFolderList = ({
   return (
     <div className="destination-folders-container">
       <ul className="destination-folders__list">
-        {folders.map((folder) => {
+        {folders.length === 0 ?
+        <Badge type="warning" content={getTranslated("noDestinationFoldersWarning")}/>
+        :
+        folders.map((folder) => {
           return (
             <DestinationFolder
               key={folder.id}

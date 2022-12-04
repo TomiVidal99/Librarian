@@ -6,8 +6,8 @@ import {
 } from "./../models";
 
 export interface IGlobalState {
-  canMoveFiles: boolean;
   autoLaunch: boolean;
+  canMoveFiles: boolean;
   recentlyMovedFolders: IRecentlyMovedFolder[];
   originFolders: IOriginFolder[];
   destinationFolders: IDestinationFolder[];

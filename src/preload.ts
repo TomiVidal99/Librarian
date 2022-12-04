@@ -3,6 +3,7 @@
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
 import { IDestinationFolder, IpcCallsType, IPC_CALLS } from "./models";
+import { IGlobalState } from "./state";
 
 declare global {
   interface Window {
@@ -14,6 +15,8 @@ declare global {
       recieveDestinationFolder: (
         arg0: (arg0: IDestinationFolder) => void
       ) => void;
+      getState: (arg0: (arg0: IGlobalState) => void) => void;
+      setState: (arg0: IGlobalState) => void;
     };
   }
 }
@@ -21,6 +24,18 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  setState: (state: IGlobalState): void => {
+    ipcRenderer.send(IPC_CALLS.SEND_STATE_FROM_SETTINGS_TO_MAIN, state);
+  },
+  getState: (callback: (arg0: IGlobalState) => void): void => {
+    ipcRenderer.on(
+      IPC_CALLS.GET_STATE_FROM_MAIN,
+      (event: IpcRendererEvent, state: IGlobalState) => {
+        console.log("from preload:", state);
+        callback(state);
+      }
+    );
+  },
   recieveDestinationFolder: (
     callback: (arg0: IDestinationFolder) => void
   ): void => {

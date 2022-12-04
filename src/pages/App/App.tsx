@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import { initialState, LanguageContext } from "../../state";
+import { IGlobalState, initialState, LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
 
 import "./App.style.scss";
@@ -47,6 +47,21 @@ export const App = () => {
   const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
     useLanguage();
 
+  useEffect(() => {
+    console.log("state updated: ", state);
+  }, []);
+
+  // syncs the state given by the main
+  useEffect(() => {
+    window.api.getState((s: IGlobalState) => {
+      console.log("got state from main");
+      dispatch({
+        type: ACTIONS.UPDATE_STATE,
+        payload: s,
+      });
+    });
+  }, []);
+
   // get destination folders from the filters window
   useEffect(() => {
     window.api.recieveDestinationFolder((folder: IDestinationFolder) => {
@@ -57,21 +72,22 @@ export const App = () => {
         type: ACTIONS.ADD_DESTINATION_FOLDER,
         payload: folder,
       });
-    })
-  }, [])
-
-  useEffect(() => {
-    dispatch({
-      type: ACTIONS.ADD_ORIGIN_FOLDER,
-      payload: ORIGIN_FOLDERS_DEFAULT,
-    });
-    DESTINATION_FOLDERS_DEFAULT.forEach((folder) => {
-      dispatch({
-        type: ACTIONS.ADD_DESTINATION_FOLDER,
-        payload: folder,
-      });
     });
   }, []);
+
+  // useEffect(() => {
+  //   dispatch({
+  //     type: ACTIONS.ADD_ORIGIN_FOLDER,
+  //     payload: ORIGIN_FOLDERS_DEFAULT,
+  //   });
+  //   DESTINATION_FOLDERS_DEFAULT.forEach((folder) => {
+  //     dispatch({
+  //       type: ACTIONS.ADD_DESTINATION_FOLDER,
+  //       payload: folder,
+  //     });
+  //   });
+  // }, []);
+
   return (
     <BrowserRouter>
       <LanguageContext.Provider
