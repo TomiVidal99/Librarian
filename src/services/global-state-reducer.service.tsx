@@ -1,4 +1,3 @@
-import uuid from "react-uuid";
 import { IGlobalReducerAction, IGlobalReducerActionsType } from "../models";
 import { IGlobalState } from "../state";
 
@@ -33,20 +32,20 @@ export const reducer = (
         originFolders: [...state.originFolders, ...action.payload],
       });
     case ACTIONS.REMOVE_ORIGIN_FOLDERS:
-      return {
+      return updateState({
         ...state,
         originFolders: action.payload,
-      };
+      });
     case ACTIONS.ADD_DESTINATION_FOLDER:
       return updateState({
         ...state,
         destinationFolders: [...state.destinationFolders, action.payload],
       });
     case ACTIONS.REMOVE_DESTINATION_FOLDERS:
-      return {
+      return updateState({
         ...state,
         destinationFolders: action.payload,
-      };
+      });
     case ACTIONS.ADD_RECENTLY_MOVED:
       return {
         ...state,
