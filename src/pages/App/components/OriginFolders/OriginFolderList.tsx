@@ -7,6 +7,7 @@ import { OriginFolder } from "./OriginFolder";
 
 import "./OriginFolderList.style.scss";
 import { createOriginFolder } from "./utils";
+import { duplicatedFolderWarningNotification } from "../../../../utils/handle-notifications.utils";
 
 interface IProps {
   folders: IOriginFolder[];
@@ -24,16 +25,17 @@ export const OriginFolderList = ({
     folders.length > 0 ? [folders[0].id] : []
   );
   const handleAddOriginFolder = async () => {
-    // TODO: fix the warning message
     const foldersPaths = await window.api.pickAFolder(true);
     const originFolders: IOriginFolder[] = foldersPaths
       .map((folder) => createOriginFolder(folder, folders))
       .filter((folder) => {
         if (Array.isArray(folder)) {
-          window.api.popWarning(
-            "carpeta duplicada",
-            "kalsdjakldjakldjaldksjldaskj"
-          );
+          duplicatedFolderWarningNotification({
+            title: getTranslated("duplicatedFolderWarningTitle"),
+            body: getTranslated("duplicatedFolderWarningBody"),
+            foldername: folder[0],
+            folderpath: folder[1],
+          });
           return false;
         }
         return true;
