@@ -1,7 +1,7 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
-import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
+import { contextBridge, ipcRenderer, IpcRendererEvent, OpenDialogReturnValue } from "electron";
 import { IDestinationFolder, IpcCallsType, IPC_CALLS } from "./models";
 import { IGlobalState } from "./state";
 
@@ -9,7 +9,7 @@ declare global {
   interface Window {
     api: {
       popWarning: (arg0: string, arg1: string) => void;
-      pickAFolder: (arg0: boolean) => Promise<string[]>;
+      pickAFolder: (arg0: boolean) => Promise<string[] | undefined>;
       request: (arg0: IpcCallsType, arg1?: any[]) => void;
       sendDestinationFolder: (arg0: IDestinationFolder) => void;
       recieveDestinationFolder: (
@@ -17,6 +17,7 @@ declare global {
       ) => void;
       getState: (arg0: (arg0: IGlobalState) => void) => void;
       setState: (arg0: IGlobalState) => void;
+      resetSettings: () => void;
     };
   }
 }
@@ -24,6 +25,9 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  resetSettings: (): void => {
+    ipcRenderer.send(IPC_CALLS.RESET_SETTINGS);
+  },
   setState: (state: IGlobalState): void => {
     ipcRenderer.send(IPC_CALLS.SEND_STATE_FROM_SETTINGS_TO_MAIN, state);
   },
@@ -31,7 +35,6 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.on(
       IPC_CALLS.GET_STATE_FROM_MAIN,
       (event: IpcRendererEvent, state: IGlobalState) => {
-        console.log("from preload:", state);
         callback(state);
       }
     );
@@ -52,7 +55,7 @@ contextBridge.exposeInMainWorld("api", {
   popWarning: (title: string, body: string): void => {
     ipcRenderer.send(IPC_CALLS.POP_WARNING_MESSAGE, { title, body });
   },
-  pickAFolder: async (multiSelections: boolean): Promise<string[]> => {
+  pickAFolder: async (multiSelections: boolean): Promise<string[] | undefined> => {
     const result = await ipcRenderer.invoke(
       IPC_CALLS.OPEN_FOLDERS_DIALOG,
       multiSelections

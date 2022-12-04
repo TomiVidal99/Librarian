@@ -7,7 +7,7 @@ import { OriginFolder } from "./OriginFolder";
 
 import "./OriginFolderList.style.scss";
 import { createOriginFolder } from "./utils";
-import { duplicatedFolderWarningNotification } from "../../../../utils/handle-notifications.utils";
+import { warningAlert } from "../../../../utils/handle-alerts.utils";
 
 interface IProps {
   folders: IOriginFolder[];
@@ -29,7 +29,7 @@ export const OriginFolderList = ({
       .map((folder) => createOriginFolder(folder, folders))
       .filter((folder) => {
         if (Array.isArray(folder)) {
-          duplicatedFolderWarningNotification({
+          warningAlert({
             title: getTranslated("duplicatedFolderWarningTitle"),
             body: getTranslated("duplicatedFolderWarningBody"),
             foldername: folder[0],

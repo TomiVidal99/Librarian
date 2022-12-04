@@ -22,5 +22,14 @@
   "filterInputRegexPlaceholder": "*imagen*",
   "cancelDestinationFolder": "cancelar",
   "addDestinationFolder": "añadir carpeta",
+  "duplicatedFolderWarningTitle": "carpeta duplicada",
+  "duplicatedFolderWarningBody": "la carpeta '%foldername' (%folderpath) ya se agregó y no se volverá a agregar",
+  "noDestinationFolderSelectedTitleAlert": "elegí una carpeta",
+  "noDestinationFolderSelectedBodyAlert": "no elegiste ninguna carpeta de destino, para poder añadir una carpeta de destino tenés que especificar una ubicación",
+  "noDestinationFolderSelectedTitleAlert": "sin destino!",
+  "noDestinationFolderSelectedBodyAlert": "no elegiste ninguna carpeta de destino, para poder añadir una carpeta de destino tenés que especificar una ubicación",
+  "noDestinationFiltersSelectedTitleAlert": "sin filtros!",
+  "noDestinationFiltersSelectedBodyAlert": "no elegiste ningún filtro, para poder añadir una carpeta de destino tenés que agregar filtros",
+  "resetButton": "reiniciar configuración",
   "appVersion": "versión"
 }

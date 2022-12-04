@@ -11,9 +11,10 @@ export const ACTIONS: IGlobalReducerActionsType = {
 };
 
 const updateState = (state: IGlobalState): IGlobalState => {
+  console.log("updated", state);
   window.api.setState(state);
-  return state
-}
+  return state;
+};
 
 export const reducer = (
   state: IGlobalState,

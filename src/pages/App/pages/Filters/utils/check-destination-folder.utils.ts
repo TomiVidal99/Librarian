@@ -1,4 +1,4 @@
-import { warningAlert } from "../../../../../utils";
+import { warningAlert } from "../../../../../utils/handle-alerts.utils";
 import { IDestinationFolder } from "../../../../../models";
 
 interface ITextData {

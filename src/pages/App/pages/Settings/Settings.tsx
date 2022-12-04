@@ -5,6 +5,7 @@ import { IGlobalState, LanguageContext  } from "../../../../state";
 import { Description, OriginFolderList, Section } from "../../components";
 import { DestinationFolderList } from "../../components/DestinationFolders/DestinationFolderList";
 import { LanguageSelector } from "../../styled-components/SelectLanguage";
+import { ResetSettings } from "./components";
 
 interface IProps {
   state: IGlobalState;
@@ -63,6 +64,7 @@ export const Settings = ({state, dispatch}: IProps): JSX.Element => {
           selectedLanguageCallback={(lang) => setLang(lang)}
           defaultValue={getLang}
         />
+        <ResetSettings/>
       </Section>
       <footer className="footer">
         <p className="capitalize">{state.appVersion}</p>

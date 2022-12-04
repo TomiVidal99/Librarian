@@ -54,7 +54,6 @@ export const App = () => {
   // syncs the state given by the main
   useEffect(() => {
     window.api.getState((s: IGlobalState) => {
-      console.log("got state from main");
       dispatch({
         type: ACTIONS.UPDATE_STATE,
         payload: s,
@@ -65,9 +64,6 @@ export const App = () => {
   // get destination folders from the filters window
   useEffect(() => {
     window.api.recieveDestinationFolder((folder: IDestinationFolder) => {
-      if (folder.name !== "") {
-        console.log("got folder: ", folder);
-      }
       dispatch({
         type: ACTIONS.ADD_DESTINATION_FOLDER,
         payload: folder,

@@ -23,30 +23,30 @@ const createInitialDestinationFolder = (): IDestinationFolder => {
     path: "",
     date: new Date(),
     filters: [
-      {
-        id: uuid(),
-        content: "pdf",
-        type: "format",
-        priority: 1,
-      },
-      {
-        id: uuid(),
-        content: "trabajos",
-        type: "name",
-        priority: 1,
-      },
-      {
-        id: uuid(),
-        content: "tps",
-        type: "name",
-        priority: 1,
-      },
-      {
-        id: uuid(),
-        content: "*tenicas.pdf",
-        type: "regex",
-        priority: 1,
-      },
+      // {
+      //   id: uuid(),
+      //   content: "pdf",
+      //   type: "format",
+      //   priority: 1,
+      // },
+      // {
+      //   id: uuid(),
+      //   content: "trabajos",
+      //   type: "name",
+      //   priority: 1,
+      // },
+      // {
+      //   id: uuid(),
+      //   content: "tps",
+      //   type: "name",
+      //   priority: 1,
+      // },
+      // {
+      //   id: uuid(),
+      //   content: "*tenicas.pdf",
+      //   type: "regex",
+      //   priority: 1,
+      // },
     ],
   };
   return folder;
@@ -58,6 +58,7 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
     useState<IDestinationFolder>(createInitialDestinationFolder());
   const handlePickedDestinationFolder = async (): Promise<void> => {
     const foldersPaths = await window.api.pickAFolder(false);
+    if (foldersPaths === undefined || foldersPaths.length === 0) return;
     const name = getFolderName(foldersPaths[0]);
     setDestinationFolder({
       ...destinationFolder,
@@ -72,8 +73,17 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
     });
   }, []);
   const handleAddDestinationFolder = () => {
-    // TODO: add alerts when the data it's not valid
-    const isValid = isValidDestinationFolder(destinationFolder);
+    const isValid = isValidDestinationFolder({
+      folder: destinationFolder, 
+      noFolderText: {
+        title: getTranslated("noDestinationFolderSelectedTitleAlert"),
+        body: getTranslated("noDestinationFolderSelectedBodyAlert"),
+      },
+      noFiltersText: {
+        title: getTranslated("noDestinationFiltersSelectedTitleAlert"),
+        body: getTranslated("noDestinationFiltersSelectedBodyAlert"),
+      },
+    });
     if (!isValid) return;
     window.api.sendDestinationFolder(destinationFolder);
     window.close();
