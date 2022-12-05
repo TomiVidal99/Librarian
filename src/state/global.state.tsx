@@ -6,15 +6,15 @@ import {
 } from "./../models";
 
 export interface IGlobalState {
-  autoLaunch: boolean;
-  canMoveFiles: boolean;
   recentlyMovedFolders: IRecentlyMovedFolder[];
   originFolders: IOriginFolder[];
   destinationFolders: IDestinationFolder[];
   language: string; // TODO: Update this to a type
+  appVersion: string;
+  autoLaunch: boolean;
+  canMoveFiles: boolean;
   generalNotifications: boolean;
   archivesNotifications: boolean;
-  appVersion: string;
 }
 
 export type IGlobalStateContext = {

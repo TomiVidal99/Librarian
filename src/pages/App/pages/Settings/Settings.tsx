@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { IGlobalReducerAction } from "../../../../models";
 import { ACTIONS } from "../../../../services";
-import { IGlobalState, LanguageContext  } from "../../../../state";
+import { IGlobalState, LanguageContext } from "../../../../state";
 import { Description, OriginFolderList, Section } from "../../components";
+import { Checkbox } from "../../components/Checkbox/Checkbox";
 import { DestinationFolderList } from "../../components/DestinationFolders/DestinationFolderList";
 import { LanguageSelector } from "../../styled-components/SelectLanguage";
 import { ResetSettings } from "./components";
@@ -12,8 +13,15 @@ interface IProps {
   dispatch: React.Dispatch<IGlobalReducerAction>;
 }
 
-export const Settings = ({state, dispatch}: IProps): JSX.Element => {
-  const { getTranslated, languagesAvailables, setLang, getLang  } = useContext(LanguageContext);
+export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
+  const { getTranslated, languagesAvailables, setLang, getLang } =
+    useContext(LanguageContext);
+  const updateState = (state: IGlobalState) => {
+    dispatch({
+      type: ACTIONS.UPDATE_STATE,
+      payload: state,
+    });
+  };
   return (
     <main className="app-container">
       <Section border={false}>
@@ -44,9 +52,7 @@ export const Settings = ({state, dispatch}: IProps): JSX.Element => {
       </Section>
       <Section
         sectionName={getTranslated("destinationFoldersSection")}
-        sectionDescription={getTranslated(
-          "destinationFoldersDescription"
-        )}
+        sectionDescription={getTranslated("destinationFoldersDescription")}
       >
         <DestinationFolderList
           folders={state.destinationFolders}
@@ -59,16 +65,36 @@ export const Settings = ({state, dispatch}: IProps): JSX.Element => {
         />
       </Section>
       <Section sectionName={getTranslated("generalSettingsSection")}>
+        <Checkbox
+          label={getTranslated("generalNotificationsCheckbox")}
+          callback={(e) => updateState({ ...state, generalNotifications: e })}
+          defaultValue={state.generalNotifications}
+        />
+        <Checkbox
+          label={getTranslated("archivesNotificationsCheckbox")}
+          callback={(e) => updateState({ ...state, archivesNotifications: e })}
+          defaultValue={state.archivesNotifications}
+        />
+        <Checkbox
+          label={getTranslated("canMoveFilesCheckbox")}
+          callback={(e) => updateState({ ...state, canMoveFiles: e })}
+          defaultValue={state.canMoveFiles}
+        />
         <LanguageSelector
           availableLanguages={languagesAvailables}
           selectedLanguageCallback={(lang) => setLang(lang)}
           defaultValue={getLang}
         />
-        <ResetSettings/>
+        <ResetSettings />
+        <Checkbox
+          label={getTranslated("autoLaunchCheckbox")}
+          callback={(e) => updateState({ ...state, autoLaunch: e })}
+          defaultValue={state.autoLaunch}
+        />
       </Section>
       <footer className="footer">
         <p className="capitalize">{state.appVersion}</p>
       </footer>
     </main>
-  )
-}
+  );
+};

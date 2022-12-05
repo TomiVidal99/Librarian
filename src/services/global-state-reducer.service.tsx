@@ -22,10 +22,10 @@ export const reducer = (
 ): IGlobalState => {
   switch (action.type) {
     case ACTIONS.UPDATE_STATE:
-      return {
+      return updateState({
         ...state,
         ...action.payload,
-      };
+      });
     case ACTIONS.ADD_ORIGIN_FOLDER:
       // TODO: check if the payload it's an array or a single folder
       return updateState({
