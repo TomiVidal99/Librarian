@@ -74,7 +74,7 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
   }, []);
   const handleAddDestinationFolder = () => {
     const isValid = isValidDestinationFolder({
-      folder: destinationFolder, 
+      folder: destinationFolder,
       noFolderText: {
         title: getTranslated("noDestinationFolderSelectedTitleAlert"),
         body: getTranslated("noDestinationFolderSelectedBodyAlert"),
@@ -107,6 +107,7 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
           <Button
             content={getTranslated("pickDestinationFoder")}
             callback={handlePickedDestinationFolder}
+            important={true}
           />
         </Flex>
         <PickFiltersSection
@@ -118,11 +119,13 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
             content={getTranslated("addDestinationFolder")}
             callback={handleAddDestinationFolder}
             type="add"
+            important={true}
           />
           <Button
             content={getTranslated("cancelDestinationFolder")}
             callback={handleCancel}
             type="delete"
+            important={true}
           />
         </Flex>
       </Section>

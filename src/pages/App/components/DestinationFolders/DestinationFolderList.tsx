@@ -53,12 +53,14 @@ export const DestinationFolderList = ({
           content={getTranslated("addFolderButton")}
           callback={handleAddFolder}
           type="add"
+          important={true}
         />
         {selectedFolders.length > 0 && (
           <Button
             content={getTranslated("removeFoldersButton")}
             callback={handleRemoveFolders}
             type="delete"
+            important={true}
           />
         )}
       </div>

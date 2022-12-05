@@ -14,10 +14,15 @@
 
   background-color: var(--color-primary);
 
+  &[aria-details="important"] .btn__content {
+    font-weight: bold;
+  }
+
   opacity: 0.9;
   &:hover {
     opacity: 1;
     transform: scale(1.02);
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   }
 
   &:active {
@@ -30,7 +35,6 @@
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: bold;
   width: max-content;
 }
 

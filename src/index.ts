@@ -124,6 +124,7 @@ ipcMain.on(
 ipcMain.on(
   IPC_CALLS.SEND_FOLDER_FROM_FILTERS_WINDOW,
   (event: IpcMainEvent, folder: IDestinationFolder) => {
+    if (folder.name === "") return;
     mainWindow.webContents.send(IPC_CALLS.RECIEVE_FOLDER_FROM_MAIN, folder);
   }
 );

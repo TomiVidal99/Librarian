@@ -21,8 +21,7 @@ export const OriginFolderList = ({
   removeFolders,
 }: IProps) => {
   const { getTranslated } = useContext(LanguageContext);
-  const [selectedFolders, setSelectedFolders] = useState<string[]>([]
-  );
+  const [selectedFolders, setSelectedFolders] = useState<string[]>([]);
   const handleAddOriginFolder = async () => {
     const foldersPaths = await window.api.pickAFolder(true);
     const originFolders: IOriginFolder[] = foldersPaths
@@ -78,12 +77,14 @@ export const OriginFolderList = ({
           callback={handleAddOriginFolder}
           content={getTranslated("addFolderButton")}
           type="add"
+          important={true}
         />
         {selectedFolders.length > 0 && (
           <Button
             callback={handleRemovedSelectedFolders}
             content={getTranslated("removeFoldersButton")}
             type="delete"
+            important={true}
           />
         )}
       </div>
