@@ -56,13 +56,10 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
   const { getTranslated } = useContext(LanguageContext);
   const [destinationFolder, setDestinationFolder] =
     useState<IDestinationFolder>(createInitialDestinationFolder());
-  const handlePickedDestinationFolder = async (): Promise<void> => {
-    const foldersPaths = await window.api.pickAFolder(false);
-    if (foldersPaths === undefined || foldersPaths.length === 0) return;
-    const name = getFolderName(foldersPaths[0]);
+  const handlePickedDestinationFolder = ({ name, path }: { name: string; path: string }): void => {
     setDestinationFolder({
       ...destinationFolder,
-      path: foldersPaths.length === 0 ? "" : foldersPaths[0],
+      path,
       name,
     });
   };
@@ -98,18 +95,10 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
         sectionName={getTranslated("addDestinationFolderSection")}
         sectionDescription={getTranslated("addDestinationFolderDescription")}
       >
-        <Flex>
-          <InlineDisplay
-            content={destinationFolder ? destinationFolder?.path : ""}
-            placeholder={getTranslated("destinatonFolderDisplayPlaceholder")}
-            clickCallback={handlePickedDestinationFolder}
-          />
-          <Button
-            content={getTranslated("pickDestinationFoder")}
-            callback={handlePickedDestinationFolder}
-            important={true}
-          />
-        </Flex>
+        <InlineDisplay
+          placeholder={getTranslated("destinatonFolderDisplayPlaceholder")}
+          clickCallback={handlePickedDestinationFolder}
+        />
         <PickFiltersSection
           folder={destinationFolder}
           setFolder={setDestinationFolder}
