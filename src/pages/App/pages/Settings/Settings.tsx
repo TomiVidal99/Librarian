@@ -85,12 +85,12 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
           selectedLanguageCallback={(lang) => setLang(lang)}
           defaultValue={getLang}
         />
-        <ResetSettings />
         <Checkbox
           label={getTranslated("autoLaunchCheckbox")}
           callback={(e) => updateState({ ...state, autoLaunch: e })}
           defaultValue={state.autoLaunch}
         />
+        <ResetSettings />
       </Section>
       <footer className="footer">
         <p className="capitalize">{state.appVersion}</p>

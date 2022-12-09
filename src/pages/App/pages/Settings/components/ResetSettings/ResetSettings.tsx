@@ -8,6 +8,6 @@ export const ResetSettings = (): JSX.Element => {
     window.api.resetSettings();
   }
   return (
-    <Button content={getTranslated("resetButton")} callback={handleResetSettings} />
+    <Button type="delete" content={getTranslated("resetButton")} callback={handleResetSettings} />
   )
 }
