@@ -1,3 +1,5 @@
+import addCircleRounded from "@iconify/icons-material-symbols/add-circle-rounded";
+import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { getFolderName } from "../OriginFolders/utils";
 import "./InlineDisplay.style.scss";
@@ -5,7 +7,7 @@ import "./InlineDisplay.style.scss";
 interface IProps {
   placeholder: string;
   className?: string;
-  clickCallback?: (arg0: {name: string; path: string}) => void;
+  clickCallback?: (arg0: { name: string; path: string }) => void;
 }
 
 export const InlineDisplay = ({
@@ -20,15 +22,18 @@ export const InlineDisplay = ({
     const path = foldersPaths[0];
     const name = getFolderName(path);
     setValue(path);
-    clickCallback({name, path});
-  }
+    clickCallback({ name, path });
+  };
   return (
-    <input
-      className={`inline-display ${className}`}
-      placeholder={placeholder + "..."}
-      value={value}
-      onClick={handleClick}
-      type="button"
-    />
+    <div className={`inline-display-container ${className}`}>
+      <input
+        className="inline-display"
+        placeholder={placeholder + "..."}
+        value={value}
+        onClick={handleClick}
+        type="button"
+      />
+      <Icon className="inline-display__icon" inline={true} icon={addCircleRounded} />
+    </div>
   );
 };
