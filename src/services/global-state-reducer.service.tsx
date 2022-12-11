@@ -42,7 +42,8 @@ export const reducer = (
         originFolders: action.payload,
       });
     case ACTIONS.ADD_DESTINATION_FOLDER:
-      if (action.payload.name === "" || action.payload.path === "") return state;
+      if (action.payload.name === "" || action.payload.path === "")
+        return state;
       return updateState({
         ...state,
         destinationFolders: [...state.destinationFolders, action.payload],

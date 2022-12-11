@@ -5,6 +5,7 @@ import {
   ipcMain,
   IpcMainEvent,
   Notification,
+  shell,
 } from "electron";
 import { IDestinationFolder, IPC_CALLS } from "./models";
 import Store from "electron-store";
@@ -60,7 +61,7 @@ const createFiltersWindow = (): void => {
   filtersWindow.loadURL(FILTERS_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  filtersWindow.webContents.openDevTools();
+  // filtersWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -141,3 +142,11 @@ ipcMain.on(
 ipcMain.on(IPC_CALLS.RESET_SETTINGS, () => {
   mainWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, resetState(store));
 });
+
+// open recently moved file folder
+ipcMain.on(
+  IPC_CALLS.OPEN_RECENTLY_MOVED_FOLDER,
+  (event: IpcMainEvent, folder: string) => {
+    shell.showItemInFolder(folder);
+  }
+);

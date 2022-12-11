@@ -7,7 +7,8 @@ export type IpcCallsType =
   | "recieve-folder-from-main"
   | "get-state-from-main"
   | "reset-settings"
-  | "send-state-from-settings-to-main";
+  | "send-state-from-settings-to-main"
+  | "open-recently-moved-folder";
 
 export interface IIpcCalls {
   [key: string]: IpcCallsType;
@@ -23,4 +24,5 @@ export const IPC_CALLS: IIpcCalls = {
   GET_STATE_FROM_MAIN: "get-state-from-main",
   SEND_STATE_FROM_SETTINGS_TO_MAIN: "send-state-from-settings-to-main",
   RESET_SETTINGS: "reset-settings",
+  OPEN_RECENTLY_MOVED_FOLDER: "open-recently-moved-folder",
 };

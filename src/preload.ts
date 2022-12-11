@@ -18,6 +18,7 @@ declare global {
       getState: (arg0: (arg0: IGlobalState) => void) => void;
       setState: (arg0: IGlobalState) => void;
       resetSettings: () => void;
+      openRecentlyMoved: (arg0: string) => void;
     };
   }
 }
@@ -25,6 +26,9 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  openRecentlyMoved: (folder: string): void => {
+    ipcRenderer.send(IPC_CALLS.OPEN_RECENTLY_MOVED_FOLDER, folder);
+  },
   resetSettings: (): void => {
     ipcRenderer.send(IPC_CALLS.RESET_SETTINGS);
   },
