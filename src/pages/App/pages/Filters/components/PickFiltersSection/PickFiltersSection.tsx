@@ -1,4 +1,4 @@
-import { Flex } from "../../../../components";
+import { Flex, Input } from "../../../../components";
 import {
   FilterType,
   IDestinationFolder,
@@ -7,7 +7,6 @@ import {
 import "./PickFiltersSection.style.scss";
 import { useContext } from "react";
 import { LanguageContext } from "../../../../../../state";
-import { FilterSelector } from "../FilterSelector/FilterSelector";
 import { isFilterCorrect } from "../../utils";
 import uuid from "react-uuid";
 import { FilterItem } from "../FilterItem/FilterItem";
@@ -47,23 +46,20 @@ export const PickFiltersSection = ({
   return (
     <div className="pick-filters-container">
       <Flex type="column">
-        <FilterSelector
-          label={getTranslated("filterLabelNamePlaceholder")}
-          placeholder={getTranslated("filterInputNamePlaceholder")}
-          type="name"
-          callback={(f: string) => handleAddFilter(f, "name")}
+        <Input
+          style="name"
+          placeholder={getTranslated("filterLabelNamePlaceholder")}
+          callbackChange={(f: string) => handleAddFilter(f, "name")}
         />
-        <FilterSelector
-          label={getTranslated("filterLabelFormatPlaceholder")}
-          placeholder={getTranslated("filterInputFormatPlaceholder")}
-          type="format"
-          callback={(f: string) => handleAddFilter(f, "format")}
+        <Input
+          style="format"
+          placeholder={getTranslated("filterLabelFormatPlaceholder")}
+          callbackChange={(f: string) => handleAddFilter(f, "format")}
         />
-        <FilterSelector
-          label={getTranslated("filterLabelRegexPlaceholder")}
-          placeholder={getTranslated("filterInputRegexPlaceholder")}
-          type="regex"
-          callback={(f: string) => handleAddFilter(f, "regex")}
+        <Input
+          style="regex"
+          placeholder={getTranslated("filterLabelRegexPlaceholder")}
+          callbackChange={(f: string) => handleAddFilter(f, "regex")}
         />
       </Flex>
       <ul className="pick-filters__list">

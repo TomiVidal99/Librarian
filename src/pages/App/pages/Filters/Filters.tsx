@@ -2,14 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { ACTIONS } from "../../../../services";
 import { IDestinationFolder, IGlobalReducerAction } from "../../../../models";
 import { IGlobalState, LanguageContext } from "../../../../state";
-import { Button, InlineDisplay, Section } from "../../components";
+import { Button, Input, Section } from "../../components";
 import { Flex } from "../../components/Flex/Flex";
 
 import "./Filters.style.scss";
 import uuid from "react-uuid";
 import { PickFiltersSection } from "./components";
 import { isValidDestinationFolder } from "./utils";
-import { getFolderName } from "../../components/OriginFolders/utils";
 
 interface IProps {
   state: IGlobalState;
@@ -95,9 +94,11 @@ export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
         sectionName={getTranslated("addDestinationFolderSection")}
         sectionDescription={getTranslated("addDestinationFolderDescription")}
       >
-        <InlineDisplay
+        <Input
+          type="pick"
+          style="add"
           placeholder={getTranslated("destinatonFolderDisplayPlaceholder")}
-          clickCallback={handlePickedDestinationFolder}
+          callbackClick={handlePickedDestinationFolder}
         />
         <PickFiltersSection
           folder={destinationFolder}
