@@ -1,4 +1,8 @@
-import { IGlobalReducerAction, IGlobalReducerActionsType } from "../models";
+import {
+  IDestinationFolder,
+  IGlobalReducerAction,
+  IGlobalReducerActionsType,
+} from "../models";
 import { IGlobalState } from "../state";
 
 export const ACTIONS: IGlobalReducerActionsType = {
@@ -38,6 +42,7 @@ export const reducer = (
         originFolders: action.payload,
       });
     case ACTIONS.ADD_DESTINATION_FOLDER:
+      if (action.payload.name === "" || action.payload.path === "") return state;
       return updateState({
         ...state,
         destinationFolders: [...state.destinationFolders, action.payload],
