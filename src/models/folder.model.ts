@@ -3,6 +3,7 @@ import { IFilter } from "./filter.model";
 export interface IRecentlyMovedFolder {
   id: string;
   name: string;
+  filter: IFilter;
   origin: string;
   destination: string;
   time: Date;
