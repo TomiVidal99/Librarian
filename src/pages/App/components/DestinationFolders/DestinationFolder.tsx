@@ -24,8 +24,11 @@ export const DestinationFolder = ({
         onClick={() => clickCallback(folder.id)}
         className="destination-folder"
       >
-        <div className="destination-folder__name">{folder.name}</div>
-        <div className="destination-folder__path">{folder.path}</div>
+        <span className="destination-folder__name">{folder.name}</span>
+        <span className="destination-folder__path">{folder.path}</span>
+        <ul className="destination-folder__filters">
+          {folder.filters.map( ({id, content, type}) => <li aria-label={type} key={id}>{content}</li>)}
+        </ul>
       </button>
     </li>
   );
