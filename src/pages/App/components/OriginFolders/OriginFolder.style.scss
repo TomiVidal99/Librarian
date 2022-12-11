@@ -44,7 +44,9 @@
 
   border-radius: 3px;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: min-content;
   justify-content: space-between;
   align-items: center;
   gap: 2em;
@@ -57,11 +59,20 @@
   color: inherit;
   font-size: inherit;
 
+  & > * {
+    height: calc(var(--fs-normal) + 0.35em);
+    overflow: hidden;
+  }
+
   & > .folder__name {
     font-size: larger;
+    text-overflow: clip;
+    text-align: left;
   }
 
   & > .folder__path {
+    text-align: right;
+    text-overflow: ellipsis;
     opacity: 0;
     transition: opacity 0.5s;
     overflow: hidden;
