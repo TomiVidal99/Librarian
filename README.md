@@ -93,6 +93,7 @@ Project is: _in progress_.
 - [ ] ADD: styled Buttons for adding and deleting (green and red).
 - [ ] ANIMATION: for the Section when it's hovered, fill the border with a different color like a loading animation.
 - [ ] ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
+- [ ] IMPROVE: organize all ipcMain handlers better.
 
 ## Contact
 
