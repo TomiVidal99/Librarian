@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: prevent from adding folders with a lot of recursion on 'origin folders'.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: check that the destination folder to be added it's not used anywhere else.
 - [ ] FIX: move all filtering an processing logic to the reducer.

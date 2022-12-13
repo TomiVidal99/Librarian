@@ -352,7 +352,7 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@iconify/icons-ic@^1.2.11":
+"@iconify/icons-ic@1.2.11":
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/@iconify/icons-ic/-/icons-ic-1.2.11.tgz#398c472432d6b89756fc0aaf651aac5c0d017411"
   integrity sha512-X73nE2DFKSPxWfBxfy+adUBrVmZaXodDN3yCj0/M30c4YFQrn8OvZuw5cz0GriiePwhL/MudvbJSi7MnmAZ40Q==
@@ -1463,7 +1463,7 @@ chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-"chokidar@>=3.0.0 <4.0.0", chokidar@^3.5.3:
+chokidar@3.5.3, "chokidar@>=3.0.0 <4.0.0", chokidar@^3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
   integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
