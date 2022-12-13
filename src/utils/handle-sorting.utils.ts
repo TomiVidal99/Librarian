@@ -23,12 +23,12 @@ export const updateOriginListeners = ({
   originFolders: IOriginFolder[];
   watcher: FSWatcher;
 }): void => {
-  const alreadyInWatch = Object.keys(watcher.getWatched());
-  const notWatched = originFolders
-    .filter((folder) => !alreadyInWatch.includes(folder.path))
-    .map(({ path }) => path);
-  watcher.add(notWatched);
-  console.log(watcher.getWatched());
+  // const alreadyInWatch = Object.keys(watcher.getWatched());
+  // const notWatched = originFolders
+  //   .filter((folder) => !alreadyInWatch.includes(folder.path))
+  //   .map(({ path }) => path);
+  // watcher.add(notWatched);
+  // console.log(watcher.getWatched());
 };
 
 /**
