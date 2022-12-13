@@ -82,6 +82,7 @@ Project is: _in progress_.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
 - [ ] FIX: classnames in the origin folders.
 - [ ] FIX: language not syncronizing properly with translation files.
+- [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
 - [ ] ADD: recursion to the origin folders.
 - [ ] ADD: better animation when hovering Section, expand, better bg color and shadows.
 - [ ] ADD: shift + click to select multiple items in lists.
