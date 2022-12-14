@@ -1,7 +1,7 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
-import { contextBridge, ipcRenderer, IpcRendererEvent, OpenDialogReturnValue } from "electron";
+import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
 import { IDestinationFolder, IpcCallsType, IPC_CALLS } from "./models";
 import { IGlobalState } from "./state";
 
@@ -19,6 +19,7 @@ declare global {
       setState: (arg0: IGlobalState) => void;
       resetSettings: () => void;
       openRecentlyMoved: (arg0: string) => void;
+      logOriginFolders: () => Promise<string[]>;
     };
   }
 }
@@ -26,6 +27,12 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  logOriginFolders: async (): Promise<string[]> => {
+    const folders = await ipcRenderer.invoke(
+      IPC_CALLS.GET_ORIGIN_FOLDERS
+    );
+    return folders;
+  },
   openRecentlyMoved: (folder: string): void => {
     ipcRenderer.send(IPC_CALLS.OPEN_RECENTLY_MOVED_FOLDER, folder);
   },

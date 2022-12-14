@@ -26,7 +26,7 @@ declare const FILTERS_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 let watcher: FSWatcher;
-const store = new Store();
+export const store = new Store();
 
 let mainWindow: BrowserWindow;
 let filtersWindow: BrowserWindow;
@@ -51,13 +51,12 @@ const createSettingsWindow = (): void => {
 
   // loads the saved state
   mainWindow.on("ready-to-show", () => {
-    const state = getState(store);
-    mainWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, state);
+    // send state to the page
+    mainWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, getState(store));
+
+    // intialize the watcher and add the listeners
+    // const state = getState(store);
     watcher = initalizeWatcher();
-    updateOriginListeners({
-      watcher,
-      originFolders: state.originFolders,
-    });
   });
 };
 
@@ -152,7 +151,7 @@ ipcMain.on(
   IPC_CALLS.SEND_STATE_FROM_SETTINGS_TO_MAIN,
   (event: IpcMainEvent, state: IGlobalState) => {
     saveState(store, state);
-    updateOriginListeners({ watcher, originFolders: state.originFolders });
+    updateOriginListeners({ watcher });
   }
 );
 
@@ -168,3 +167,8 @@ ipcMain.on(
     shell.showItemInFolder(folder);
   }
 );
+
+// return the current origin folders being watched
+ipcMain.handle(IPC_CALLS.GET_ORIGIN_FOLDERS, async () => {
+  return watcher.getWatched();
+});

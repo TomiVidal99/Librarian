@@ -1,15 +1,22 @@
 import { FSWatcher, watch } from "chokidar";
-import { IOriginFolder } from "../models";
+import { getFolderName } from "../pages/App/components/OriginFolders/utils";
+import { getState } from ".";
+import { store } from "../";
+import { FilterType } from "../models";
+
+const WATCH_OPTIONS = {
+  ignored: /(^|[\/\\])\../, // ignore dotfiles
+  persistent: true,
+  depth: 0,
+}
 
 /**
  * Creates the watcher with it's intial configuration
  * @returns {FSWatcher}
  */
 export const initalizeWatcher = (): FSWatcher => {
-  const watcher = watch("file, dir, glob, or array", {
-    ignored: /(^|[\/\\])\../, // ignore dotfiles
-    persistent: true,
-  });
+  const originFoldersPaths = getState(store).originFolders.map(f => f.path);
+  const watcher = watch(originFoldersPaths, WATCH_OPTIONS);
   return watcher;
 };
 
@@ -18,17 +25,16 @@ export const initalizeWatcher = (): FSWatcher => {
  */
 export const updateOriginListeners = ({
   watcher,
-  originFolders,
 }: {
-  originFolders: IOriginFolder[];
   watcher: FSWatcher;
 }): void => {
-  // const alreadyInWatch = Object.keys(watcher.getWatched());
-  // const notWatched = originFolders
-  //   .filter((folder) => !alreadyInWatch.includes(folder.path))
-  //   .map(({ path }) => path);
-  // watcher.add(notWatched);
-  // console.log(watcher.getWatched());
+  console.log('updating origin listeners');
+  const alreadyInWatch = Object.keys(watcher.getWatched());
+  const notWatched = getState(store).originFolders
+    .filter((folder) => !alreadyInWatch.includes(folder.path))
+    .map(({ path }) => path);
+  watcher.add(notWatched);
+  watcher.on('add', (file) => { handleNewFile(file) });
 };
 
 /**
@@ -43,3 +49,57 @@ export const removeAllListeners = ({
     console.log("Watcher instance closed");
   });
 };
+
+interface ISortArgs {
+  file: string;
+  filter: string;
+}
+/**
+ * Called back when a file has been added insisde some origin folder
+ */
+const handleNewFile = (filepath: string): void => {
+  console.log(`new file ${filepath}`);
+  const filename = getFolderName(filepath);
+  const state = getState(store)
+
+  const actions = {
+    "name": sortByName,
+    "format": sortByFormat,
+    "regex": sortByRegex,
+  }
+
+  // TODO: check how i would sort by priority
+  state.destinationFolders.forEach((folder) => {
+    folder.filters.forEach((filter) => {
+      const args: ISortArgs = {
+        file: filepath,
+        filter: filter.content,
+      }
+      const shouldMove = actions[filter.type](args);
+      if (!shouldMove) return;
+      console.log(`should move ${filename} to ${filepath}`);
+    })
+  })
+
+}
+
+/**
+ * Sorts a file by name
+ */
+const sortByName = ({ file, filter }: ISortArgs): boolean => {
+  return file.includes(filter)
+}
+
+/**
+ * Sorts a file by format
+ */
+const sortByFormat = ({ file, filter }: ISortArgs): boolean => {
+  throw "Not implemented yet."
+}
+
+/**
+ * Sorts a file by regular expression
+ */
+const sortByRegex = ({ file, filter }: ISortArgs): boolean => {
+  throw "Not implemented yet."
+}

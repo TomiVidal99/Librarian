@@ -3,44 +3,57 @@ import { IGlobalState, initialState, LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
 
 import "./App.style.scss";
-import { IDestinationFolder, IOriginFolder } from "../../models";
-import uuid from "react-uuid";
+import { IDestinationFolder } from "../../models";
 import { useEffect, useReducer } from "react";
 import { ACTIONS, reducer } from "../../services";
 import { Filters, Settings } from "./pages";
 import { Route, Routes } from "react-router";
 
-const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
-  {
-    id: uuid(),
-    name: "temp",
-    path: "/home/tomii/temp",
-    date: new Date(),
-  },
-  {
-    id: uuid(),
-    name: "Github",
-    path: "/home/tomii/Github",
-    date: new Date(),
-  },
-];
-
-const DESTINATION_FOLDERS_DEFAULT: IDestinationFolder[] = [
-  {
-    id: uuid(),
-    name: "pdfs",
-    path: "/home/tomii/Documents/pdfs",
-    date: new Date(),
-    filters: [],
-  },
-  {
-    id: uuid(),
-    name: "documentos",
-    path: "/home/tomii/Documents",
-    date: new Date(),
-    filters: [],
-  },
-];
+// const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
+//   {
+//     id: uuid(),
+//     name: "temp",
+//     path: "/home/tomii/temp",
+//     date: new Date(),
+//   },
+//   {
+//     id: uuid(),
+//     name: "Github",
+//     path: "/home/tomii/Github",
+//     date: new Date(),
+//   },
+// ];
+//
+// const DESTINATION_FOLDERS_DEFAULT: IDestinationFolder[] = [
+//   {
+//     id: uuid(),
+//     name: "pdfs",
+//     path: "/home/tomii/Documents/pdfs",
+//     date: new Date(),
+//     filters: [],
+//   },
+//   {
+//     id: uuid(),
+//     name: "documentos",
+//     path: "/home/tomii/Documents",
+//     date: new Date(),
+//     filters: [],
+//   },
+// ];
+//
+// const RECENTLY_MOVED_TEST: IRecentlyMovedFolder = {
+//   id: uuid(),
+//   name: "archivo_test",
+//   origin: "/home/tomii/origin/",
+//   destination: "/home/tomii/destino/",
+//   time: new Date(),
+//   filter: {
+//     id: uuid(),
+//     type: "name",
+//     content: "test",
+//     priority: 1,
+//   },
+// };
 
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -71,6 +84,7 @@ export const App = () => {
     });
   }, []);
 
+  // For testing porpouses
   // useEffect(() => {
   //   dispatch({
   //     type: ACTIONS.ADD_ORIGIN_FOLDER,

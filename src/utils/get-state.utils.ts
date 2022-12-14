@@ -14,7 +14,5 @@ export const getState = (
     saveState(store, state as IGlobalState);
   }
 
-  console.log("State: ", state);
-
   return state as IGlobalState;
 };

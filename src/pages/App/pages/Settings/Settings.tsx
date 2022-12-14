@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
-import uuid from "react-uuid";
-import { IGlobalReducerAction, IRecentlyMovedFolder } from "../../../../models";
+import { useContext } from "react";
+import { IGlobalReducerAction } from "../../../../models";
 import { ACTIONS } from "../../../../services";
 import { IGlobalState, LanguageContext } from "../../../../state";
 import { Description, OriginFolderList, Section } from "../../components";
@@ -9,20 +8,6 @@ import { DestinationFolderList } from "../../components/DestinationFolders/Desti
 import { LanguageSelector } from "../../styled-components/SelectLanguage";
 import { ResetSettings } from "./components";
 import { RecentlyMovedList } from "./components/RecentlyMoved/RecentlyMovedList";
-
-const RECENTLY_MOVED_TEST: IRecentlyMovedFolder = {
-  id: uuid(),
-  name: "archivo_test",
-  origin: "/home/tomii/origin/",
-  destination: "/home/tomii/destino/",
-  time: new Date(),
-  filter: {
-    id: uuid(),
-    type: "name",
-    content: "test",
-    priority: 1,
-  },
-};
 
 interface IProps {
   state: IGlobalState;
@@ -38,14 +23,6 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
       payload: state,
     });
   };
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch({
-        type: ACTIONS.ADD_RECENTLY_MOVED,
-        payload: RECENTLY_MOVED_TEST,
-      });
-    }, 500)
-  }, []);
   return (
     <main className="app-container">
       <Section border={false}>

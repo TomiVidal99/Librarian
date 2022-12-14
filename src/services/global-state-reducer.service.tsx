@@ -1,5 +1,4 @@
 import {
-  IDestinationFolder,
   IGlobalReducerAction,
   IGlobalReducerActionsType,
 } from "../models";
@@ -15,7 +14,7 @@ export const ACTIONS: IGlobalReducerActionsType = {
 };
 
 const updateState = (state: IGlobalState): IGlobalState => {
-  console.log("updated", state);
+  // console.log("updated", state);
   window.api.setState(state);
   return state;
 };
