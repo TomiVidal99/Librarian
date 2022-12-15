@@ -2,9 +2,12 @@ import { FSWatcher, watch } from "chokidar";
 import { getFolderName } from "../pages/App/components/OriginFolders/utils";
 import { getState } from ".";
 import { store } from "../";
+import path from "path";
+import fs from "fs";
 
 const WATCH_OPTIONS = {
   ignored: /(^|[\/\\])\../, // ignore dotfiles
+  ignoreInitial: true, // TODO: make this an option in the frontend
   persistent: true,
   depth: 0,
 }
@@ -64,7 +67,7 @@ export const removeAllListeners = ({
 };
 
 interface ISortArgs {
-  file: string;
+  filename: string;
   filter: string;
 }
 /**
@@ -85,12 +88,21 @@ const handleNewFile = (filepath: string): void => {
   state.destinationFolders.forEach((folder) => {
     folder.filters.forEach((filter) => {
       const args: ISortArgs = {
-        file: filepath,
+        filename: filename,
         filter: filter.content,
       }
       const shouldMove = actions[filter.type](args);
       if (!shouldMove) return;
-      console.log(`should move ${filename} to ${filepath}`);
+      const destinationPath = `${folder.path}/${filename}`;
+      console.log(`moving ${filepath} to ${destinationPath}, (filter: ${filter.type})`);
+      // TODO: create a recently moved folder
+      // TODO: create tray animation
+      fs.rename(filepath, destinationPath, (err) => {
+        // TODO: add error notification
+        //if (err) throw err;
+        console.error(err);
+        console.log("moved sucessfully");
+      })
     })
   })
 
@@ -99,20 +111,21 @@ const handleNewFile = (filepath: string): void => {
 /**
  * Sorts a file by name
  */
-const sortByName = ({ file, filter }: ISortArgs): boolean => {
-  return file.includes(filter)
+const sortByName = ({ filename, filter }: ISortArgs): boolean => {
+  return filename.includes(filter)
 }
 
 /**
  * Sorts a file by format
  */
-const sortByFormat = ({ file, filter }: ISortArgs): boolean => {
-  throw "Not implemented yet."
+const sortByFormat = ({ filename, filter }: ISortArgs): boolean => {
+  return path.extname(filename) === filter
 }
 
 /**
  * Sorts a file by regular expression
  */
-const sortByRegex = ({ file, filter }: ISortArgs): boolean => {
-  throw "Not implemented yet."
+const sortByRegex = ({ filename, filter }: ISortArgs): boolean => {
+  const regex = RegExp(filter)
+  return filename.match(regex) === null ? false : true
 }
