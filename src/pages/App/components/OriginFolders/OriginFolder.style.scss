@@ -1,4 +1,4 @@
-.folder-container {
+.origin-folder-container {
   position: relative;
   background-color: var(--color-third-darker);
   border-radius: 3px;
@@ -28,7 +28,7 @@
   }
 }
 
-.folder-container[aria-selected="true"] {
+.origin-folder-container[aria-selected="true"] {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   &::before {
@@ -37,7 +37,7 @@
   }
 }
 
-.folder {
+.origin-folder {
   width: 100%;
   height: 100%;
   cursor: pointer;

@@ -14,12 +14,12 @@ export const OriginFolder = ({
   clickCallback,
 }: IProps): JSX.Element => {
   return (
-    <li aria-selected={selected} className="folder-container">
+    <li aria-selected={selected} className="origin-folder-container">
       <button
         onClick={() => {
           clickCallback(folder.id);
         }}
-        className="folder"
+        className="origin-folder"
       >
         <div className="folder__name">{folder.name}</div>
         <div className="folder__path">{folder.path}</div>

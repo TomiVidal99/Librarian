@@ -11,7 +11,6 @@ import { PickFiltersSection } from "./components";
 import { isValidDestinationFolder } from "./utils";
 
 interface IProps {
-  state: IGlobalState;
   dispatch: React.Dispatch<IGlobalReducerAction>;
 }
 
@@ -51,16 +50,44 @@ const createInitialDestinationFolder = (): IDestinationFolder => {
   return folder;
 };
 
-export const Filters = ({ state, dispatch }: IProps): JSX.Element => {
+export const Filters = ({ dispatch }: IProps): JSX.Element => {
   const { getTranslated } = useContext(LanguageContext);
+  const [state, setState] = useState<IGlobalState | null>(null);
+  useEffect(() => {
+    // get state from main
+    window.api.getState((s) => {
+      console.log("getting state from main: ", s);
+      setState(s);
+    });
+  }, []);
   const [destinationFolder, setDestinationFolder] =
     useState<IDestinationFolder>(createInitialDestinationFolder());
-  const handlePickedDestinationFolder = ({ name, path }: { name: string; path: string }): void => {
-    setDestinationFolder({
-      ...destinationFolder,
-      path,
-      name,
-    });
+  const handlePickedDestinationFolder = ({
+    name,
+    path,
+  }: {
+    name: string;
+    path: string;
+  }): void => {
+    const alreadyHasThisPath = state.destinationFolders.filter(
+      (f) => f.path === path
+    );
+    if (alreadyHasThisPath.length > 0) {
+      window.api.popWarning(
+        getTranslated("destinationFolderAlreadySelectedWarningTitle"),
+        getTranslated("destinationFolderAlreadySelectedWarningBody").concat(
+          ...alreadyHasThisPath[0].filters.map(
+            (f) => `'${f.content}(${f.type})' `
+          )
+        )
+      );
+    } else {
+      setDestinationFolder({
+        ...destinationFolder,
+        path,
+        name,
+      });
+    }
   };
   useEffect(() => {
     dispatch({

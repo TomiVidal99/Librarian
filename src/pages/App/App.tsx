@@ -116,7 +116,7 @@ export const App = () => {
           />
           <Route
             path="/filters_window"
-            element={<Filters state={state} dispatch={dispatch} />}
+            element={<Filters dispatch={dispatch} />}
           />
           <Route path="*" element={<div>NOT FOUND</div>} />
         </Routes>
