@@ -20,6 +20,7 @@ declare global {
       resetSettings: () => void;
       openRecentlyMoved: (arg0: string) => void;
       logOriginFolders: () => Promise<string[]>;
+      removeOriginFolder: (arg0: string[]) => void;
     };
   }
 }
@@ -27,6 +28,9 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  removeOriginFolder: (folders: string[]): void => {
+    ipcRenderer.send(IPC_CALLS.REMOVE_ORIGIN_FOLDER, folders);
+  },
   logOriginFolders: async (): Promise<string[]> => {
     const folders = await ipcRenderer.invoke(
       IPC_CALLS.GET_ORIGIN_FOLDERS

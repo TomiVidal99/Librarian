@@ -1,6 +1,7 @@
 import {
   IGlobalReducerAction,
   IGlobalReducerActionsType,
+  IOriginFolder,
 } from "../models";
 import { IGlobalState } from "../state";
 
@@ -13,8 +14,15 @@ export const ACTIONS: IGlobalReducerActionsType = {
   ADD_RECENTLY_MOVED: "get-recently-moved",
 };
 
+let firstTimeInit = false;
 const updateState = (state: IGlobalState): IGlobalState => {
-  // console.log("updated", state);
+  if (!firstTimeInit) {
+    // check if it's the first time that has init and do not update the first state
+    // TODO: check how to make this sync better
+    firstTimeInit = true;
+    return state;
+  }
+  console.log("sending state to main", state);
   window.api.setState(state);
   return state;
 };
@@ -30,16 +38,20 @@ export const reducer = (
         ...action.payload,
       });
     case ACTIONS.ADD_ORIGIN_FOLDER:
-      // TODO: check if the payload it's an array or a single folder
       return updateState({
         ...state,
         originFolders: [...state.originFolders, ...action.payload],
       });
     case ACTIONS.REMOVE_ORIGIN_FOLDERS:
-      return updateState({
-        ...state,
-        originFolders: action.payload,
-      });
+      return (() => {
+        window.api.removeOriginFolder(
+          action.payload.toRemove.map((f: IOriginFolder) => f.path)
+        );
+        return updateState({
+          ...state,
+          originFolders: action.payload.toKeep,
+        });
+      })();
     case ACTIONS.ADD_DESTINATION_FOLDER:
       if (action.payload.name === "" || action.payload.path === "")
         return state;

@@ -9,7 +9,9 @@ export type IpcCallsType =
   | "reset-settings"
   | "send-state-from-settings-to-main"
   | "open-recently-moved-folder"
-  | "get-origin-folders";
+  | "get-origin-folders"
+  | "remove-origin-folder"
+  | "add-origin-folder";
 
 export interface IIpcCalls {
   [key: string]: IpcCallsType;
@@ -27,4 +29,6 @@ export const IPC_CALLS: IIpcCalls = {
   RESET_SETTINGS: "reset-settings",
   OPEN_RECENTLY_MOVED_FOLDER: "open-recently-moved-folder",
   GET_ORIGIN_FOLDERS: "get-origin-folders",
+  REMOVE_ORIGIN_FOLDER: "remove-origin-folder",
+  ADD_ORIGIN_FOLDER: "add-origin-folder",
 };

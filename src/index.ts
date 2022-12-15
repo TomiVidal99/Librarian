@@ -15,6 +15,7 @@ import {
   updateOriginListeners,
   initalizeWatcher,
   removeAllListeners,
+  removeFoldersListeners,
 } from "./utils";
 import { IGlobalState } from "./state";
 import { FSWatcher } from "chokidar";
@@ -151,6 +152,7 @@ ipcMain.on(
   IPC_CALLS.SEND_STATE_FROM_SETTINGS_TO_MAIN,
   (event: IpcMainEvent, state: IGlobalState) => {
     saveState(store, state);
+    // TODO: think if i will remove this or not
     updateOriginListeners({ watcher });
   }
 );
@@ -158,6 +160,7 @@ ipcMain.on(
 // resets the settings
 ipcMain.on(IPC_CALLS.RESET_SETTINGS, () => {
   mainWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, resetState(store));
+  watcher.removeAllListeners();
 });
 
 // open recently moved file folder
@@ -172,3 +175,11 @@ ipcMain.on(
 ipcMain.handle(IPC_CALLS.GET_ORIGIN_FOLDERS, async () => {
   return watcher.getWatched();
 });
+
+// removes listeners from the removed origin folder
+ipcMain.on(
+  IPC_CALLS.REMOVE_ORIGIN_FOLDER,
+  (event: IpcMainEvent, folders: string[]) => {
+    removeFoldersListeners({ watcher, folders });
+  }
+);

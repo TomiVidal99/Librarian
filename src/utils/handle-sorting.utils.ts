@@ -2,7 +2,6 @@ import { FSWatcher, watch } from "chokidar";
 import { getFolderName } from "../pages/App/components/OriginFolders/utils";
 import { getState } from ".";
 import { store } from "../";
-import { FilterType } from "../models";
 
 const WATCH_OPTIONS = {
   ignored: /(^|[\/\\])\../, // ignore dotfiles
@@ -17,7 +16,22 @@ const WATCH_OPTIONS = {
 export const initalizeWatcher = (): FSWatcher => {
   const originFoldersPaths = getState(store).originFolders.map(f => f.path);
   const watcher = watch(originFoldersPaths, WATCH_OPTIONS);
+  watcher.on('add', (file) => { handleNewFile(file) });
   return watcher;
+};
+
+/**
+ * Removes the listener from the folders
+ */
+export const removeFoldersListeners = ({
+  folders,
+  watcher,
+}: {
+  folders: string[];
+  watcher: FSWatcher;
+}): void => {
+  console.log('Removing: ', folders);
+  watcher.unwatch(folders);
 };
 
 /**
@@ -34,7 +48,6 @@ export const updateOriginListeners = ({
     .filter((folder) => !alreadyInWatch.includes(folder.path))
     .map(({ path }) => path);
   watcher.add(notWatched);
-  watcher.on('add', (file) => { handleNewFile(file) });
 };
 
 /**

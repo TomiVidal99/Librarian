@@ -27,9 +27,7 @@ const doesFolderAlreadyExist = (
   let foundFlag = false;
 
   folders.forEach((folder) => {
-    console.log(folder);
     if (name === folder.name || path === folder.path) foundFlag = true;
-    console.log(foundFlag);
   });
 
   return foundFlag;

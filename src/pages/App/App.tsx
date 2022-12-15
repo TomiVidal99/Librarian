@@ -66,6 +66,7 @@ export const App = () => {
 
   // syncs the state given by the main
   useEffect(() => {
+    console.log("getting state from main");
     window.api.getState((s: IGlobalState) => {
       dispatch({
         type: ACTIONS.UPDATE_STATE,

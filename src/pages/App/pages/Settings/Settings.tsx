@@ -48,10 +48,10 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
               payload: folders,
             });
           }}
-          removeFolders={(folders) => {
+          removeFolders={(toKeep, toRemove) => {
             dispatch({
               type: ACTIONS.REMOVE_ORIGIN_FOLDERS,
-              payload: folders,
+              payload: {toKeep, toRemove},
             });
           }}
         />

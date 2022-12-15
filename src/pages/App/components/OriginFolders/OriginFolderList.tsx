@@ -11,7 +11,7 @@ import { warningAlert } from "../../../../utils/handle-alerts.utils";
 
 interface IProps {
   folders: IOriginFolder[];
-  removeFolders: (arg0: IOriginFolder[]) => void;
+  removeFolders: (arg0: IOriginFolder[], arg1: IOriginFolder[]) => void;
   addFolders: (arg0: IOriginFolder[]) => void;
 }
 
@@ -41,7 +41,16 @@ export const OriginFolderList = ({
     addFolders(originFolders);
   };
   const handleRemovedSelectedFolders = () => {
-    removeFolders(folders.filter((f) => !selectedFolders.includes(f.id)));
+    const toRemove: IOriginFolder[] = [];
+    const toKeep: IOriginFolder[] = [];
+    folders.map((f) => {
+      if (selectedFolders.includes(f.id)) {
+        toRemove.push(f);
+      } else {
+        toKeep.push(f);
+      }
+    })
+    removeFolders(toKeep,toRemove);
     setSelectedFolders([]);
   };
   const handleClickedFolder = (id: string) => {
