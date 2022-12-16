@@ -12,6 +12,9 @@
     & .destination-folder__path {
       opacity: 1;
     }
+    & .destination-folder__filters {
+      opacity: 1;
+    }
   }
   &::before {
     content: "";
@@ -79,6 +82,8 @@
   }
 
   & .destination-folder__filters {
+    transition: opacity 200ms ease-in-out;
+    opacity: 0.75;
     grid-column: span 2;
     padding: 0;
     margin: 0;

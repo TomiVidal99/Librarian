@@ -69,7 +69,6 @@ Project is: _in progress_.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: should add pop up alerts when a folder or some other data is not correct.
 - [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
-- [ ] FIX: color contrast on filters when hovered.
 - [ ] FIX: if a filters window it's opened, the user can't open another and the one opened should pop up in front.
 - [ ] FIX: notification messages.
 - [ ] FIX: Check duplicates on adding new folders.
@@ -81,19 +80,15 @@ Project is: _in progress_.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
 - [ ] FIX: classnames in the origin folders.
 - [ ] FIX: language not syncronizing properly with translation files.
+- [ ] ADD: edit destination folders.
 - [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
 - [ ] ADD: recursion to the origin folders.
-- [ ] ADD: better animation when hovering Section, expand, better bg color and shadows.
 - [ ] ADD: shift + click to select multiple items in lists.
 - [ ] ADD: maybe check if there are conflicting filters?, i.e: work (name) conflics with work.pdf (pdf).
 - [ ] ADD: pop up a warning when adding more than 6 (?) filters, not adviced, maybe think of adding more folders, or using regex or format.
 - [ ] ADD: theme selector (light and dark, maybe later more palettes).
-- [ ] ADD: arias to buttons.
-- [ ] ADD: a Checkbox element.
 - [ ] ADD: navigation.
-- [ ] ADD: styled Buttons for adding and deleting (green and red).
-- [ ] ANIMATION: for the Section when it's hovered, fill the border with a different color like a loading animation.
-- [ ] ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
+- [ ] MAYBE ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
 - [ ] IMPROVE: organize all ipcMain handlers better.
 
 ## Contact
