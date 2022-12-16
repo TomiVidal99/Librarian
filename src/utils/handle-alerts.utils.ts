@@ -13,5 +13,15 @@ export const warningAlert = ({
     .replace("%foldername", foldername)
     .replace("%folderpath", folderpath)
     .replace(/^\w/, (c) => c.toUpperCase());
-  window.api.popWarning(title, fullBody);
+  // TODO: maybe add custom properties instead of just the foldername and the folderpath?
+  // customProp: [string, string][] (string of tuples)
+  // if (customProp) {
+  //   customProp.forEach(([pattern, value]) => {
+  //     body.replace(pattern, value)
+  //   })
+  // }
+  window.api.popWarning(
+    title.replace(/^\w/, (c) => c.toUpperCase()),
+    fullBody
+  );
 };

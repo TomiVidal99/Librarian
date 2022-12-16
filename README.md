@@ -67,8 +67,6 @@ Project is: _in progress_.
 
 - [ ] FIX: prevent from adding folders with a lot of recursion on 'origin folders'.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
-- [ ] FIX: check that the destination folder to be added it's not used anywhere else.
-- [ ] FIX: move all filtering an processing logic to the reducer.
 - [ ] FIX: should add pop up alerts when a folder or some other data is not correct.
 - [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
 - [ ] FIX: color contrast on filters when hovered.
@@ -87,6 +85,7 @@ Project is: _in progress_.
 - [ ] ADD: recursion to the origin folders.
 - [ ] ADD: better animation when hovering Section, expand, better bg color and shadows.
 - [ ] ADD: shift + click to select multiple items in lists.
+- [ ] ADD: maybe check if there are conflicting filters?, i.e: work (name) conflics with work.pdf (pdf).
 - [ ] ADD: pop up a warning when adding more than 6 (?) filters, not adviced, maybe think of adding more folders, or using regex or format.
 - [ ] ADD: theme selector (light and dark, maybe later more palettes).
 - [ ] ADD: arias to buttons.

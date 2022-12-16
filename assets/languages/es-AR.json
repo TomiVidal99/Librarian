@@ -29,7 +29,7 @@
   "noDestinationFiltersSelectedTitleAlert": "sin filtros!",
   "noDestinationFiltersSelectedBodyAlert": "no elegiste ningún filtro, para poder añadir una carpeta de destino tenés que agregar filtros",
   "destinationFolderAlreadySelectedWarningTitle": "carpeta ya existente",
-  "destinationFolderAlreadySelectedWarningBody": "la carpeta de destino que elegiste ya esta en la lista con los filtros ",
+  "destinationFolderAlreadySelectedWarningBody": "la carpeta de destino '%foldername' ya está en la lista con los filtros",
   "canMoveFilesCheckbox": "mover archivos",
   "resetButton": "reiniciar configuración",
   "autoLaunchCheckbox": "auto iniciar aplicación",

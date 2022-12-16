@@ -9,6 +9,7 @@ import "./Filters.style.scss";
 import uuid from "react-uuid";
 import { PickFiltersSection } from "./components";
 import { isValidDestinationFolder } from "./utils";
+import { warningAlert } from "../../../../utils/handle-alerts.utils";
 
 interface IProps {
   dispatch: React.Dispatch<IGlobalReducerAction>;
@@ -68,26 +69,41 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
   }: {
     name: string;
     path: string;
-  }): void => {
-    const alreadyHasThisPath = state.destinationFolders.filter(
-      (f) => f.path === path
-    );
-    if (alreadyHasThisPath.length > 0) {
-      window.api.popWarning(
-        getTranslated("destinationFolderAlreadySelectedWarningTitle"),
-        getTranslated("destinationFolderAlreadySelectedWarningBody").concat(
-          ...alreadyHasThisPath[0].filters.map(
-            (f) => `'${f.content}(${f.type})' `
-          )
-        )
+  }): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const alreadyHasThisPath = state.destinationFolders.filter(
+        (f) => f.path === path
       );
-    } else {
-      setDestinationFolder({
-        ...destinationFolder,
-        path,
-        name,
-      });
-    }
+      if (alreadyHasThisPath.length > 0) {
+        warningAlert({
+          title: getTranslated("destinationFolderAlreadySelectedWarningTitle"),
+          body:
+            getTranslated("destinationFolderAlreadySelectedWarningBody").concat(
+              ...alreadyHasThisPath[0].filters.map(
+                (f, i) => `${i > 0 ? "," : ""} '${f.content} (${f.type})'`
+              )
+            ),
+          foldername: path,
+          folderpath: "lasdkjasldkjsal",
+        })
+        // window.api.popWarning(
+        //   getTranslated("destinationFolderAlreadySelectedWarningTitle"),
+        //   getTranslated("destinationFolderAlreadySelectedWarningBody").concat(
+        //     ...alreadyHasThisPath[0].filters.map(
+        //       (f) => `'${f.content}(${f.type})' `
+        //     )
+        //   )
+        // );
+        resolve(false);
+      } else {
+        setDestinationFolder({
+          ...destinationFolder,
+          path,
+          name,
+        });
+        resolve(true);
+      }
+    });
   };
   useEffect(() => {
     dispatch({

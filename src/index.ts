@@ -76,7 +76,7 @@ const createFiltersWindow = (): void => {
 
   // send state to the page
   filtersWindow.on("ready-to-show", () => {
-    mainWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, getState(store));
+    filtersWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, getState(store));
   });
 
   // Open the DevTools.

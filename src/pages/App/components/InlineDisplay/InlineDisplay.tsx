@@ -10,7 +10,7 @@ interface IProps {
   type?: "text" | "pick";
   style?: "normal" | "add" | "remove" | FilterType;
   className?: string;
-  callbackClick?: (arg0: { name: string; path: string }) => void;
+  callbackClick?: (arg0: { name: string; path: string }) => Promise<boolean>;
   callbackChange?: (arg0: string) => void;
 }
 
@@ -19,9 +19,10 @@ export const Input = ({
   type = "text",
   style = "normal",
   placeholder,
-  callbackClick = () => {
-    console.error("You must define a click callback");
-  },
+  callbackClick = () => new Promise((resolve, reject) => {
+    const err = "You must define a click callback";
+    reject(err);
+  }),
   callbackChange = () => {
     console.error("You must define a change callback");
   },
@@ -38,8 +39,10 @@ export const Input = ({
     if (foldersPaths === undefined || foldersPaths.length === 0) return;
     const path = foldersPaths[0];
     const name = getFolderName(path);
-    setValue(path);
-    callbackClick({ name, path });
+    callbackClick({ name, path }).then( (success) => {
+      if (!success) return;
+      setValue(path);
+    });
     blurOutInput();
   };
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
