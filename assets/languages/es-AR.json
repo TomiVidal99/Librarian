@@ -28,6 +28,8 @@
   "noDestinationFolderSelectedBodyAlert": "no elegiste ninguna carpeta de destino, para poder añadir una carpeta de destino tenés que especificar una ubicación",
   "noDestinationFiltersSelectedTitleAlert": "sin filtros!",
   "noDestinationFiltersSelectedBodyAlert": "no elegiste ningún filtro, para poder añadir una carpeta de destino tenés que agregar filtros",
+  "maxFiltersTitleAlert": "muchos filtros!",
+  "maxFiltersBodyAlert": "no recomendamos tantos filtros. No provoca ningún error en la aplicación, sin embargo quizás podés usar expresiones regulares que simplifiquen todo.",
   "destinationFolderAlreadySelectedWarningTitle": "carpeta ya existente",
   "destinationFolderAlreadySelectedWarningBody": "la carpeta de destino '%foldername' ya está en la lista con los filtros",
   "canMoveFilesCheckbox": "mover archivos",

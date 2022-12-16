@@ -86,14 +86,6 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
           foldername: path,
           folderpath: "lasdkjasldkjsal",
         })
-        // window.api.popWarning(
-        //   getTranslated("destinationFolderAlreadySelectedWarningTitle"),
-        //   getTranslated("destinationFolderAlreadySelectedWarningBody").concat(
-        //     ...alreadyHasThisPath[0].filters.map(
-        //       (f) => `'${f.content}(${f.type})' `
-        //     )
-        //   )
-        // );
         resolve(false);
       } else {
         setDestinationFolder({
@@ -122,6 +114,10 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
         title: getTranslated("noDestinationFiltersSelectedTitleAlert"),
         body: getTranslated("noDestinationFiltersSelectedBodyAlert"),
       },
+      maxFiltersText: {
+        title: getTranslated("maxFiltersTitleAlert"),
+        body: getTranslated("maxFiltersBodyAlert"),
+      }
     });
     if (!isValid) return;
     window.api.sendDestinationFolder(destinationFolder);
