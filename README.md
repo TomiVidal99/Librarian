@@ -65,12 +65,13 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX/ADD: the language should be loaded in the backend and then given to the frontend.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
-- [ ] FIX: notification messages.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
 - [ ] FIX: language not syncronizing properly with translation files.
+- [ ] ADD: disable/enable organize files, inside the tray and the settings page.
 - [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
