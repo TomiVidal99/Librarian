@@ -77,7 +77,7 @@ Project is: _in progress_.
 - [ ] ADD: recursion to the origin folders.
 - [ ] ADD: shift + click to select multiple items in lists.
 - [ ] ADD: maybe check if there are conflicting filters?, i.e: work (name) conflics with work.pdf (pdf).
-- [ ] ADD: theme selector (light and dark, maybe later more palettes).
+- [ ] ADD: theme selector (light and dark, later maybe more palettes).
 - [ ] ADD: navigation.
 - [ ] MAYBE ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
 - [ ] IMPROVE: organize all ipcMain handlers better.

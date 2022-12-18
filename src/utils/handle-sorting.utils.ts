@@ -117,6 +117,7 @@ const handleNewFile = (filepath: string): void => {
           sendNotification({
             title: "Se movió un archivo",
             body: `El archivo ${filepath} se movió a ${destinationPath}`,
+            type: "move-file",
           });
           sendRecentlyWatchedFolder({
             name: folder.name,
