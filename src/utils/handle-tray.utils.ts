@@ -1,7 +1,8 @@
 import { Menu, nativeImage, Tray } from "electron";
 import path from "path";
+import { useLanguage } from "../hooks";
+import { LanguageContext } from "../state";
 import { quitApp, toggleOpenMainWindow } from "../.";
-import { getCurrentPlatform, PLATFORMS } from ".";
 
 export let tray: Tray;
 
@@ -23,24 +24,24 @@ const getTrayPaths = (icon: TRAY_PATHS): string => {
 
 /**
  * Creates the tray that 'holds' the app, when destroy the app it's closed.
+ * TODO: get dynamic language
  */
 export const createTray = (): void => {
   const iconPath = getTrayPaths(TRAY_PATHS.ICON);
   const icon = nativeImage.createFromPath(iconPath);
+
   tray = new Tray(icon);
 
   const contextMenu = Menu.buildFromTemplate([
     { label: "Configuraciones", type: "normal", click: toggleOpenMainWindow},
-    { type: "separator", click: quitApp },
-    { label: "Quit", type: "normal", click: quitApp },
+    { type: "separator" },
+    { label: "Salir", type: "normal", click: quitApp },
   ]);
 
   tray.setContextMenu(contextMenu);
 
-  tray.setToolTip("This is my application");
-  tray.setTitle("This is my title");
-
-  // console.log({ iconPath, icon, tray });
+  tray.setToolTip("Librarian");
+  tray.setTitle("Librarian");
 };
 
 /**

@@ -1,4 +1,6 @@
 {
+  "trayTitle": "Librarian",
+  "trayToolTip": "Librarian",
   "appDescriptionSection": "descripción de la aplicación",
   "description": "con esta aplicación vas a poder organizar tus archivos automaticamente, solamente necesitás configurar las carpetas de 'origen' y las de 'destino' con sus correspondientes 'filtros' y listo!",
   "recentlyMovedSection": "organizados recientemente",
