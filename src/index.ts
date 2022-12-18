@@ -29,8 +29,8 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 let watcher: FSWatcher;
 export const store = new Store();
 
-let mainWindow: BrowserWindow;
-let filtersWindow: BrowserWindow;
+let mainWindow: BrowserWindow = null;
+let filtersWindow: BrowserWindow = null;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -62,6 +62,13 @@ const createSettingsWindow = (): void => {
 };
 
 const createFiltersWindow = (): void => {
+  // check if the window has already been created
+  console.log(filtersWindow);
+  if (filtersWindow !== null) {
+    filtersWindow.focus();
+    return;
+  }
+
   // Create the browser window.
   filtersWindow = new BrowserWindow({
     height: 600,
@@ -78,6 +85,10 @@ const createFiltersWindow = (): void => {
   filtersWindow.on("ready-to-show", () => {
     filtersWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, getState(store));
   });
+
+  filtersWindow.on("closed", () => {
+    filtersWindow = null;
+  })
 
   // Open the DevTools.
   // filtersWindow.webContents.openDevTools();
