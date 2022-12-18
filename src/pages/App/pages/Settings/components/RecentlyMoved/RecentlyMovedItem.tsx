@@ -3,10 +3,15 @@ import "./RecentlyMovedItem.style.scss";
 
 interface IProps {
   item: IRecentlyMovedFolder;
+  translationData: [string, string];
   className?: string;
 }
 
-export const RecentlyMovedItem = ({ item, className }: IProps): JSX.Element => {
+export const RecentlyMovedItem = ({
+  item,
+  translationData,
+  className,
+}: IProps): JSX.Element => {
   const handleOpenFolder = () => {
     window.api.openRecentlyMoved(item.destination);
   };
@@ -19,8 +24,8 @@ export const RecentlyMovedItem = ({ item, className }: IProps): JSX.Element => {
           <span>{`${date.toLocaleTimeString()} - ${date.toLocaleDateString()}`}</span>
         </div>
         <div className="recently-moved__paths">
-          <span>{item.origin}</span>
-          <span>{item.destination}</span>
+          <span>{`${translationData[0].toUpperCase()}: ${item.origin}`}</span>
+          <span>{`${translationData[1].toUpperCase()}: ${item.destination}`}</span>
         </div>
       </button>
     </li>

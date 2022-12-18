@@ -34,16 +34,31 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  row-gap: 0.6em;
   & > *:first-child {
     font-size: larger;
+  }
+  & > *:last-child {
+    font-style: italic;
   }
 }
 
 .recently-moved__paths {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   font-size: smaller;
   color: var(--color-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  row-gap: 0.4em;
+  & span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    width: 100%;
+  }
 }

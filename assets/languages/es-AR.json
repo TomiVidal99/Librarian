@@ -2,6 +2,8 @@
   "appDescriptionSection": "descripción de la aplicación",
   "description": "con esta aplicación vas a poder organizar tus archivos automaticamente, solamente necesitás configurar las carpetas de 'origen' y las de 'destino' con sus correspondientes 'filtros' y listo!",
   "recentlyMovedSection": "organizados recientemente",
+  "recentlyMovedFrom": "desde",
+  "recentlyMovedTo": "hasta",
   "originFoldersSection": "carpetas de origen",
   "originFoldersDescription": "éstas carpetas se examinarán para organizar sus archivos",
   "noOriginFoldersWarning": "Necesitás agregar carpetas para que el programa organice los archivos, hacé click en el botón de abajo (nueva carpeta)",
