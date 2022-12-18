@@ -10,12 +10,13 @@ export const RecentlyMovedItem = ({ item, className }: IProps): JSX.Element => {
   const handleOpenFolder = () => {
     window.api.openRecentlyMoved(item.destination);
   };
+  const date = new Date(item.time);
   return (
     <li className={`recently-moved-container ${className}`}>
       <button onClick={handleOpenFolder} className="recently-moved-btn">
         <div className="recently-moved__header">
           <span>{item.name}</span>
-          <span>{`${item.time.toLocaleTimeString()} - ${item.time.toLocaleDateString()}`}</span>
+          <span>{`${date.toLocaleTimeString()} - ${date.toLocaleDateString()}`}</span>
         </div>
         <div className="recently-moved__paths">
           <span>{item.origin}</span>
