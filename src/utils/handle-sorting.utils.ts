@@ -1,7 +1,6 @@
-import { ipcMain } from "electron";
 import { FSWatcher, watch } from "chokidar";
 import { getFolderName } from "../pages/App/components/OriginFolders/utils";
-import { getState } from ".";
+import { getState, startMovingFileAnimation } from ".";
 import { sendRecentlyWatchedFolder, store } from "../";
 import path from "path";
 import fs from "fs";
@@ -114,6 +113,7 @@ const handleNewFile = (filepath: string): void => {
           });
         } else {
           console.log("moved sucessfully");
+          startMovingFileAnimation();
           sendNotification({
             title: "Se movió un archivo",
             body: `El archivo ${filepath} se movió a ${destinationPath}`,

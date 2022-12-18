@@ -1,5 +1,3 @@
-import os from "os";
-
 import {
   app,
   BrowserWindow,
@@ -26,6 +24,7 @@ import {
   createTray,
   tray,
   destroyTray,
+  cleanTrayAnimations,
 } from "./utils";
 import { IGlobalState } from "./state";
 import { FSWatcher } from "chokidar";
@@ -172,8 +171,10 @@ export const quitApp = () => {
 
 // Clean before quitting
 app.on("before-quit", () => {
+  removeAllListeners({watcher});
   settingsWindow.destroy();
   filtersWindow.destroy();
+  cleanTrayAnimations();
   destroyTray();
 })
 
