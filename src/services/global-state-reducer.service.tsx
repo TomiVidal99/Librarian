@@ -1,11 +1,13 @@
 import uuid from "react-uuid";
-import { ISendRecentlyWatchedFolder } from "src";
+import { ISendRecentlyWatchedFolder } from "..";
 import {
   IGlobalReducerAction,
   IGlobalReducerActionsType,
   IOriginFolder,
 } from "../models";
 import { IGlobalState } from "../state";
+
+const MAX_RECENTLY_WATCHED_FOLDERS = 5;
 
 export const ACTIONS: IGlobalReducerActionsType = {
   UPDATE_STATE: "update-state",
@@ -71,8 +73,14 @@ export const reducer = (
         action.payload as ISendRecentlyWatchedFolder;
       return updateState({
         ...state,
+        // this logic caps the log of the folders to MAX_RECENTLY_WATCHED_FOLDERS
         recentlyMovedFolders: [
-          ...state.recentlyMovedFolders,
+          ...(state.recentlyMovedFolders.length >= MAX_RECENTLY_WATCHED_FOLDERS
+            ? state.recentlyMovedFolders.splice(
+              0,
+              state.recentlyMovedFolders.length - 1
+            )
+            : state.recentlyMovedFolders),
           {
             name,
             origin,
