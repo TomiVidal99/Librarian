@@ -4,6 +4,7 @@ import { getState } from ".";
 import { store } from "../";
 import path from "path";
 import fs from "fs";
+import { sendNotification } from "./handle-notifications.utils";
 
 const WATCH_OPTIONS = {
   ignored: /(^|[\/\\])\../, // ignore dotfiles
@@ -100,8 +101,15 @@ const handleNewFile = (filepath: string): void => {
       fs.rename(filepath, destinationPath, (err) => {
         // TODO: add error notification
         //if (err) throw err;
-        console.error(err);
-        console.log("moved sucessfully");
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("moved sucessfully");
+          sendNotification({
+            title: "Se movió un archivo",
+            body: `El archivo ${filepath} se movió a ${destinationPath}`,
+          })
+        }
       })
     })
   })

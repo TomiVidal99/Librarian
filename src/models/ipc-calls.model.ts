@@ -11,7 +11,8 @@ export type IpcCallsType =
   | "open-recently-moved-folder"
   | "get-origin-folders"
   | "remove-origin-folder"
-  | "add-origin-folder";
+  | "add-origin-folder"
+  | "send-notification";
 
 export interface IIpcCalls {
   [key: string]: IpcCallsType;
@@ -31,4 +32,5 @@ export const IPC_CALLS: IIpcCalls = {
   GET_ORIGIN_FOLDERS: "get-origin-folders",
   REMOVE_ORIGIN_FOLDER: "remove-origin-folder",
   ADD_ORIGIN_FOLDER: "add-origin-folder",
+  SEND_NOTIFICATION: "send-notification",
 };
