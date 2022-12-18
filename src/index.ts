@@ -1,3 +1,5 @@
+import os from "os";
+
 import {
   app,
   BrowserWindow,
@@ -6,7 +8,12 @@ import {
   IpcMainEvent,
   shell,
 } from "electron";
-import { IDestinationFolder, IFilter, INotification, IPC_CALLS } from "./models";
+import {
+  IDestinationFolder,
+  IFilter,
+  INotification,
+  IPC_CALLS,
+} from "./models";
 import Store from "electron-store";
 import {
   getState,
@@ -16,6 +23,9 @@ import {
   initalizeWatcher,
   removeAllListeners,
   removeFoldersListeners,
+  createTray,
+  tray,
+  destroyTray,
 } from "./utils";
 import { IGlobalState } from "./state";
 import { FSWatcher } from "chokidar";
@@ -30,7 +40,7 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 let watcher: FSWatcher;
 export const store = new Store();
 
-let mainWindow: BrowserWindow = null;
+let settingsWindow: BrowserWindow = null;
 let filtersWindow: BrowserWindow = null;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -40,7 +50,7 @@ if (require("electron-squirrel-startup")) {
 
 const createSettingsWindow = (): void => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
+  settingsWindow = new BrowserWindow({
     height: 600,
     width: 800,
     webPreferences: {
@@ -49,17 +59,31 @@ const createSettingsWindow = (): void => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  settingsWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // loads the saved state
-  mainWindow.on("ready-to-show", () => {
+  settingsWindow.on("ready-to-show", () => {
     // send state to the page
-    mainWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, getState(store));
-
-    // intialize the watcher and add the listeners
-    // const state = getState(store);
-    watcher = initalizeWatcher();
+    settingsWindow.webContents.send(
+      IPC_CALLS.GET_STATE_FROM_MAIN,
+      getState(store)
+    );
   });
+
+  settingsWindow.on("close", (event) => {
+    event.preventDefault();
+    settingsWindow.hide();
+  });
+
+  // hide the window by default when the app first launched
+  settingsWindow.hide();
+};
+// toggle open or closed the mainWindow when the tray it's double clicked
+// or when the option in the drop down menu it's clicked
+// TODO: add menu option to open the settings window
+export const toggleOpenMainWindow = () => {
+  if (!settingsWindow) throw "Expected mainWindow to exits.";
+  settingsWindow.isVisible() ? settingsWindow.hide() : settingsWindow.show();
 };
 
 const createFiltersWindow = (): void => {
@@ -103,30 +127,55 @@ export interface ISendRecentlyWatchedFolder {
   destination: string;
   filter: IFilter;
 }
-/** 
+/**
  * Sends data to the settings page to make a recently moved folder.
  */
 export const sendRecentlyWatchedFolder = (data: ISendRecentlyWatchedFolder) => {
-  if (mainWindow === null) return;
-  mainWindow.webContents.send(IPC_CALLS.SEND_RECENTLY_WATCHED, data)
+  if (settingsWindow === null) return;
+  settingsWindow.webContents.send(IPC_CALLS.SEND_RECENTLY_WATCHED, data);
+};
+
+function initApp() {
+  // TODO: if the window has not been created and a folder has been
+  // the recently moved folder won't be created.
+  //createSettingsWindow();
+  createTray();
+
+  // creates the main window
+  createSettingsWindow();
+
+  // start watching
+  watcher = initalizeWatcher();
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createSettingsWindow);
+app.on("ready", initApp);
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    if (watcher) {
-      removeAllListeners({ watcher });
-    }
-    app.quit();
-  }
-});
+// app.on("window-all-closed", () => {
+//   if (process.platform !== "darwin") {
+//     if (watcher) {
+//       removeAllListeners({ watcher });
+//     }
+//     app.quit();
+//   }
+// });
+
+// Quit app
+export const quitApp = () => {
+  app.quit();
+}
+
+// Clean before quitting
+app.on("before-quit", () => {
+  settingsWindow.destroy();
+  filtersWindow.destroy();
+  destroyTray();
+})
 
 app.on("activate", () => {
   // On OS X it's common to re-create a window in the app when the
@@ -162,7 +211,7 @@ ipcMain.handle(
 ipcMain.on(
   IPC_CALLS.POP_WARNING_MESSAGE,
   (event: IpcMainEvent, data: { title: string; body: string }) => {
-    dialog.showMessageBox(mainWindow, {
+    dialog.showMessageBox(settingsWindow, {
       message: data.body,
       title: data.title,
     });
@@ -176,7 +225,7 @@ ipcMain.on(
   IPC_CALLS.SEND_FOLDER_FROM_FILTERS_WINDOW,
   (event: IpcMainEvent, folder: IDestinationFolder) => {
     if (folder.name === "") return;
-    mainWindow.webContents.send(IPC_CALLS.RECIEVE_FOLDER_FROM_MAIN, folder);
+    settingsWindow.webContents.send(IPC_CALLS.RECIEVE_FOLDER_FROM_MAIN, folder);
   }
 );
 
@@ -192,7 +241,10 @@ ipcMain.on(
 
 // resets the settings
 ipcMain.on(IPC_CALLS.RESET_SETTINGS, () => {
-  mainWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, resetState(store));
+  settingsWindow.webContents.send(
+    IPC_CALLS.GET_STATE_FROM_MAIN,
+    resetState(store)
+  );
   watcher.removeAllListeners();
 });
 
