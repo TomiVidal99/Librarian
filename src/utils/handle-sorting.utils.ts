@@ -1,7 +1,8 @@
+import { ipcMain } from "electron";
 import { FSWatcher, watch } from "chokidar";
 import { getFolderName } from "../pages/App/components/OriginFolders/utils";
 import { getState } from ".";
-import { store } from "../";
+import { sendRecentlyWatchedFolder, store } from "../";
 import path from "path";
 import fs from "fs";
 import { sendNotification } from "./handle-notifications.utils";
@@ -11,16 +12,18 @@ const WATCH_OPTIONS = {
   ignoreInitial: true, // TODO: make this an option in the frontend
   persistent: true,
   depth: 0,
-}
+};
 
 /**
  * Creates the watcher with it's intial configuration
  * @returns {FSWatcher}
  */
 export const initalizeWatcher = (): FSWatcher => {
-  const originFoldersPaths = getState(store).originFolders.map(f => f.path);
+  const originFoldersPaths = getState(store).originFolders.map((f) => f.path);
   const watcher = watch(originFoldersPaths, WATCH_OPTIONS);
-  watcher.on('add', (file) => { handleNewFile(file) });
+  watcher.on("add", (file) => {
+    handleNewFile(file);
+  });
   return watcher;
 };
 
@@ -34,7 +37,7 @@ export const removeFoldersListeners = ({
   folders: string[];
   watcher: FSWatcher;
 }): void => {
-  console.log('Removing: ', folders);
+  console.log("Removing: ", folders);
   watcher.unwatch(folders);
 };
 
@@ -46,10 +49,10 @@ export const updateOriginListeners = ({
 }: {
   watcher: FSWatcher;
 }): void => {
-  console.log('updating origin listeners');
+  console.log("updating origin listeners");
   const alreadyInWatch = Object.keys(watcher.getWatched());
-  const notWatched = getState(store).originFolders
-    .filter((folder) => !alreadyInWatch.includes(folder.path))
+  const notWatched = getState(store)
+    .originFolders.filter((folder) => !alreadyInWatch.includes(folder.path))
     .map(({ path }) => path);
   watcher.add(notWatched);
 };
@@ -77,13 +80,13 @@ interface ISortArgs {
 const handleNewFile = (filepath: string): void => {
   console.log(`new file ${filepath}`);
   const filename = getFolderName(filepath);
-  const state = getState(store)
+  const state = getState(store);
 
   const actions = {
-    "name": sortByName,
-    "format": sortByFormat,
-    "regex": sortByRegex,
-  }
+    name: sortByName,
+    format: sortByFormat,
+    regex: sortByRegex,
+  };
 
   // TODO: check how i would sort by priority
   state.destinationFolders.forEach((folder) => {
@@ -91,49 +94,60 @@ const handleNewFile = (filepath: string): void => {
       const args: ISortArgs = {
         filename: filename,
         filter: filter.content,
-      }
+      };
       const shouldMove = actions[filter.type](args);
       if (!shouldMove) return;
       const destinationPath = `${folder.path}/${filename}`;
-      console.log(`moving ${filepath} to ${destinationPath}, (filter: ${filter.type})`);
-      // TODO: create a recently moved folder
+      console.log(
+        `moving ${filepath} to ${destinationPath}, (filter: ${filter.type})`
+      );
       // TODO: create tray animation
       fs.rename(filepath, destinationPath, (err) => {
         // TODO: add error notification
         //if (err) throw err;
         if (err) {
           console.error(err);
+          sendNotification({
+            title: "Ocurrió un error",
+            body: `Ocurrió un error cuando se intentaba copiar ${filepath} a ${destinationPath}. Se aplicó el filtro '${filter.content} (${filter.type})'`,
+            type: "error",
+          });
         } else {
           console.log("moved sucessfully");
           sendNotification({
             title: "Se movió un archivo",
             body: `El archivo ${filepath} se movió a ${destinationPath}`,
-          })
+          });
+          sendRecentlyWatchedFolder({
+            name: folder.name,
+            origin: filepath,
+            destination: destinationPath,
+            filter,
+          });
         }
-      })
-    })
-  })
-
-}
+      });
+    });
+  });
+};
 
 /**
  * Sorts a file by name
  */
 const sortByName = ({ filename, filter }: ISortArgs): boolean => {
-  return filename.includes(filter)
-}
+  return filename.includes(filter);
+};
 
 /**
  * Sorts a file by format
  */
 const sortByFormat = ({ filename, filter }: ISortArgs): boolean => {
-  return path.extname(filename) === filter
-}
+  return path.extname(filename) === filter;
+};
 
 /**
  * Sorts a file by regular expression
  */
 const sortByRegex = ({ filename, filter }: ISortArgs): boolean => {
-  const regex = RegExp(filter)
-  return filename.match(regex) === null ? false : true
-}
+  const regex = RegExp(filter);
+  return filename.match(regex) === null ? false : true;
+};

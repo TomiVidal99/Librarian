@@ -1,3 +1,5 @@
+import uuid from "react-uuid";
+import { ISendRecentlyWatchedFolder } from "src";
 import {
   IGlobalReducerAction,
   IGlobalReducerActionsType,
@@ -65,10 +67,22 @@ export const reducer = (
         destinationFolders: action.payload,
       });
     case ACTIONS.ADD_RECENTLY_MOVED:
-      return {
+      const { name, origin, destination, filter } =
+        action.payload as ISendRecentlyWatchedFolder;
+      return updateState({
         ...state,
-        recentlyMovedFolders: [...state.recentlyMovedFolders, action.payload],
-      };
+        recentlyMovedFolders: [
+          ...state.recentlyMovedFolders,
+          {
+            name,
+            origin,
+            destination,
+            time: new Date(),
+            id: uuid(),
+            filter,
+          },
+        ],
+      });
     default:
       return state;
   }

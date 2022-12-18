@@ -62,11 +62,20 @@ export const App = () => {
 
   useEffect(() => {
     console.log("state updated: ", state);
+  }, [state]);
+
+  // listens to make a recently watched folder
+  useEffect(() => {
+    window.api.getRecentlyWatchedFolder((data) => {
+      dispatch({
+        type: ACTIONS.ADD_RECENTLY_MOVED,
+        payload: data,
+      });
+    });
   }, []);
 
   // syncs the state given by the main
   useEffect(() => {
-    console.log("getting state from main");
     window.api.getState((s: IGlobalState) => {
       dispatch({
         type: ACTIONS.UPDATE_STATE,

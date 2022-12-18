@@ -6,7 +6,7 @@ import {
   IpcMainEvent,
   shell,
 } from "electron";
-import { IDestinationFolder, INotification, IPC_CALLS } from "./models";
+import { IDestinationFolder, IFilter, INotification, IPC_CALLS } from "./models";
 import Store from "electron-store";
 import {
   getState,
@@ -64,7 +64,6 @@ const createSettingsWindow = (): void => {
 
 const createFiltersWindow = (): void => {
   // check if the window has already been created
-  console.log(filtersWindow);
   if (filtersWindow !== null) {
     filtersWindow.focus();
     return;
@@ -97,6 +96,20 @@ const createFiltersWindow = (): void => {
   // Open the DevTools.
   // filtersWindow.webContents.openDevTools();
 };
+
+export interface ISendRecentlyWatchedFolder {
+  name: string;
+  origin: string;
+  destination: string;
+  filter: IFilter;
+}
+/** 
+ * Sends data to the settings page to make a recently moved folder.
+ */
+export const sendRecentlyWatchedFolder = (data: ISendRecentlyWatchedFolder) => {
+  if (mainWindow === null) return;
+  mainWindow.webContents.send(IPC_CALLS.SEND_RECENTLY_WATCHED, data)
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

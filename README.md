@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
 - [ ] FIX: notification messages.

@@ -3,7 +3,7 @@ import path from "path";
 import { INotification } from "../models";
 
 export const sendNotification = (data: INotification): void => {
-  const { title, body, type = "normal", clickcallback } = data;
+  const { title, body, clickcallback } = data;
   const noti = new Notification({
     title,
     body,

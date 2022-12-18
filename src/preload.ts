@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
+import { ISendRecentlyWatchedFolder } from ".";
 import { IDestinationFolder, IpcCallsType, IPC_CALLS } from "./models";
 import { IGlobalState } from "./state";
 
@@ -21,6 +22,9 @@ declare global {
       openRecentlyMoved: (arg0: string) => void;
       logOriginFolders: () => Promise<string[]>;
       removeOriginFolder: (arg0: string[]) => void;
+      getRecentlyWatchedFolder: (
+        arg0: (arg0: ISendRecentlyWatchedFolder) => void
+      ) => void;
     };
   }
 }
@@ -28,13 +32,21 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  getRecentlyWatchedFolder: (
+    callback: (arg0: ISendRecentlyWatchedFolder) => void
+  ): void => {
+    ipcRenderer.on(
+      IPC_CALLS.SEND_RECENTLY_WATCHED,
+      (event: IpcRendererEvent, data: ISendRecentlyWatchedFolder) => {
+        callback(data);
+      }
+    );
+  },
   removeOriginFolder: (folders: string[]): void => {
     ipcRenderer.send(IPC_CALLS.REMOVE_ORIGIN_FOLDER, folders);
   },
   logOriginFolders: async (): Promise<string[]> => {
-    const folders = await ipcRenderer.invoke(
-      IPC_CALLS.GET_ORIGIN_FOLDERS
-    );
+    const folders = await ipcRenderer.invoke(IPC_CALLS.GET_ORIGIN_FOLDERS);
     return folders;
   },
   openRecentlyMoved: (folder: string): void => {
@@ -70,7 +82,9 @@ contextBridge.exposeInMainWorld("api", {
   popWarning: (title: string, body: string): void => {
     ipcRenderer.send(IPC_CALLS.POP_WARNING_MESSAGE, { title, body });
   },
-  pickAFolder: async (multiSelections: boolean): Promise<string[] | undefined> => {
+  pickAFolder: async (
+    multiSelections: boolean
+  ): Promise<string[] | undefined> => {
     const result = await ipcRenderer.invoke(
       IPC_CALLS.OPEN_FOLDERS_DIALOG,
       multiSelections
