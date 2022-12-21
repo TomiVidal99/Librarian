@@ -9,11 +9,11 @@ import { mainConfig } from "./webpack.main.config";
 import { rendererConfig } from "./webpack.renderer.config";
 
 import path from "path";
-const iconsPath = path.join(__dirname, "assets/icons/1024");
+const iconsPath = path.join(__dirname, "assets", "icons");
 
 const config: ForgeConfig = {
   packagerConfig: {
-    icon: iconsPath,
+    extraResource: iconsPath
   },
   rebuildConfig: {},
   makers: [

@@ -8,9 +8,9 @@ export let tray: Tray;
 export let trayAnimationInterval: NodeJS.Timer;
 
 const enum TRAY_PATHS {
-  "ICON" = "assets/icons/tray.png",
-  "CLEANING-1" = "assets/icons/tray-cleaning-1.png",
-  "CLEANING-2" = "assets/icons/tray-cleaning-2.png",
+  "ICON" = "tray.png",
+  "CLEANING-1" = "tray-cleaning-1.png",
+  "CLEANING-2" = "tray-cleaning-2.png",
 }
 
 /**
@@ -18,9 +18,10 @@ const enum TRAY_PATHS {
  * @returns {string} path
  */
 const getTrayPaths = (icon: TRAY_PATHS): string => {
-  return process.env.NODE_ENV === "development"
+  const p = process.env.NODE_ENV === "development"
     ? icon
-    : path.join(__dirname, icon);
+    : path.join(__dirname, "..", "..", "..", "icons", icon);
+  return p
 };
 
 /**
