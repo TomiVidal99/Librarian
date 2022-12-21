@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: add hashing to windows path names, so no conflic occurs when filtering the route.
 - [ ] FIX: remove frames on windows.
 - [ ] FIX: the store should be handled in the state handler file, move dependencies to it and make the refactors in the functions.
 - [ ] FIX/ADD: the language should be loaded in the backend and then given to the frontend.
