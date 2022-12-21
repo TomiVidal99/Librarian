@@ -65,6 +65,7 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: the store should be handled in the state handler file, move dependencies to it and make the refactors in the functions.
 - [ ] FIX/ADD: the language should be loaded in the backend and then given to the frontend.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
