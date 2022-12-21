@@ -1,4 +1,3 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { IGlobalState, initialState, LanguageContext } from "../../state";
 import { useLanguage } from "../../hooks";
 
@@ -6,7 +5,7 @@ import "./App.style.scss";
 import { IDestinationFolder } from "../../models";
 import { useEffect, useReducer } from "react";
 import { ACTIONS, reducer } from "../../services";
-import { Filters, NotFound, Settings } from "./pages";
+import { Filters, Settings } from "./pages";
 
 // const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
 //   {
@@ -107,18 +106,6 @@ export const App = () => {
   //   });
   // }, []);
 
-  // useEffect(() => {
-  //   console.log(window.location)
-  //   const path = window.location.href;
-  //   const routes = ["main_window", "filters_window"];
-  //   routes.forEach((r) => {
-  //     process.env.NODE_ENV === "production" ? 
-  //     console.log(path.includes(r) ? window.location.pathname = `${path}/${r}` : false)
-  //     : 
-  //     console.log(path.includes(r) ? redirect(`/${r}`) : false)
-  //   })
-  // }, [window.location]);
-
   return (
     <LanguageContext.Provider
       value={{
@@ -128,19 +115,12 @@ export const App = () => {
         languagesAvailables: supportedLanguages,
       }}
     >
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={"/main_window"}
-            element={<Settings state={state} dispatch={dispatch} />}
-          />
-          <Route
-            path={"/filters_window"}
-            element={<Filters dispatch={dispatch} />}
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </LanguageContext.Provider >
+      {
+        location.pathname.includes("main_window") && <Settings state={state} dispatch={dispatch} />
+      }
+      {
+        location.pathname.includes("filters_window") && <Filters dispatch={dispatch} />
+      }
+    </LanguageContext.Provider>
   );
 };
