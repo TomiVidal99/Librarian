@@ -77,9 +77,11 @@ interface ISortArgs {
  * Called back when a file has been added insisde some origin folder
  */
 const handleNewFile = (filepath: string): void => {
-  console.log(`new file ${filepath}`);
-  const filename = getFolderName(filepath);
   const state = getState(store);
+  const filename = getFolderName(filepath);
+
+  // if the user disables the files movement, don't move them
+  if (!state.canMoveFiles) return;
 
   const actions = {
     name: sortByName,
@@ -97,9 +99,9 @@ const handleNewFile = (filepath: string): void => {
       const shouldMove = actions[filter.type](args);
       if (!shouldMove) return;
       const destinationPath = `${folder.path}/${filename}`;
-      console.log(
-        `moving ${filepath} to ${destinationPath}, (filter: ${filter.type})`
-      );
+      // console.log(
+      //   `moving ${filepath} to ${destinationPath}, (filter: ${filter.type})`
+      // );
       // TODO: create tray animation
       fs.rename(filepath, destinationPath, (err) => {
         // TODO: add error notification
@@ -112,7 +114,7 @@ const handleNewFile = (filepath: string): void => {
             type: "error",
           });
         } else {
-          console.log("moved sucessfully");
+          // console.log("moved sucessfully");
           startMovingFileAnimation();
           sendNotification({
             title: "Se movió un archivo",
