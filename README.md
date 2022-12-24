@@ -74,6 +74,7 @@ Project is: _in progress_.
 - [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
 - [ ] FIX: language not syncronizing properly with translation files.
+- [ ] ADD: an alert when a recentlyMoved it's clicked but the file doesn't exists anymore. 
 - [ ] ADD: disable/enable organize files, inside the tray and the settings page.
 - [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
 - [ ] ADD: edit destination folders.
