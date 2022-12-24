@@ -21,9 +21,9 @@ export const isFilterCorrect = (
         const nameCondition =
           (f.content.includes(filter.content) ||
             filter.content.includes(f.content)) &&
-          filter.type === "name";
+          filter.type === "name" && f.type === "name";
         const formatCondition =
-          f.content === filter.content && filter.type === "format";
+          filter.content === f.content && filter.type === "format" && f.type === "format";
         if (nameCondition || formatCondition) {
           warningAlert({
             title: ITextData.title,
@@ -33,6 +33,7 @@ export const isFilterCorrect = (
           });
           return true;
         }
+        return false;
       })
     )
   )
