@@ -66,22 +66,18 @@ Project is: _in progress_.
 ## TODO:
 
 - [ ] FIX: add hashing to windows path names, so no conflic occurs when filtering the route.
-- [ ] FIX: remove frames on windows.
 - [ ] FIX: the store should be handled in the state handler file, move dependencies to it and make the refactors in the functions.
+- [ ] FIX: language not syncronizing properly with translation files.
 - [ ] FIX/ADD: the language should be loaded in the backend and then given to the frontend.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
-- [ ] FIX: add more type checking to filters, expecially if a filter like format is added with a dot '.', should parse that correctly.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
-- [ ] FIX: language not syncronizing properly with translation files.
 - [ ] ADD: an alert when a recentlyMoved it's clicked but the file doesn't exists anymore. 
-- [ ] ADD: disable/enable organize files, inside the tray and the settings page.
 - [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
 - [ ] ADD: recursion to the origin folders.
 - [ ] ADD: shift + click to select multiple items in lists.
-- [ ] ADD: maybe check if there are conflicting filters?, i.e: work (name) conflics with work.pdf (pdf).
 - [ ] ADD: theme selector (light and dark, later maybe more palettes).
 - [ ] ADD: navigation.
 - [ ] MAYBE ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
