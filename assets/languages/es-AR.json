@@ -31,7 +31,7 @@
   "noDestinationFiltersSelectedTitleAlert": "sin filtros!",
   "noDestinationFiltersSelectedBodyAlert": "no elegiste ningún filtro, para poder añadir una carpeta de destino tenés que agregar filtros",
   "repeatedFilterTitleAlert": "posible filtro repetido",
-  "repeatedFilterBodyAlert": "el filtro que querés agregar está posiblemente en conflicto con alguno de la carpeta '%folderpath'",
+  "repeatedFilterBodyAlert": "el filtro que querés agregar está posiblemente en conflicto con alguno de la carpeta de destino '%folderpath'",
   "maxFiltersTitleAlert": "muchos filtros!",
   "maxFiltersBodyAlert": "no recomendamos tantos filtros. No provoca ningún error en la aplicación, sin embargo quizás podés usar expresiones regulares que simplifiquen todo.",
   "destinationFolderAlreadySelectedWarningTitle": "carpeta ya existente",

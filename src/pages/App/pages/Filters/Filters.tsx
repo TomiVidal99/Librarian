@@ -56,6 +56,13 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
   const [state, setState] = useState<IGlobalState | null>(null);
   useEffect(() => {
     // get state from main
+    window.api.getStateFromSettings((s) => {
+      console.log("getting state from settings: ", s);
+      setState(s);
+    });
+  }, []);
+  useEffect(() => {
+    // get state from main
     window.api.getState((s) => {
       console.log("getting state from main: ", s);
       setState(s);

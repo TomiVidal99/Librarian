@@ -9,8 +9,8 @@ import { IGlobalState } from "./state";
 declare global {
   interface Window {
     api: {
-      openFiltersWindow: (
-      ) => void;
+      getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;
+      openFiltersWindow: () => void;
       popWarning: (arg0: string, arg1: string) => void;
       pickAFolder: (arg0: boolean) => Promise<string[] | undefined>;
       sendDestinationFolder: (arg0: IDestinationFolder) => void;
@@ -33,8 +33,15 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
-  openFiltersWindow: (
-  ): void => {
+  getStateFromSettings: (callback: (arg0: IGlobalState) => void): void => {
+    ipcRenderer.on(
+      IPC_CALLS.GET_STATE_FROM_SETTINGS_WINDOW,
+      (event: IpcRendererEvent, state: IGlobalState) => {
+        callback(state);
+      }
+    );
+  },
+  openFiltersWindow: (): void => {
     ipcRenderer.send(IPC_CALLS.OPEN_FILTERS_WINDOW);
   },
   getRecentlyWatchedFolder: (

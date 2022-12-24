@@ -67,7 +67,7 @@ const createSettingsWindow = (): void => {
     height: 600,
     width: 800,
     show: false,
-    // frame: false,
+    frame: process.env.NODE_ENV === "development",
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
@@ -109,7 +109,7 @@ const createFiltersWindow = (): void => {
   filtersWindow = new BrowserWindow({
     height: 600,
     width: 200,
-    // frame: false,
+    frame: process.env.NODE_ENV === "development",
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
@@ -249,8 +249,11 @@ ipcMain.on(
   IPC_CALLS.SEND_STATE_FROM_SETTINGS_TO_MAIN,
   (event: IpcMainEvent, state: IGlobalState) => {
     saveState(store, state);
-    // TODO: think if i will remove this or not
     updateOriginListeners({ watcher });
+    // updates the state of the filters window
+    if (filtersWindow && !filtersWindow.isDestroyed()) {
+      filtersWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_SETTINGS_WINDOW, state);
+    }
   }
 );
 

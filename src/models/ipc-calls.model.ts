@@ -14,7 +14,8 @@ export type IpcCallsType =
   | "add-origin-folder"
   | "send-notification"
   | "send-main-to-settings-recently-watched-folder"
-  | "get-destination-folders-from-main-sync";
+  | "get-destination-folders-from-main-sync"
+  | "get-state-from-settings-window";
 
 export interface IIpcCalls {
   [key: string]: IpcCallsType;
@@ -37,4 +38,5 @@ export const IPC_CALLS: IIpcCalls = {
   SEND_NOTIFICATION: "send-notification",
   SEND_RECENTLY_WATCHED: "send-main-to-settings-recently-watched-folder",
   GET_DESTINATION_FOLDERS: "get-destination-folders-from-main-sync",
+  GET_STATE_FROM_SETTINGS_WINDOW: "get-state-from-settings-window",
 };

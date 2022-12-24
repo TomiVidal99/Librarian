@@ -29,14 +29,25 @@ export const PickFiltersSection = ({
       filters: [...folder.filters.filter((f) => f.id !== id)],
     });
   };
+  /**
+   * Checks if the filter it's format and then it returns the Filter
+   * with the content beginning with a dot.
+   */
+  const parseFormatFilter = (filter: IFilter): IFilter => {
+    if (filter.type !== "format" || filter.content[0] === ".") return filter;
+    return {
+      ...filter,
+      content: "." + filter.content,
+    };
+  };
   const handleAddFilter = (content: string, type: FilterType): void => {
     // TODO: make the priority system.
-    const newFilter: IFilter = {
+    const newFilter: IFilter = parseFormatFilter({
       id: uuid(),
       type,
       content,
       priority: 1,
-    };
+    });
     const warningText = {
       title: getTranslated("repeatedFilterTitleAlert"),
       body: getTranslated("repeatedFilterBodyAlert"),
