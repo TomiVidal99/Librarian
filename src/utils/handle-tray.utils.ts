@@ -18,10 +18,9 @@ const enum TRAY_PATHS {
  * @returns {string} path
  */
 const getTrayPaths = (icon: TRAY_PATHS): string => {
-  const p = process.env.NODE_ENV === "development"
-    ? path.join(__dirname, "assets", "icons", icon)
+  return process.env.NODE_ENV === "development"
+    ? path.join("assets", "icons", icon)
     : path.join(__dirname, "..", "..", "..", "icons", icon);
-  return p
 };
 
 /**
