@@ -3,15 +3,16 @@
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
 import { ISendRecentlyWatchedFolder } from ".";
-import { IDestinationFolder, IpcCallsType, IPC_CALLS } from "./models";
+import { IDestinationFolder, IPC_CALLS } from "./models";
 import { IGlobalState } from "./state";
 
 declare global {
   interface Window {
     api: {
+      openFiltersWindow: (
+      ) => void;
       popWarning: (arg0: string, arg1: string) => void;
       pickAFolder: (arg0: boolean) => Promise<string[] | undefined>;
-      request: (arg0: IpcCallsType, arg1?: any[]) => void;
       sendDestinationFolder: (arg0: IDestinationFolder) => void;
       recieveDestinationFolder: (
         arg0: (arg0: IDestinationFolder) => void
@@ -32,6 +33,10 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  openFiltersWindow: (
+  ): void => {
+    ipcRenderer.send(IPC_CALLS.OPEN_FILTERS_WINDOW);
+  },
   getRecentlyWatchedFolder: (
     callback: (arg0: ISendRecentlyWatchedFolder) => void
   ): void => {
@@ -55,6 +60,10 @@ contextBridge.exposeInMainWorld("api", {
   resetSettings: (): void => {
     ipcRenderer.send(IPC_CALLS.RESET_SETTINGS);
   },
+  /**
+   * Returns the state when the main updates it.
+   * @returns {IGlobalState} state Global State
+   */
   setState: (state: IGlobalState): void => {
     ipcRenderer.send(IPC_CALLS.SEND_STATE_FROM_SETTINGS_TO_MAIN, state);
   },
@@ -90,9 +99,5 @@ contextBridge.exposeInMainWorld("api", {
       multiSelections
     );
     return result;
-  },
-  request: (channel: IpcCallsType, args?: any[]): void => {
-    // TODO: add payload argument to send
-    ipcRenderer.send(channel, args ? args : []);
   },
 });

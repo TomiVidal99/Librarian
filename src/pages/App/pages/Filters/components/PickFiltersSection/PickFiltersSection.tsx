@@ -6,17 +6,19 @@ import {
 } from "../../../../../../models";
 import "./PickFiltersSection.style.scss";
 import { useContext } from "react";
-import { LanguageContext } from "../../../../../../state";
+import { IGlobalState, LanguageContext } from "../../../../../../state";
 import { isFilterCorrect } from "../../utils";
 import uuid from "react-uuid";
 import { FilterItem } from "../FilterItem/FilterItem";
 
 interface IProps {
+  state: IGlobalState;
   folder: IDestinationFolder;
   setFolder: React.Dispatch<React.SetStateAction<IDestinationFolder>>;
 }
 
 export const PickFiltersSection = ({
+  state,
   folder,
   setFolder,
 }: IProps): JSX.Element => {
@@ -28,9 +30,6 @@ export const PickFiltersSection = ({
     });
   };
   const handleAddFilter = (content: string, type: FilterType): void => {
-    // TODO: isFilterCorrect should also check that the filter
-    // has not been added before and does not overlap with others
-    if (!isFilterCorrect(content)) return;
     // TODO: make the priority system.
     const newFilter: IFilter = {
       id: uuid(),
@@ -38,6 +37,16 @@ export const PickFiltersSection = ({
       content,
       priority: 1,
     };
+    const warningText = {
+      title: getTranslated("repeatedFilterTitleAlert"),
+      body: getTranslated("repeatedFilterBodyAlert"),
+    };
+    const isCorrect = isFilterCorrect(
+      newFilter,
+      state.destinationFolders,
+      warningText
+    );
+    if (!isCorrect) return;
     setFolder({
       ...folder,
       filters: [...folder.filters, newFilter],

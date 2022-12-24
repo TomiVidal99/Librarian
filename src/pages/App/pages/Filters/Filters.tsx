@@ -140,6 +140,7 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
           callbackClick={handlePickedDestinationFolder}
         />
         <PickFiltersSection
+          state={state}
           folder={destinationFolder}
           setFolder={setDestinationFolder}
         />

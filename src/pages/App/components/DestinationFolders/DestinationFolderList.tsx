@@ -25,7 +25,7 @@ export const DestinationFolderList = ({
     );
   };
   const handleAddFolder = () => {
-    window.api.request(IPC_CALLS.OPEN_FILTERS_WINDOW);
+    window.api.openFiltersWindow();
   };
   const handleRemoveFolders = () => {
     removeFolders(folders.filter((f) => !selectedFolders.includes(f.id)));

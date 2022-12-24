@@ -13,7 +13,8 @@ export type IpcCallsType =
   | "remove-origin-folder"
   | "add-origin-folder"
   | "send-notification"
-  | "send-main-to-settings-recently-watched-folder";
+  | "send-main-to-settings-recently-watched-folder"
+  | "get-destination-folders-from-main-sync";
 
 export interface IIpcCalls {
   [key: string]: IpcCallsType;
@@ -35,4 +36,5 @@ export const IPC_CALLS: IIpcCalls = {
   ADD_ORIGIN_FOLDER: "add-origin-folder",
   SEND_NOTIFICATION: "send-notification",
   SEND_RECENTLY_WATCHED: "send-main-to-settings-recently-watched-folder",
+  GET_DESTINATION_FOLDERS: "get-destination-folders-from-main-sync",
 };
