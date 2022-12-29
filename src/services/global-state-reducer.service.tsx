@@ -16,6 +16,7 @@ export const ACTIONS: IGlobalReducerActionsType = {
   ADD_ORIGIN_FOLDER: "add-origin-folder",
   REMOVE_ORIGIN_FOLDERS: "remove-origin-folders",
   ADD_RECENTLY_MOVED: "get-recently-moved",
+  TOGGLE_AUTO_LAUNCH: "toggle-auto-launch",
 };
 
 let firstTimeInit = false;
@@ -36,6 +37,12 @@ export const reducer = (
   action: IGlobalReducerAction
 ): IGlobalState => {
   switch (action.type) {
+    case ACTIONS.TOGGLE_AUTO_LAUNCH:
+      window.api.toggleAutoLaunch();
+      return updateState({
+        ...state,
+        autoLaunch: action.payload
+      });
     case ACTIONS.UPDATE_STATE:
       return updateState({
         ...state,

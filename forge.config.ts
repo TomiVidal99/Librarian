@@ -20,7 +20,7 @@ const config: ForgeConfig = {
     new MakerSquirrel({}),
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({}),
-    new MakerDeb({}),
+    // new MakerDeb({}),
   ],
   plugins: [
     new WebpackPlugin({

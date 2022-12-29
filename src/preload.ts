@@ -9,6 +9,7 @@ import { IGlobalState } from "./state";
 declare global {
   interface Window {
     api: {
+      toggleAutoLaunch: () => void;
       getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;
       openFiltersWindow: () => void;
       popWarning: (arg0: string, arg1: string) => void;
@@ -33,6 +34,9 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  toggleAutoLaunch: (): void => {
+    ipcRenderer.send(IPC_CALLS.TOGGLE_AUTO_LAUNCH);
+  },
   getStateFromSettings: (callback: (arg0: IGlobalState) => void): void => {
     ipcRenderer.on(
       IPC_CALLS.GET_STATE_FROM_SETTINGS_WINDOW,

@@ -51,7 +51,7 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
           removeFolders={(toKeep, toRemove) => {
             dispatch({
               type: ACTIONS.REMOVE_ORIGIN_FOLDERS,
-              payload: {toKeep, toRemove},
+              payload: { toKeep, toRemove },
             });
           }}
         />
@@ -93,7 +93,12 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
         />
         <Checkbox
           label={getTranslated("autoLaunchCheckbox")}
-          callback={(e) => updateState({ ...state, autoLaunch: e })}
+          callback={(e) =>
+            dispatch({
+              type: ACTIONS.TOGGLE_AUTO_LAUNCH,
+              payload: e,
+            })
+          }
           defaultValue={state.autoLaunch}
         />
         <ResetSettings />

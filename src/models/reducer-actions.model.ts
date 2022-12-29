@@ -5,6 +5,7 @@ export interface IGlobalReducerActionsType {
   ADD_ORIGIN_FOLDER: "add-origin-folder";
   REMOVE_ORIGIN_FOLDERS: "remove-origin-folders";
   ADD_RECENTLY_MOVED: "get-recently-moved";
+  TOGGLE_AUTO_LAUNCH: "toggle-auto-launch",
 }
 
 export interface IGlobalReducerAction {
