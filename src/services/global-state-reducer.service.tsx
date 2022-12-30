@@ -38,7 +38,7 @@ export const reducer = (
 ): IGlobalState => {
   switch (action.type) {
     case ACTIONS.TOGGLE_AUTO_LAUNCH:
-      window.api.toggleAutoLaunch();
+      window.api.toggleAutoLaunch(action.payload);
       return updateState({
         ...state,
         autoLaunch: action.payload
