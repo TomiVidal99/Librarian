@@ -16,7 +16,8 @@ export type IpcCallsType =
   | "send-main-to-settings-recently-watched-folder"
   | "get-destination-folders-from-main-sync"
   | "get-state-from-settings-window"
-  | "toggle-auto-launch";
+  | "toggle-auto-launch"
+  | "change-language";
 
 export interface IIpcCalls {
   [key: string]: IpcCallsType;
@@ -41,4 +42,5 @@ export const IPC_CALLS: IIpcCalls = {
   GET_DESTINATION_FOLDERS: "get-destination-folders-from-main-sync",
   GET_STATE_FROM_SETTINGS_WINDOW: "get-state-from-settings-window",
   TOGGLE_AUTO_LAUNCH: "toggle-auto-launch",
+  CHANGE_LANGUAGE: "change-language",
 };

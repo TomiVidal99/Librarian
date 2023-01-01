@@ -88,7 +88,7 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
         />
         <LanguageSelector
           availableLanguages={languagesAvailables}
-          selectedLanguageCallback={(lang) => setLang(lang)}
+          selectedLanguageCallback={(lang) => window.api.changeLanguage(lang)}
           defaultValue={getLang}
         />
         <Checkbox

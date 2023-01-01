@@ -3,12 +3,14 @@
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
 import { ISendRecentlyWatchedFolder } from ".";
+import { LanguageType } from "./hooks";
 import { IDestinationFolder, IPC_CALLS } from "./models";
 import { IGlobalState } from "./state";
 
 declare global {
   interface Window {
     api: {
+      changeLanguage: (arg0: LanguageType) => void;
       toggleAutoLaunch: (arg0: boolean) => void;
       getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;
       openFiltersWindow: () => void;
@@ -34,6 +36,9 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  changeLanguage: (lang: LanguageType): void => {
+    ipcRenderer.send(IPC_CALLS.CHANGE_LANGUAGE, lang);
+  },
   toggleAutoLaunch: (isEnabled: boolean): void => {
     ipcRenderer.send(IPC_CALLS.TOGGLE_AUTO_LAUNCH, isEnabled);
   },
