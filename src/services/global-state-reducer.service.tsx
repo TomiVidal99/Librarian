@@ -10,6 +10,7 @@ import { IGlobalState } from "../state";
 const MAX_RECENTLY_WATCHED_FOLDERS = 5;
 
 export const ACTIONS: IGlobalReducerActionsType = {
+  UPDATE_LANGUAGE: "update-language",
   UPDATE_STATE: "update-state",
   ADD_DESTINATION_FOLDER: "add-destination-folder",
   REMOVE_DESTINATION_FOLDERS: "remove-destination-folders",
@@ -37,11 +38,17 @@ export const reducer = (
   action: IGlobalReducerAction
 ): IGlobalState => {
   switch (action.type) {
+    case ACTIONS.UPDATE_LANGUAGE:
+      window.api.changeLanguage(action.payload);
+      return updateState({
+        ...state,
+        language: action.payload,
+      });
     case ACTIONS.TOGGLE_AUTO_LAUNCH:
       window.api.toggleAutoLaunch(action.payload);
       return updateState({
         ...state,
-        autoLaunch: action.payload
+        autoLaunch: action.payload,
       });
     case ACTIONS.UPDATE_STATE:
       return updateState({
