@@ -308,7 +308,6 @@ ipcMain.on(
 ipcMain.on(
   IPC_CALLS.CHANGE_LANGUAGE,
   async (event: IpcMainEvent, lang: LanguageType) => {
-    console.log({lang})
     await setLanguage(lang);
     updateTrayText();
   }

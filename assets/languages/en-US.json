@@ -1,6 +1,9 @@
 {
-  "trayTitle": "Librarian",
-  "trayToolTip": "Librarian",
+  "trayTitle": "librarian",
+  "trayToolTip": "librarian",
+  "trayMovingFileToolTip": "moving file...",
+  "traySettings": "settings",
+  "trayQuit": "quit",
   "appDescriptionSection": "app description",
   "description": "with this app you can organize your files automatically, you just need to setup the 'origin' and 'destiny' folders with their corresponding 'filters' and it's all set!",
   "recentlyMovedSection": "recently organized",

@@ -5,8 +5,6 @@ import { quitApp, toggleOpenMainWindow } from "../.";
 
 const ANIMATION_TIME_INTERVAL = 500;
 
-let TRAY_MENU: Menu;
-
 export let tray: Tray;
 export let trayAnimationInterval: NodeJS.Timer;
 
@@ -35,42 +33,32 @@ export const createTray = (): void => {
 
   tray = new Tray(icon);
 
-  TRAY_MENU = Menu.buildFromTemplate([
+  const menu = Menu.buildFromTemplate([
     {
       id: "traySettings",
-      label: "",
+      label: getTranslated("traySettings"),
       type: "normal",
       click: toggleOpenMainWindow,
     },
     { type: "separator" },
     {
       id: "trayQuit",
-      label: "",
+      label: getTranslated("trayQuit"),
       type: "normal",
       click: quitApp,
     },
   ]);
 
-  tray.setContextMenu(TRAY_MENU);
-
-  updateTrayText();
+  tray.setContextMenu(menu);
 };
 
 /**
- * Updates the text of the tooltip and the menu accordingly to the language.
+ * Creates the tray again from scratch with the new language.
  * @returns {void} void
  */
 export const updateTrayText = (): void => {
-  TRAY_MENU.items.forEach((item) => {
-    if (item.id) {
-      item.label = getTranslated(item.id);
-    }
-  });
-  const items = TRAY_MENU.items;
-  console.log({items})
-  tray.setContextMenu(TRAY_MENU);
-  tray.setToolTip(getTranslated("trayToolTip"));
-  tray.setTitle(getTranslated("trayTitle"));
+  tray.destroy();
+  createTray();
 };
 
 /**
