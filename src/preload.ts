@@ -10,6 +10,7 @@ import { IGlobalState } from "./state";
 declare global {
   interface Window {
     api: {
+      getTranslated: (arg0: string) => Promise<string>;
       changeLanguage: (arg0: LanguageType) => void;
       toggleAutoLaunch: (arg0: boolean) => void;
       getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;
@@ -36,6 +37,10 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  getTranslated: async (key: string): Promise<string> => {
+    const translation = await ipcRenderer.invoke(IPC_CALLS.GET_TRANSLATED, key);
+    return translation;
+  },
   changeLanguage: (lang: LanguageType): void => {
     ipcRenderer.send(IPC_CALLS.CHANGE_LANGUAGE, lang);
   },

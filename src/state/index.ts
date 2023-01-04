@@ -1,2 +1,2 @@
-export * from "./global.state"
-export * from "./language.state"
+export * from "./global.state";
+export * from "./language.state";

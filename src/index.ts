@@ -12,7 +12,6 @@ import {
   INotification,
   IPC_CALLS,
 } from "./models";
-import Store from "electron-store";
 import {
   getState,
   resetState,
@@ -29,6 +28,8 @@ import {
   enableAutoLaunch,
   setLanguage,
   updateTrayText,
+  initializeStore,
+  getTranslated,
 } from "./utils";
 import { IGlobalState } from "./state";
 import { FSWatcher } from "chokidar";
@@ -46,7 +47,6 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const FILTERS_WINDOW_WEBPACK_ENTRY: string;
 
 let watcher: FSWatcher;
-export const store = new Store();
 
 let settingsWindow: BrowserWindow = null;
 let filtersWindow: BrowserWindow = null;
@@ -57,8 +57,6 @@ if (require("electron-squirrel-startup")) {
 }
 
 const createSettingsWindow = (): void => {
-
-
   // Create the browser window.
   settingsWindow = new BrowserWindow({
     height: 600,
@@ -76,10 +74,7 @@ const createSettingsWindow = (): void => {
   // loads the saved state
   settingsWindow.on("ready-to-show", () => {
     // send state to the page
-    settingsWindow.webContents.send(
-      IPC_CALLS.GET_STATE_FROM_MAIN,
-      getState(store)
-    );
+    settingsWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, getState());
   });
 
   settingsWindow.on("close", (event) => {
@@ -117,10 +112,7 @@ const createFiltersWindow = (): void => {
 
   // send state to the page
   filtersWindow.on("ready-to-show", () => {
-    filtersWindow.webContents.send(
-      IPC_CALLS.GET_STATE_FROM_MAIN,
-      getState(store)
-    );
+    filtersWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, getState());
   });
 
   filtersWindow.on("closed", () => {
@@ -150,6 +142,8 @@ async function initApp() {
   // the recently moved folder won't be created.
   //createSettingsWindow();
 
+  initializeStore();
+
   await setLanguage("es-AR");
 
   createTray();
@@ -161,7 +155,7 @@ async function initApp() {
   watcher = initalizeWatcher();
 
   // init auto launcher
-  const state = getState(store);
+  const state = getState();
   if (state.autoLaunch) {
     enableAutoLaunch();
   }
@@ -242,7 +236,7 @@ ipcMain.on(
 ipcMain.on(
   IPC_CALLS.SEND_STATE_FROM_SETTINGS_TO_MAIN,
   (event: IpcMainEvent, state: IGlobalState) => {
-    saveState(store, state);
+    saveState(state);
     updateOriginListeners({ watcher });
     // updates the state of the filters window
     if (filtersWindow && !filtersWindow.isDestroyed()) {
@@ -256,10 +250,7 @@ ipcMain.on(
 
 // resets the settings
 ipcMain.on(IPC_CALLS.RESET_SETTINGS, () => {
-  settingsWindow.webContents.send(
-    IPC_CALLS.GET_STATE_FROM_MAIN,
-    resetState(store)
-  );
+  settingsWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, resetState());
   watcher.removeAllListeners();
 });
 
@@ -310,5 +301,13 @@ ipcMain.on(
   async (event: IpcMainEvent, lang: LanguageType) => {
     await setLanguage(lang);
     updateTrayText();
+  }
+);
+
+// send translation to the renderer
+ipcMain.handle(
+  IPC_CALLS.GET_TRANSLATED,
+  async (event: IpcMainEvent, key: string) => {
+    return getTranslated(key);
   }
 );
