@@ -13,26 +13,24 @@ const DEFAULT_TRANSLATION = "TRANSLATION NOT FOUND";
 /**
  * Returns the current selected language, i.e 'es-AR'
  */
-export const getCurrentLanguage = (): string => {
+export function getCurrentLanguage(): string {
   return currentLanguage;
-};
+}
 
 /**
  * Sets the current language, updating the translations.
  * @param {LanguageType} language
  */
-export const setLanguage = async (language: LanguageType): Promise<void> => {
+export async function setLanguage(language: LanguageType): Promise<void> {
   currentLanguage = language;
   await updateLanguageDictionary(language);
-};
+}
 
 /**
  * Reads the language files corresponding to the current language and
  * sets the translations
  */
-const updateLanguageDictionary = async (
-  language: LanguageType
-): Promise<void> => {
+async function updateLanguageDictionary(language: LanguageType): Promise<void> {
   const filepath = path.resolve(
     __dirname,
     `../../assets/languages/${language}.json`
@@ -47,20 +45,20 @@ const updateLanguageDictionary = async (
       resolve();
     });
   });
-};
+}
 
 /**
  * Returns the translation with the correct format (capitalized).
  */
-const parseTranslation = (text: string): string => {
+function parseTranslation(text: string): string {
   return text[0].toUpperCase() + text.substring(1);
-};
+}
 
 /**
  * Returns the translation of a given key.
  * @argument {string} key Key in the translation file.
  * @returns {string} translation Translation contained inside the translation file.
  */
-export const getTranslated = (key: string): string => {
+export function getTranslated(key: string): string {
   return parseTranslation(translation[key] || DEFAULT_TRANSLATION);
-};
+}
