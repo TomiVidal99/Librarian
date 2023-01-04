@@ -1,29 +1,4 @@
-export type IpcCallsType =
-  | "open-filters-window"
-  | "close-filters-window"
-  | "open-folders-dialog"
-  | "pop-warning-message"
-  | "send-folder-from-filters-window"
-  | "recieve-folder-from-main"
-  | "get-state-from-main"
-  | "reset-settings"
-  | "send-state-from-settings-to-main"
-  | "open-recently-moved-folder"
-  | "get-origin-folders"
-  | "remove-origin-folder"
-  | "add-origin-folder"
-  | "send-notification"
-  | "send-main-to-settings-recently-watched-folder"
-  | "get-destination-folders-from-main-sync"
-  | "get-state-from-settings-window"
-  | "toggle-auto-launch"
-  | "change-language";
-
-export interface IIpcCalls {
-  [key: string]: IpcCallsType;
-}
-
-export const IPC_CALLS: IIpcCalls = {
+export const IPC_CALLS = {
   OPEN_FILTERS_WINDOW: "open-filters-window",
   CLOSE_FILTERS_WINDOW: "close-filters-window",
   OPEN_FOLDERS_DIALOG: "open-folders-dialog",
@@ -43,4 +18,5 @@ export const IPC_CALLS: IIpcCalls = {
   GET_STATE_FROM_SETTINGS_WINDOW: "get-state-from-settings-window",
   TOGGLE_AUTO_LAUNCH: "toggle-auto-launch",
   CHANGE_LANGUAGE: "change-language",
-};
+  GET_TRANSLATED: "get-translated-from-main",
+} as const;
