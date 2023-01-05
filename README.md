@@ -73,6 +73,7 @@ Project is: _in progress_.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
+- [ ] ADD: eslint-plugin-prettier. 
 - [ ] ADD: an alert when a recentlyMoved it's clicked but the file doesn't exists anymore. 
 - [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
 - [ ] ADD: edit destination folders.
