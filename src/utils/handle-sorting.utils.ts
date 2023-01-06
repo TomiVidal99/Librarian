@@ -1,7 +1,7 @@
 import { FSWatcher, watch } from "chokidar";
 import { getFolderName } from "../pages/App/components/OriginFolders/utils";
 import { getState, startMovingFileAnimation } from ".";
-import { sendRecentlyWatchedFolder, store } from "../";
+import { sendRecentlyWatchedFolder } from "../";
 import path from "path";
 import fs from "fs";
 import { sendNotification } from "./handle-notifications.utils";
@@ -18,7 +18,7 @@ const WATCH_OPTIONS = {
  * @returns {FSWatcher}
  */
 export const initalizeWatcher = (): FSWatcher => {
-  const originFoldersPaths = getState(store).originFolders.map((f) => f.path);
+  const originFoldersPaths = getState().originFolders.map((f) => f.path);
   const watcher = watch(originFoldersPaths, WATCH_OPTIONS);
   watcher.on("add", (file) => {
     handleNewFile(file);
@@ -50,7 +50,7 @@ export const updateOriginListeners = ({
 }): void => {
   console.log("updating origin listeners");
   const alreadyInWatch = Object.keys(watcher.getWatched());
-  const notWatched = getState(store)
+  const notWatched = getState()
     .originFolders.filter((folder) => !alreadyInWatch.includes(folder.path))
     .map(({ path }) => path);
   watcher.add(notWatched);
@@ -77,7 +77,7 @@ interface ISortArgs {
  * Called back when a file has been added insisde some origin folder
  */
 const handleNewFile = (filepath: string): void => {
-  const state = getState(store);
+  const state = getState();
   const filename = getFolderName(filepath);
 
   // if the user disables the files movement, don't move them
