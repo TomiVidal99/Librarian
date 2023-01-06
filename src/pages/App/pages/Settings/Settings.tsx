@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { LanguageType } from "src/utils";
 import { IGlobalReducerAction } from "../../../../models";
 import { ACTIONS } from "../../../../services";
 import { IGlobalState, LanguageContext } from "../../../../state";
@@ -15,8 +16,7 @@ interface IProps {
 }
 
 export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
-  const { getTranslated, languagesAvailables, setLang, getLang } =
-    useContext(LanguageContext);
+  const { getTranslated, getLang } = useContext(LanguageContext);
   const updateState = (state: IGlobalState) => {
     dispatch({
       type: ACTIONS.UPDATE_STATE,
@@ -87,8 +87,13 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
           defaultValue={state.canMoveFiles}
         />
         <LanguageSelector
-          availableLanguages={languagesAvailables}
-          selectedLanguageCallback={(lang) => window.api.changeLanguage(lang)}
+          availableLanguages={["es-AR", "en-US"]}
+          selectedLanguageCallback={(lang) =>
+            dispatch({
+              type: ACTIONS.UPDATE_LANGUAGE,
+              payload: lang,
+            })
+          }
           defaultValue={getLang}
         />
         <Checkbox

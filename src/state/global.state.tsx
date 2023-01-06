@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { LanguageType } from "../utils";
 import {
   IDestinationFolder,
   IOriginFolder,
@@ -9,7 +10,7 @@ export interface IGlobalState {
   recentlyMovedFolders: IRecentlyMovedFolder[];
   originFolders: IOriginFolder[];
   destinationFolders: IDestinationFolder[];
-  language: string; // TODO: Update this to a type
+  language: LanguageType; // TODO: Update this to a type
   appVersion: string;
   autoLaunch: boolean;
   canMoveFiles: boolean;

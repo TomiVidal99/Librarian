@@ -1,84 +1,30 @@
 import { useEffect, useState } from "react";
-import ES_LANGUAGE_JSON from "../../assets/languages/es-AR.json";
-import EN_LANGUAGE_JSON from "../../assets/languages/en-US.json";
+import { ILanguage, LanguageType} from "../utils";
 
-export type LanguageType = "en-US" | "es-AR";
-const DEFAULT_LANGUAGE: LanguageType = "es-AR" as const;
-const DEFAULT_NO_MESSAGE_RESPONSE = "TRANSLATION NOT FOUND" as const;
+const DEFAULT_LANGUAGE: LanguageType = "en-US";
 
-export const useLanguage = (): [
-  LanguageType,
-  (arg0: LanguageType) => Promise<void>,
-  (arg0: string) => string,
-  LanguageType[]
-] => {
-  const [currentLanguage, setCurrentLanguage] =
-    useState<LanguageType>(DEFAULT_LANGUAGE);
-  const [translations, setTranslations] = useState<any>(null);
-  const SUPPORTED_LANGUAGES: LanguageType[] = ["es-AR", "en-US"];
+// TODO: think how to reuse this from the backend
+const DEFAULT_TRANSLATION = "TRANSLATION NOT FOUND";
+function parseTranslation(text: string): string {
+  return text[0].toUpperCase() + text.substring(1);
+}
 
+export const useLanguage = (): [LanguageType, (arg0: string) => string] => {
+  const [currentLanguage, setCurrentLanguage] = useState<LanguageType>(DEFAULT_LANGUAGE);
+  const [translation, setTranslation] = useState<ILanguage>({});
+
+  // get language and translation from main
   useEffect(() => {
-    // console.log(`Default lang: ${currentLanguage}`);
-  });
-
-  const switchLanguages = (language: LanguageType): void => {
-    switch (language) {
-      case "en-US":
-        setTranslations(EN_LANGUAGE_JSON);
-        setCurrentLanguage("en-US");
-        break;
-      case "es-AR":
-        setTranslations(ES_LANGUAGE_JSON);
-        setCurrentLanguage("es-AR");
-        break;
-    }
-  };
-
-  // load the selected language and if all went correctly update the current language selected.
-  const loadLanguageAssets = async (language: LanguageType): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      if (currentLanguage === language)
-        reject("The selected language its already set");
-      resolve(switchLanguages(language));
+    window.api.getLanguage((currentLang, newTranslation) => {
+      setCurrentLanguage(currentLang);
+      setTranslation(newTranslation);
     });
-  };
+    window.api.sendLanguageToRenderer();
+  }, [])
 
-  const setLanguage = (language: LanguageType): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      loadLanguageAssets(language)
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  };
+  function getTranslatedText(key: string): string {
+    return parseTranslation(translation[key] || DEFAULT_TRANSLATION);
+  }
 
-  const getTranslatedText = (id: string): string => {
-    if (translations === null) return DEFAULT_NO_MESSAGE_RESPONSE;
-    const translatedText = translations[id] || DEFAULT_NO_MESSAGE_RESPONSE;
-    return translatedText;
-  };
-
-  // set default language based on user preferences and load the initial language.
-  useEffect(() => {
-    const defaultUserLanguage = navigator.language;
-    let languageUpdateFlag = false;
-    if (defaultUserLanguage) {
-      SUPPORTED_LANGUAGES.forEach((language) => {
-        if (language.split(defaultUserLanguage).length > 1) {
-          // match
-          switchLanguages(language);
-          languageUpdateFlag = true;
-        }
-      });
-    }
-    if (!languageUpdateFlag) {
-      // if there was no default language found
-      switchLanguages(DEFAULT_LANGUAGE);
-    }
-  }, []);
-
-  return [currentLanguage, setLanguage, getTranslatedText, SUPPORTED_LANGUAGES];
+  return [currentLanguage, getTranslatedText];
 };

@@ -1,5 +1,5 @@
 import Store from "electron-store";
-import { createFirstTimeState } from ".";
+import { createFirstTimeState, setLanguage } from ".";
 import { IGlobalState } from "../state";
 
 const STATE_KEY = "state" as const;

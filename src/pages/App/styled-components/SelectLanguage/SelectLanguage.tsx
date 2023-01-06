@@ -1,4 +1,4 @@
-import { LanguageType } from "../../../../hooks";
+import { LanguageType } from "../../../../utils";
 import { Select } from "../../components";
 
 interface IProps {

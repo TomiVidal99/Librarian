@@ -39,13 +39,13 @@ export const reducer = (
 ): IGlobalState => {
   switch (action.type) {
     case ACTIONS.UPDATE_LANGUAGE:
-      !firstTimeInit ? window.api.changeLanguage(action.payload) : null;
+      window.api.changeLanguage(action.payload);
       return updateState({
         ...state,
         language: action.payload,
       });
     case ACTIONS.TOGGLE_AUTO_LAUNCH:
-      !firstTimeInit ? window.api.toggleAutoLaunch(action.payload) : null;
+      window.api.toggleAutoLaunch(action.payload);
       return updateState({
         ...state,
         autoLaunch: action.payload,

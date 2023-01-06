@@ -1,20 +1,22 @@
 import path from "path";
 import fs from "fs";
-import { LanguageType } from "../hooks";
 
-interface ILanguage {
+export type LanguageType = "en-US" | "es-AR";
+
+export interface ILanguage {
   [key: string]: string;
 }
 
 let currentLanguage: LanguageType;
 let translation: ILanguage;
-const DEFAULT_TRANSLATION = "TRANSLATION NOT FOUND";
+export const DEFAULT_TRANSLATION = "TRANSLATION NOT FOUND";
 
 /**
- * Returns the current selected language, i.e 'es-AR'
+ * Returns the current selected language, i.e 'es-AR' and it's translation.
+ * @returns {tuple} [currentLanguage, translation]
  */
-export function getCurrentLanguage(): string {
-  return currentLanguage;
+export function getCurrentLanguage(): [LanguageType, ILanguage] {
+  return [currentLanguage as LanguageType, translation];
 }
 
 /**
@@ -48,17 +50,17 @@ async function updateLanguageDictionary(language: LanguageType): Promise<void> {
 }
 
 /**
- * Returns the translation with the correct format (capitalized).
- */
-function parseTranslation(text: string): string {
-  return text[0].toUpperCase() + text.substring(1);
-}
-
-/**
  * Returns the translation of a given key.
  * @argument {string} key Key in the translation file.
  * @returns {string} translation Translation contained inside the translation file.
  */
 export function getTranslated(key: string): string {
   return parseTranslation(translation[key] || DEFAULT_TRANSLATION);
+}
+
+/**
+ * Returns the translation with the correct format (capitalized).
+ */
+export function parseTranslation(text: string): string {
+  return text[0].toUpperCase() + text.substring(1);
 }

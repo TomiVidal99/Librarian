@@ -3,14 +3,15 @@
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
 import { ISendRecentlyWatchedFolder } from ".";
-import { LanguageType } from "./hooks";
+import { LanguageType, ILanguage } from "./utils";
 import { IDestinationFolder, IPC_CALLS } from "./models";
 import { IGlobalState } from "./state";
 
 declare global {
   interface Window {
     api: {
-      getTranslated: (arg0: string) => Promise<string>;
+      sendLanguageToRenderer: () => void;
+      getLanguage: (arg0: (arg0: LanguageType, arg1: ILanguage) => void) => void;
       changeLanguage: (arg0: LanguageType) => void;
       toggleAutoLaunch: (arg0: boolean) => void;
       getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;
@@ -37,9 +38,18 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
-  getTranslated: async (key: string): Promise<string> => {
-    const translation = await ipcRenderer.invoke(IPC_CALLS.GET_TRANSLATED, key);
-    return translation;
+  sendLanguageToRenderer: (): void => {
+    ipcRenderer.send(IPC_CALLS.SEND_LANGUAGE_TO_RENDERER);
+  },
+  getLanguage: (
+    callback: (arg0: LanguageType, arg1: ILanguage) => void
+  ): void => {
+    ipcRenderer.on(
+      IPC_CALLS.GET_LANGUAGE,
+      (event: IpcRendererEvent, [language, translation]) => {
+        callback(language, translation);
+      }
+    );
   },
   changeLanguage: (lang: LanguageType): void => {
     ipcRenderer.send(IPC_CALLS.CHANGE_LANGUAGE, lang);

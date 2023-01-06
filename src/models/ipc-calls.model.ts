@@ -18,5 +18,6 @@ export const IPC_CALLS = {
   GET_STATE_FROM_SETTINGS_WINDOW: "get-state-from-settings-window",
   TOGGLE_AUTO_LAUNCH: "toggle-auto-launch",
   CHANGE_LANGUAGE: "change-language",
-  GET_TRANSLATED: "get-translated-from-main",
+  GET_LANGUAGE: "get-language-from-main",
+  SEND_LANGUAGE_TO_RENDERER: "send-language-to-renderer",
 } as const;

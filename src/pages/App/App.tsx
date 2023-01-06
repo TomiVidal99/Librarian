@@ -55,8 +55,7 @@ import { Filters, Settings } from "./pages";
 
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [currentLanguage, setLanguage, getTranslatedText, supportedLanguages] =
-    useLanguage();
+  const [currentLanguage, getTranslatedText] = useLanguage();
 
   useEffect(() => {
     console.log("state updated: ", state);
@@ -110,9 +109,7 @@ export const App = () => {
     <LanguageContext.Provider
       value={{
         getLang: currentLanguage,
-        setLang: setLanguage,
         getTranslated: getTranslatedText,
-        languagesAvailables: supportedLanguages,
       }}
     >
       {
