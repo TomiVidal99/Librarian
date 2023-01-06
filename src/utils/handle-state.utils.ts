@@ -1,4 +1,5 @@
 import Store from "electron-store";
+import { updateWindowsState } from "src";
 import { createFirstTimeState, setLanguage } from ".";
 import { IGlobalState } from "../state";
 
@@ -19,6 +20,7 @@ export function initializeStore(): void {
  */
 export function saveState(state: IGlobalState): void {
   store.set(STATE_KEY, state);
+  updateWindowsState(state);
 }
 
 /**

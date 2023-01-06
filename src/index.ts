@@ -156,8 +156,7 @@ async function initApp() {
   watcher = initalizeWatcher();
 
   // init auto launcher
-  const state = getState();
-  if (state.autoLaunch) {
+  if (getState().autoLaunch) {
     enableAutoLaunch();
   }
 }
@@ -312,3 +311,13 @@ ipcMain.on(
     settingsWindow.webContents.send(IPC_CALLS.GET_LANGUAGE, getCurrentLanguage());
   }
 );
+
+/**
+ * Sends the new state to the settings and filters windows.
+ * @param {IGlobalState | null} state or null.
+ * @returns {void} null
+ */
+export function updateWindowsState(state: IGlobalState | null): void {
+  settingsWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, state ? state : getState());
+  filtersWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, state ? state : getState());
+}
