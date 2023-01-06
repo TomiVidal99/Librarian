@@ -10,10 +10,11 @@ import { rendererConfig } from "./webpack.renderer.config";
 
 import path from "path";
 const iconsPath = path.join(__dirname, "assets", "icons");
+const languagesPath = path.join(__dirname, "assets", "languages");
 
 const config: ForgeConfig = {
   packagerConfig: {
-    extraResource: iconsPath
+    extraResource: [iconsPath, languagesPath]
   },
   rebuildConfig: {},
   makers: [

@@ -1,12 +1,11 @@
 import { Notification } from "electron";
 import path from "path";
-import { store } from "..";
 import { getState } from ".";
 import { INotification } from "../models";
 
 export const sendNotification = (data: INotification): void => {
   const { title, body, type, clickcallback } = data;
-  const state = getState(store);
+  const state = getState();
 
   // only enable the notification if the user has it enabled
   if (!state.generalNotifications && type !== "move-file") return;

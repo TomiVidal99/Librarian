@@ -33,10 +33,11 @@ export async function setLanguage(language: LanguageType): Promise<void> {
  * sets the translations
  */
 async function updateLanguageDictionary(language: LanguageType): Promise<void> {
-  const filepath = path.resolve(
+  const filepath = process.env.NODE_ENV === "development" ? path.resolve(
     __dirname,
-    `../../assets/languages/${language}.json`
-  );
+    `../../assets/languages/${language}.json`)
+    :
+    path.join(__dirname, "..", "..", "..", "languages", `${language}.json`);
   return await new Promise((resolve, reject) => {
     fs.readFile(filepath, "utf-8", (err, data) => {
       if (err) {
