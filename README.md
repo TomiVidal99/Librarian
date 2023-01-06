@@ -65,11 +65,9 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] FIX: language not syncronizing properly with translation files.
 - [ ] FIX: title overflow.
 - [ ] FIX: add hashing to windows path names, so no conflic occurs when filtering the route.
 - [ ] FIX: the store should be handled in the state handler file, move dependencies to it and make the refactors in the functions.
-- [ ] FIX/ADD: the language should be loaded in the backend and then given to the frontend.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
