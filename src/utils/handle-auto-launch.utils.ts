@@ -29,8 +29,8 @@ export function disableAutoLaunch(): void {
  * Enables the auto launch of the app.
  */
 export function enableAutoLaunch(): void {
-  if (process.env.NODE_ENV === "development")
-    return
+  // if (process.env.NODE_ENV === "development")
+  //   return
   appAutoLauncher.isEnabled().then((isEnabled: boolean) => {
     if (isEnabled)
       return

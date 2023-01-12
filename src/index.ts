@@ -31,6 +31,7 @@ import {
   initializeStore,
   getTranslated,
   getCurrentLanguage,
+  isAutoLaunchEnabled,
 } from "./utils";
 import { IGlobalState } from "./state";
 import { FSWatcher } from "chokidar";
@@ -86,6 +87,7 @@ const createSettingsWindow = (): void => {
 // toggle open or closed the mainWindow when the tray it's double clicked
 // or when the option in the drop down menu it's clicked
 // TODO: add menu option to open the settings window
+// TODO: replace hide and show with destroy and create.
 export const toggleOpenMainWindow = () => {
   if (!settingsWindow) throw "Expected mainWindow to exits.";
   settingsWindow.isVisible() ? settingsWindow.hide() : settingsWindow.show();
@@ -287,6 +289,7 @@ ipcMain.on(
 ipcMain.on(
   IPC_CALLS.TOGGLE_AUTO_LAUNCH,
   (event: IpcMainEvent, enable: boolean) => {
+    console.log({enable})
     if (enable) {
       enableAutoLaunch();
     } else {
@@ -311,13 +314,3 @@ ipcMain.on(
     settingsWindow.webContents.send(IPC_CALLS.GET_LANGUAGE, getCurrentLanguage());
   }
 );
-
-/**
- * Sends the new state to the settings and filters windows.
- * @param {IGlobalState | null} state or null.
- * @returns {void} null
- */
-export function updateWindowsState(state: IGlobalState | null): void {
-  settingsWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, state ? state : getState());
-  filtersWindow.webContents.send(IPC_CALLS.GET_STATE_FROM_MAIN, state ? state : getState());
-}

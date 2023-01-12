@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { LanguageType } from "../../../../utils";
 import { IGlobalReducerAction } from "../../../../models";
 import { ACTIONS } from "../../../../services";
 import { IGlobalState, LanguageContext } from "../../../../state";
