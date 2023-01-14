@@ -1,6 +1,6 @@
 import { Menu, nativeImage, Tray } from "electron";
 import path from "path";
-import { getTranslated } from ".";
+import { getFormattedTrayTitle, getTranslated } from ".";
 import { quitApp, toggleOpenMainWindow } from "../.";
 
 const ANIMATION_TIME_INTERVAL = 500;
@@ -34,6 +34,13 @@ export const createTray = (): void => {
   tray = new Tray(icon);
 
   const menu = Menu.buildFromTemplate([
+    {
+      id: "trayTitle",
+      label: getFormattedTrayTitle(),
+      type: "normal",
+      click: toggleOpenMainWindow,
+    },
+    { type: "separator" },
     {
       id: "traySettings",
       label: getTranslated("traySettings"),
