@@ -1,10 +1,10 @@
 # Librarian
 
-> Desktop made with Typescript, Electron.js, React.js, Webpack and sass. The gold is to have the program organize and make backup of our data by setting everything up just once.
+Provides an UI to have organize and make backup of our data by setting everything up just once.
 
 ## Screenshots
 
-<!-- ![Example screenshot](./assets/Librarian-Screenshot.png) -->
+![Example screenshot](./librarian-screenshot.png)
 
 <!-- If you have screenshots you'd like to share, include them here. -->
 
