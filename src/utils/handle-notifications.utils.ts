@@ -3,7 +3,7 @@ import path from "path";
 import { getState } from ".";
 import { INotification } from "../models";
 
-export const sendNotification = (data: INotification): void => {
+export function sendNotification(data: INotification): void {
   const { title, body, type, clickcallback } = data;
   const state = getState();
 
