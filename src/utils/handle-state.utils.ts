@@ -1,5 +1,4 @@
 import Store from "electron-store";
-import { updateWindowsState } from "..";
 import { createFirstTimeState } from ".";
 import { IGlobalState } from "../state";
 
