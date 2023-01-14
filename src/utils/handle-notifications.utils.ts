@@ -3,6 +3,11 @@ import path from "path";
 import { getState } from ".";
 import { INotification } from "../models";
 
+/**
+ * Creates a notification and sends it to the OS notification handler.
+ *
+ * @param {INotification} data - [TODO:description]
+ */
 export function sendNotification(data: INotification): void {
   const { title, body, type, clickcallback } = data;
   const state = getState();
