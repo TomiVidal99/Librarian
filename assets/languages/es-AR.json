@@ -9,6 +9,8 @@
   "recentlyMovedSection": "organizados recientemente",
   "recentlyMovedFrom": "desde",
   "recentlyMovedTo": "hasta",
+  "recentlyMovedFileNoLongerExistsTitleWarning": "archivo no encontrado",
+  "recentlyMovedFileNoLongerExistsBodyWarning": "el archivo '%folderpath' ya no existe, probablemente ha sido eliminado o movido",
   "originFoldersSection": "carpetas de origen",
   "originFoldersDescription": "éstas carpetas se examinarán para organizar sus archivos",
   "noOriginFoldersWarning": "Necesitás agregar carpetas para que el programa organice los archivos, hacé click en el botón de abajo (nueva carpeta)",

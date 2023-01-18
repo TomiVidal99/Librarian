@@ -6,3 +6,5 @@ export * from "./handle-notifications.utils";
 export * from "./handle-auto-launch.utils";
 export * from "./handle-language.utils";
 export * from "./handle-state.utils";
+export * from "./get-app-version.utils";
+export * from "./recently-moved-exists.utils";

@@ -9,6 +9,8 @@
   "recentlyMovedSection": "recently organized",
   "recentlyMovedFrom": "from",
   "recentlyMovedTo": "to",
+  "recentlyMovedFileNoLongerExistsTitleWarning": "file not found",
+  "recentlyMovedFileNoLongerExistsBodyWarning": "the file '%folderpath' no longer exists, it problably has been moved or deleted",
   "originFoldersSection": "origin folders",
   "originFoldersDescription": "these folders will be searched for changes",
   "noOriginFoldersWarning": "the program needs origin folders to seek files, click 'new folder' button below to add a new origin folder",
