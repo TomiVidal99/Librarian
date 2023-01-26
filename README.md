@@ -42,7 +42,7 @@ Provides an UI to have organize and make backup of our data by setting everythin
 
 List the ready features here:
 
-- [ ] none yet 😪.
+- [x] Sorting.
 
 ## Contribute
 
