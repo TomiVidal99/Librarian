@@ -65,13 +65,13 @@ Project is: _in progress_.
 
 ## TODO:
 
+- [ ] FIX: translation not working on filters page.
 - [ ] FIX: title overflow.
 - [ ] FIX: add hashing to windows path names, so no conflic occurs when filtering the route.
 - [ ] FIX: the store should be handled in the state handler file, move dependencies to it and make the refactors in the functions.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
-- [ ] ADD: eslint-plugin-prettier. 
 - [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
