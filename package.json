@@ -1,8 +1,8 @@
 {
-  "name": "librarian2",
-  "productName": "librarian2",
-  "version": "2.0.1",
-  "description": "My Electron application description",
+  "name": "librarian",
+  "productName": "librarian",
+  "version": "2.1.1",
+  "description": "Organizes files in your system automatically",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -11,7 +11,13 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
-  "keywords": [],
+  "keywords": [
+    "organize",
+    "files",
+    "manage",
+    "manager",
+    "folders"
+  ],
   "author": {
     "name": "Tomás Vidal",
     "email": "tomi_vidal_99@hotmail.com"
@@ -41,9 +47,10 @@
     "electron": "21.3.1",
     "eslint": "8.0.1",
     "eslint-plugin-import": "2.25.0",
+    "eslint-plugin-prettier": "4.2.1",
     "fork-ts-checker-webpack-plugin": "7.2.13",
     "node-loader": "2.0.0",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.3",
     "sass": "1.56.1",
     "sass-loader": "13.2.0",
     "style-loader": "3.0.0",
