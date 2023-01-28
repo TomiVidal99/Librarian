@@ -49,8 +49,8 @@ export const OriginFolderList = ({
       } else {
         toKeep.push(f);
       }
-    })
-    removeFolders(toKeep,toRemove);
+    });
+    removeFolders(toKeep, toRemove);
     setSelectedFolders([]);
   };
   const handleClickedFolder = (id: string) => {

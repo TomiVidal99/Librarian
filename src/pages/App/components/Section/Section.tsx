@@ -19,7 +19,9 @@ export const Section = ({
   return (
     <section
       aria-description={sectionName}
-      className={`app-section ${border ? "" : "section-no-border"} ${className}`}
+      className={`app-section ${
+        border ? "" : "section-no-border"
+      } ${className}`}
     >
       {sectionDescription ? (
         <p className="app-section__description capitalize">

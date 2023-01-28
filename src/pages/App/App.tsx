@@ -112,12 +112,12 @@ export const App = () => {
         getTranslated: getTranslatedText,
       }}
     >
-      {
-        location.pathname.includes("main_window") && <Settings state={state} dispatch={dispatch} />
-      }
-      {
-        location.pathname.includes("filters_window") && <Filters dispatch={dispatch} />
-      }
+      {location.pathname.includes("main_window") && (
+        <Settings state={state} dispatch={dispatch} />
+      )}
+      {location.pathname.includes("filters_window") && (
+        <Filters dispatch={dispatch} />
+      )}
     </LanguageContext.Provider>
   );
 };

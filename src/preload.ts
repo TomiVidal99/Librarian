@@ -11,7 +11,9 @@ declare global {
   interface Window {
     api: {
       sendLanguageToRenderer: () => void;
-      getLanguage: (arg0: (arg0: LanguageType, arg1: ILanguage) => void) => void;
+      getLanguage: (
+        arg0: (arg0: LanguageType, arg1: ILanguage) => void
+      ) => void;
       changeLanguage: (arg0: LanguageType) => void;
       toggleAutoLaunch: (arg0: boolean) => void;
       getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;

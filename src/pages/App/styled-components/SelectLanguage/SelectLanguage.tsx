@@ -17,6 +17,6 @@ export const LanguageSelector = ({
       availableOptions={availableLanguages}
       selectedOptionsCallback={selectedLanguageCallback}
       defaultValue={defaultValue}
-      />
+    />
   );
 };

@@ -84,15 +84,16 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
       if (alreadyHasThisPath.length > 0) {
         warningAlert({
           title: getTranslated("destinationFolderAlreadySelectedWarningTitle"),
-          body:
-            getTranslated("destinationFolderAlreadySelectedWarningBody").concat(
-              ...alreadyHasThisPath[0].filters.map(
-                (f, i) => `${i > 0 ? "," : ""} '${f.content} (${f.type})'`
-              )
-            ),
+          body: getTranslated(
+            "destinationFolderAlreadySelectedWarningBody"
+          ).concat(
+            ...alreadyHasThisPath[0].filters.map(
+              (f, i) => `${i > 0 ? "," : ""} '${f.content} (${f.type})'`
+            )
+          ),
           foldername: path,
           folderpath: "lasdkjasldkjsal",
-        })
+        });
         resolve(false);
       } else {
         setDestinationFolder({
@@ -124,7 +125,7 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
       maxFiltersText: {
         title: getTranslated("maxFiltersTitleAlert"),
         body: getTranslated("maxFiltersBodyAlert"),
-      }
+      },
     });
     if (!isValid) return;
     window.api.sendDestinationFolder(destinationFolder);

@@ -1,4 +1,4 @@
-import fs from "fs"
+import fs from "fs";
 
 /**
  * Returns weather the file given still exists or not.
@@ -13,6 +13,6 @@ export function fileExits(file: string): Promise<boolean> {
         resolve(false);
       }
       resolve(true);
-    })
-  })
+    });
+  });
 }

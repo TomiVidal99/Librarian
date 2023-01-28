@@ -12,7 +12,7 @@ export const isValidDestinationFolder = ({
   folder,
   noFolderText,
   noFiltersText,
-  maxFiltersText
+  maxFiltersText,
 }: {
   folder: IDestinationFolder;
   noFolderText: ITextData;

@@ -25,7 +25,9 @@ export const RecentlyMovedItem = ({
         </div>
         <div className="recently-moved__paths">
           <span>{`${translationData[0].toUpperCase()}: ${item.origin}`}</span>
-          <span>{`${translationData[1].toUpperCase()}: ${item.destination}`}</span>
+          <span>{`${translationData[1].toUpperCase()}: ${
+            item.destination
+          }`}</span>
         </div>
       </button>
     </li>
