@@ -1,4 +1,5 @@
 import type { Configuration } from "webpack";
+import path from "path";
 
 import { rules } from "./webpack.rules";
 
@@ -23,5 +24,13 @@ export const mainConfig: Configuration = {
       ".scss",
       ".sass",
     ],
+    alias: {
+      "@src": path.resolve(__dirname, "src"),
+      "@models": path.resolve(__dirname, "src/models"),
+      "@state": path.resolve(__dirname, "src/state"),
+      "@utils": path.resolve(__dirname, "src/utils"),
+      "@services": path.resolve(__dirname, "src/services"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
+    },
   },
 };
