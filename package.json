@@ -9,7 +9,8 @@
     "package": "NODE_ENV=production electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "prepare": "husky install"
   },
   "keywords": [
     "organize",
@@ -49,8 +50,9 @@
     "eslint-plugin-import": "2.25.0",
     "eslint-plugin-prettier": "4.2.1",
     "fork-ts-checker-webpack-plugin": "7.2.13",
+    "husky": "8.0.3",
     "node-loader": "2.0.0",
-    "prettier": "^2.8.3",
+    "prettier": "2.8.3",
     "sass": "1.56.1",
     "sass-loader": "13.2.0",
     "style-loader": "3.0.0",
@@ -59,15 +61,21 @@
     "typescript": "4.5.4"
   },
   "dependencies": {
-    "@types/auto-launch": "^5.0.2",
-    "auto-launch": "^5.0.5",
+    "@types/auto-launch": "5.0.2",
+    "auto-launch": "5.0.5",
     "babel-runtime": "6.26.0",
     "chokidar": "3.5.3",
     "electron-squirrel-startup": "1.0.0",
     "electron-store": "8.1.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "8.5.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-uuid": "2.0.0"
+  },
+  "lint-staged": {
+    "*.(ts|tsx)": [
+      "eslint . --fix",
+      "prettier --write"
+    ]
   }
 }
