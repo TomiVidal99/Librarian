@@ -91,9 +91,9 @@ export const reducer = (
         recentlyMovedFolders: [
           ...(state.recentlyMovedFolders.length >= MAX_RECENTLY_WATCHED_FOLDERS
             ? state.recentlyMovedFolders.splice(
-              0,
-              state.recentlyMovedFolders.length - 1
-            )
+                0,
+                state.recentlyMovedFolders.length - 1
+              )
             : state.recentlyMovedFolders),
           {
             name,

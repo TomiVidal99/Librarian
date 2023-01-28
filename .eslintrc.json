@@ -1,7 +1,10 @@
 {
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-useless-escape": 0,
+    "no-case-declarations": 0
   },
   "env": {
     "browser": true,
