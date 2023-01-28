@@ -1,3 +1,6 @@
+| :exclamation:  Working on a 2.0 version under librarianv2 branch   |
+|-----------------------------------------|
+
 # Librarian
 
 > Desktop made with Typescript, Electron.js, React.js, Webpack and sass. The gold is to have the program organize and make backup of our data by setting everything up just once.
@@ -16,7 +19,6 @@
 - [Features](#features)
 - [Setup](#setup)
 - [Project Status](#project-status)
-- [To do](#todo)
 - [Contact](#contact)
 - [License](#license)
 
@@ -65,44 +67,6 @@ Project is: _in progress_.
 <!--Room for improvement:-->
 <!--- Improvement to be done 1-->
 <!--- Improvement to be done 2-->
-
-## TODO:
-
-- [ ] FIX: Check if the new path (origin and destination) doesn't aleady exist.
-- [ ] FIX: When new filters are added check spelling (FiltersMenu.jsx).
-- [ ] FIX: better method to handle app version when packed.
-- [ ] FIX: moving files not working on windows.
-- [ ] FIX: should add some logging file on production.
-- [ ] FIX: when the path on the selects it's empty.
-- [ ] ADD: default watching and destination folders.
-- [ ] ADD: Auto updater.
-- [ ] ADD: regex filtering.
-- [ ] ADD: more filtering options.
-- [ ] ADD: languages system.
-- [ ] ADD: better notifications.
-- [ ] ADD: edit destination folders.
-- [ ] ADD: on filters page add buttons for depth recursion and should match uppercase, .
-- [ ] CHANGE: arrow on the custom select component.
-- [ ] CHANGE: improve icons and UI.
-- [ ] CHANGE: Refactor functions in main.ts and organize them in more files.
-- [x] FIX: Connect the tray menu with the settings menu.
-- [x] FIX: Dialog menu popping behind the BrowserWindow.
-- [x] FIX: Add development check to set the autolaunch.
-- [x] ADD: recently moved cap (to 200?).
-- [x] FIX: hook tray buttons with the front end.
-- [x] FIX: configuration not persisting when rebooted.
-- [x] ADD: front end for canMoveFiles state property, so the user can switch between enabling the app or no.
-- [x] ADD: icon on the settings page (mainWindow).
-- [x] FIX: Recently moved filters all the files after the first three and doesn't delete the history.
-- [x] FIX: Auto launch.
-- [x] FIX: don't have app version as state, only update once on startup.
-- [x] FIX: when hovering checkbox the mouse is not pointer.
-- [x] ADD: filters selection when selecting a new destination folder.
-- [x] FIX: error when selecting a single conflicting path??.
-- [x] FIX: separated dispatch actions for all selected folders.
-- [x] FIX: check for repeated paths on when adding new ones.
-- [x] ADD: Section with the basic app information (what is it and how to use it).
-- [x] ADD: functionallity.
 
 ## Contact
 
