@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { ACTIONS } from "../../../../services";
-import { IDestinationFolder, IGlobalReducerAction } from "../../../../models";
-import { IGlobalState, LanguageContext } from "../../../../state";
-import { Button, Input, Section } from "../../components";
-import { Flex } from "../../components/Flex/Flex";
-
-import "./Filters.style.scss";
+import { useEffect, useState } from "react";
+import { ACTIONS } from "@services";
+import { IDestinationFolder, IGlobalReducerAction } from "@models";
+import { IGlobalState, LanguageContext } from "@state";
+import { Button, Flex, Input, Section } from "@components";
+import { useLanguage } from "@hooks";
 import uuid from "react-uuid";
 import { PickFiltersSection } from "./components";
 import { isValidDestinationFolder } from "./utils";
 import { warningAlert } from "../../../../utils/handle-alerts.utils";
+
+import "./Filters.style.scss";
 
 interface IProps {
   dispatch: React.Dispatch<IGlobalReducerAction>;
@@ -52,7 +52,12 @@ const createInitialDestinationFolder = (): IDestinationFolder => {
 };
 
 export const Filters = ({ dispatch }: IProps): JSX.Element => {
-  const { getTranslated } = useContext(LanguageContext);
+  const [currentLanguage, getTranslatedText] = useLanguage();
+  console.log({
+    currentLanguage,
+    getTranslatedText,
+    test: getTranslatedText("trayTitle"),
+  });
   const [state, setState] = useState<IGlobalState | null>(null);
   useEffect(() => {
     // get state from main
@@ -83,8 +88,10 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
       );
       if (alreadyHasThisPath.length > 0) {
         warningAlert({
-          title: getTranslated("destinationFolderAlreadySelectedWarningTitle"),
-          body: getTranslated(
+          title: getTranslatedText(
+            "destinationFolderAlreadySelectedWarningTitle"
+          ),
+          body: getTranslatedText(
             "destinationFolderAlreadySelectedWarningBody"
           ).concat(
             ...alreadyHasThisPath[0].filters.map(
@@ -115,16 +122,16 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
     const isValid = isValidDestinationFolder({
       folder: destinationFolder,
       noFolderText: {
-        title: getTranslated("noDestinationFolderSelectedTitleAlert"),
-        body: getTranslated("noDestinationFolderSelectedBodyAlert"),
+        title: getTranslatedText("noDestinationFolderSelectedTitleAlert"),
+        body: getTranslatedText("noDestinationFolderSelectedBodyAlert"),
       },
       noFiltersText: {
-        title: getTranslated("noDestinationFiltersSelectedTitleAlert"),
-        body: getTranslated("noDestinationFiltersSelectedBodyAlert"),
+        title: getTranslatedText("noDestinationFiltersSelectedTitleAlert"),
+        body: getTranslatedText("noDestinationFiltersSelectedBodyAlert"),
       },
       maxFiltersText: {
-        title: getTranslated("maxFiltersTitleAlert"),
-        body: getTranslated("maxFiltersBodyAlert"),
+        title: getTranslatedText("maxFiltersTitleAlert"),
+        body: getTranslatedText("maxFiltersBodyAlert"),
       },
     });
     if (!isValid) return;
@@ -135,38 +142,49 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
     window.close();
   };
   return (
-    <main className="filter-page-container">
-      <Section
-        className="filter-page"
-        sectionName={getTranslated("addDestinationFolderSection")}
-        sectionDescription={getTranslated("addDestinationFolderDescription")}
-      >
-        <Input
-          type="pick"
-          style="add"
-          placeholder={getTranslated("destinatonFolderDisplayPlaceholder")}
-          callbackClick={handlePickedDestinationFolder}
-        />
-        <PickFiltersSection
-          state={state}
-          folder={destinationFolder}
-          setFolder={setDestinationFolder}
-        />
-        <Flex className="filter-page__bottom-btns">
-          <Button
-            content={getTranslated("addDestinationFolder")}
-            callback={handleAddDestinationFolder}
-            type="add"
-            important={true}
+    <LanguageContext.Provider
+      value={{
+        getLang: currentLanguage,
+        getTranslated: getTranslatedText,
+      }}
+    >
+      <main className="filter-page-container">
+        <Section
+          className="filter-page"
+          sectionName={getTranslatedText("addDestinationFolderSection")}
+          sectionDescription={getTranslatedText(
+            "addDestinationFolderDescription"
+          )}
+        >
+          <Input
+            type="pick"
+            style="add"
+            placeholder={getTranslatedText(
+              "destinatonFolderDisplayPlaceholder"
+            )}
+            callbackClick={handlePickedDestinationFolder}
           />
-          <Button
-            content={getTranslated("cancelDestinationFolder")}
-            callback={handleCancel}
-            type="delete"
-            important={true}
+          <PickFiltersSection
+            state={state}
+            folder={destinationFolder}
+            setFolder={setDestinationFolder}
           />
-        </Flex>
-      </Section>
-    </main>
+          <Flex className="filter-page__bottom-btns">
+            <Button
+              content={getTranslatedText("addDestinationFolder")}
+              callback={handleAddDestinationFolder}
+              type="add"
+              important={true}
+            />
+            <Button
+              content={getTranslatedText("cancelDestinationFolder")}
+              callback={handleCancel}
+              type="delete"
+              important={true}
+            />
+          </Flex>
+        </Section>
+      </main>
+    </LanguageContext.Provider>
   );
 };

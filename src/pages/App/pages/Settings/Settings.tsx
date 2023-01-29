@@ -1,14 +1,16 @@
 import { useLanguage } from "@hooks";
-import { useContext } from "react";
-import { IGlobalReducerAction } from "../../../../models";
-import { ACTIONS } from "../../../../services";
-import { IGlobalState, LanguageContext } from "../../../../state";
-import { Description, OriginFolderList, Section } from "../../components";
-import { Checkbox } from "../../components/Checkbox/Checkbox";
-import { DestinationFolderList } from "../../components/DestinationFolders/DestinationFolderList";
+import { IGlobalReducerAction } from "@models";
+import { ACTIONS } from "@services";
+import { IGlobalState, LanguageContext } from "@state";
+import {
+  Checkbox,
+  Description,
+  DestinationFolderList,
+  OriginFolderList,
+  Section,
+} from "@components";
 import { LanguageSelector } from "../../styled-components/SelectLanguage";
-import { ResetSettings } from "./components";
-import { RecentlyMovedList } from "./components/RecentlyMoved/RecentlyMovedList";
+import { RecentlyMovedList, ResetSettings } from "./components";
 
 interface IProps {
   state: IGlobalState;
@@ -16,7 +18,6 @@ interface IProps {
 }
 
 export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
-  const { getTranslated, getLang } = useContext(LanguageContext);
   const [currentLanguage, getTranslatedText] = useLanguage();
   const updateState = (state: IGlobalState) => {
     dispatch({
@@ -35,17 +36,17 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
         <Section border={false}>
           <h1 className="app-title">Librarian</h1>
         </Section>
-        <Section sectionName={getTranslated("appDescriptionSection")}>
+        <Section sectionName={getTranslatedText("appDescriptionSection")}>
           <Description />
         </Section>
         {state.recentlyMovedFolders.length > 0 ? (
-          <Section sectionName={getTranslated("recentlyMovedSection")}>
+          <Section sectionName={getTranslatedText("recentlyMovedSection")}>
             <RecentlyMovedList list={state.recentlyMovedFolders} />
           </Section>
         ) : null}
         <Section
-          sectionName={getTranslated("originFoldersSection")}
-          sectionDescription={getTranslated("originFoldersDescription")}
+          sectionName={getTranslatedText("originFoldersSection")}
+          sectionDescription={getTranslatedText("originFoldersDescription")}
         >
           <OriginFolderList
             folders={state.originFolders}
@@ -64,8 +65,10 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
           />
         </Section>
         <Section
-          sectionName={getTranslated("destinationFoldersSection")}
-          sectionDescription={getTranslated("destinationFoldersDescription")}
+          sectionName={getTranslatedText("destinationFoldersSection")}
+          sectionDescription={getTranslatedText(
+            "destinationFoldersDescription"
+          )}
         >
           <DestinationFolderList
             folders={state.destinationFolders}
@@ -77,21 +80,21 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
             }}
           />
         </Section>
-        <Section sectionName={getTranslated("generalSettingsSection")}>
+        <Section sectionName={getTranslatedText("generalSettingsSection")}>
           <Checkbox
-            label={getTranslated("generalNotificationsCheckbox")}
+            label={getTranslatedText("generalNotificationsCheckbox")}
             callback={(e) => updateState({ ...state, generalNotifications: e })}
             defaultValue={state.generalNotifications}
           />
           <Checkbox
-            label={getTranslated("archivesNotificationsCheckbox")}
+            label={getTranslatedText("archivesNotificationsCheckbox")}
             callback={(e) =>
               updateState({ ...state, archivesNotifications: e })
             }
             defaultValue={state.archivesNotifications}
           />
           <Checkbox
-            label={getTranslated("canMoveFilesCheckbox")}
+            label={getTranslatedText("canMoveFilesCheckbox")}
             callback={(e) => updateState({ ...state, canMoveFiles: e })}
             defaultValue={state.canMoveFiles}
           />
@@ -103,10 +106,10 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
                 payload: lang,
               })
             }
-            defaultValue={getLang}
+            defaultValue={currentLanguage}
           />
           <Checkbox
-            label={getTranslated("autoLaunchCheckbox")}
+            label={getTranslatedText("autoLaunchCheckbox")}
             callback={(e) =>
               dispatch({
                 type: ACTIONS.TOGGLE_AUTO_LAUNCH,

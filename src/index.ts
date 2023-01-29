@@ -330,5 +330,8 @@ ipcMain.on(
 
 // send translation to the renderer
 ipcMain.on(IPC_CALLS.SEND_LANGUAGE_TO_RENDERER, () => {
-  settingsWindow.webContents.send(IPC_CALLS.GET_LANGUAGE, getCurrentLanguage());
+  const currentLanguage = getCurrentLanguage();
+  settingsWindow.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
+  if (!filtersWindow || filtersWindow.isDestroyed()) return;
+  filtersWindow.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
 });
