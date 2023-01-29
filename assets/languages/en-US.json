@@ -15,6 +15,7 @@
   "originFoldersDescription": "these folders will be searched for changes",
   "noOriginFoldersWarning": "the program needs origin folders to seek files, click 'new folder' button below to add a new origin folder",
   "addFolderButton": "new folder",
+  "editFoldersButton": "edit folder",
   "removeFoldersButton": "remove folder/s",
   "destinationFoldersSection": "destiny folder",
   "destinationFoldersDescription": "the sorted files will go to these folders, because of that they will have filters as well",

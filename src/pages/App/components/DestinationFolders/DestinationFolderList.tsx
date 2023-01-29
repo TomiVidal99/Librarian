@@ -28,6 +28,9 @@ export const DestinationFolderList = ({ folders, removeFolders }: IProps) => {
     removeFolders(folders.filter((f) => !selectedFolders.includes(f.id)));
     setSelectedFolders([]);
   };
+  const handleEditFolder = () => {
+    console.warn("TODO");
+  };
   return (
     <div className="destination-folders-container">
       <ul className="destination-folders__list">
@@ -56,6 +59,14 @@ export const DestinationFolderList = ({ folders, removeFolders }: IProps) => {
           type="add"
           important={true}
         />
+        {selectedFolders.length === 1 && (
+          <Button
+            content={getTranslated("editFoldersButton")}
+            callback={handleEditFolder}
+            type="edit"
+            important={true}
+          />
+        )}
         {selectedFolders.length > 0 && (
           <Button
             content={getTranslated("removeFoldersButton")}

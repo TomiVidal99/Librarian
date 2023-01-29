@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  width: clamp(350px, 70%, 450px);
+  width: 100%;
+  //width: clamp(350px, 70%, 450px);
   font-size: var(--fs-normal);
   background-color: var(--color-fifth);
 }
@@ -26,7 +27,8 @@
 
 .origin-folders__btns-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   margin: 1.5em 0;
+  gap: 1.5em;
 }

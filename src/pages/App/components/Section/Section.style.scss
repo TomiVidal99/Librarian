@@ -1,5 +1,6 @@
 .app-section {
   position: relative;
+  min-width: min-content;
   max-width: clamp(400px, 60vw, 800px);
   display: flex;
   flex-direction: column;
