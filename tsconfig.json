@@ -19,7 +19,8 @@
       "@state": ["./src/state"],
       "@utils": ["./src/utils"],
       "@services": ["./src/services"],
-      "@hooks": ["./src/hooks"]
+      "@hooks": ["./src/hooks"],
+      "@components": ["./src/pages/App/components"]
     }
   },
   "include": ["src/**/*"]
