@@ -70,6 +70,7 @@ Project is: _in progress_.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
+- [ ] ADD: check when adding regex if it's valid.
 - [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
