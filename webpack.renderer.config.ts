@@ -15,7 +15,16 @@ export const rendererConfig: Configuration = {
   },
   plugins,
   resolve: {
-    extensions: [".js", ".ts", ".jsx", ".tsx", ".css"],
+    extensions: [
+      ".js",
+      ".ts",
+      ".jsx",
+      ".tsx",
+      ".css",
+      ".json",
+      ".scss",
+      ".sass",
+    ],
     alias: {
       "@src": path.resolve(__dirname, "src"),
       "@models": path.resolve(__dirname, "src/models"),
@@ -23,6 +32,7 @@ export const rendererConfig: Configuration = {
       "@utils": path.resolve(__dirname, "src/utils"),
       "@services": path.resolve(__dirname, "src/services"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
+      "@components": path.resolve(__dirname, "src/pages/App/components"),
     },
   },
 };
