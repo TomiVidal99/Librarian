@@ -10,6 +10,10 @@ import { IGlobalState } from "./state";
 declare global {
   interface Window {
     api: {
+      getDestinationFolderToEdit: (
+        arg0: (arg0: IDestinationFolder) => void
+      ) => void;
+      editDestinationFolder: (arg0: string) => void;
       sendLanguageToRenderer: () => void;
       getLanguage: (
         arg0: (arg0: LanguageType, arg1: ILanguage) => void
@@ -40,6 +44,19 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  getDestinationFolderToEdit: (
+    callback: (arg0: IDestinationFolder) => void
+  ): void => {
+    ipcRenderer.on(
+      IPC_CALLS.GET_DESTINATION_FOLDER_TO_EDIT,
+      (_: IpcRendererEvent, folderToEdit) => {
+        callback(folderToEdit);
+      }
+    );
+  },
+  editDestinationFolder: (folderId: string): void => {
+    ipcRenderer.send(IPC_CALLS.SEND_DESTINATION_FOLDER_TO_EDIT, folderId);
+  },
   sendLanguageToRenderer: (): void => {
     ipcRenderer.send(IPC_CALLS.SEND_LANGUAGE_TO_RENDERER);
   },
@@ -48,7 +65,7 @@ contextBridge.exposeInMainWorld("api", {
   ): void => {
     ipcRenderer.on(
       IPC_CALLS.GET_LANGUAGE,
-      (event: IpcRendererEvent, [language, translation]) => {
+      (_: IpcRendererEvent, [language, translation]) => {
         callback(language, translation);
       }
     );
@@ -62,7 +79,7 @@ contextBridge.exposeInMainWorld("api", {
   getStateFromSettings: (callback: (arg0: IGlobalState) => void): void => {
     ipcRenderer.on(
       IPC_CALLS.GET_STATE_FROM_SETTINGS_WINDOW,
-      (event: IpcRendererEvent, state: IGlobalState) => {
+      (_: IpcRendererEvent, state: IGlobalState) => {
         callback(state);
       }
     );
@@ -75,7 +92,7 @@ contextBridge.exposeInMainWorld("api", {
   ): void => {
     ipcRenderer.on(
       IPC_CALLS.SEND_RECENTLY_WATCHED,
-      (event: IpcRendererEvent, data: ISendRecentlyWatchedFolder) => {
+      (_: IpcRendererEvent, data: ISendRecentlyWatchedFolder) => {
         callback(data);
       }
     );
@@ -103,7 +120,7 @@ contextBridge.exposeInMainWorld("api", {
   getState: (callback: (arg0: IGlobalState) => void): void => {
     ipcRenderer.on(
       IPC_CALLS.GET_STATE_FROM_MAIN,
-      (event: IpcRendererEvent, state: IGlobalState) => {
+      (_: IpcRendererEvent, state: IGlobalState) => {
         callback(state);
       }
     );
@@ -113,7 +130,7 @@ contextBridge.exposeInMainWorld("api", {
   ): void => {
     ipcRenderer.on(
       IPC_CALLS.RECIEVE_FOLDER_FROM_MAIN,
-      (event: IpcRendererEvent, folder: IDestinationFolder) => {
+      (_: IpcRendererEvent, folder: IDestinationFolder) => {
         callback(folder);
       }
     );

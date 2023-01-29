@@ -15,7 +15,7 @@ interface IProps {
   dispatch: React.Dispatch<IGlobalReducerAction>;
 }
 
-const createInitialDestinationFolder = (): IDestinationFolder => {
+function createInitialDestinationFolder(): IDestinationFolder {
   const folder: IDestinationFolder = {
     id: uuid(),
     name: "",
@@ -49,16 +49,17 @@ const createInitialDestinationFolder = (): IDestinationFolder => {
     ],
   };
   return folder;
-};
+}
 
 export const Filters = ({ dispatch }: IProps): JSX.Element => {
   const [currentLanguage, getTranslatedText] = useLanguage();
-  console.log({
-    currentLanguage,
-    getTranslatedText,
-    test: getTranslatedText("trayTitle"),
-  });
   const [state, setState] = useState<IGlobalState | null>(null);
+  useEffect(() => {
+    // get the destination folder to edit
+    // window.api.getDestinationFolderToEdit((folderToEdit) => {
+    //
+    // })
+  }, []);
   useEffect(() => {
     // get state from main
     window.api.getStateFromSettings((s) => {

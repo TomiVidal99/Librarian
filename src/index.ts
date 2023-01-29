@@ -88,12 +88,12 @@ const createSettingsWindow = (): void => {
 // or when the option in the drop down menu it's clicked
 // TODO: add menu option to open the settings window
 // TODO: replace hide and show with destroy and create.
-export const toggleOpenMainWindow = () => {
+export function toggleOpenMainWindow() {
   if (!settingsWindow) throw "Expected mainWindow to exits.";
   settingsWindow.isVisible() ? settingsWindow.hide() : settingsWindow.show();
-};
+}
 
-const createFiltersWindow = (): void => {
+function createFiltersWindow(): void {
   // check if the window has already been created
   if (filtersWindow !== null) {
     filtersWindow.focus();
@@ -124,7 +124,7 @@ const createFiltersWindow = (): void => {
 
   // Open the DevTools.
   // filtersWindow.webContents.openDevTools();
-};
+}
 
 export interface ISendRecentlyWatchedFolder {
   name: string;
@@ -135,10 +135,10 @@ export interface ISendRecentlyWatchedFolder {
 /**
  * Sends data to the settings page to make a recently moved folder.
  */
-export const sendRecentlyWatchedFolder = (data: ISendRecentlyWatchedFolder) => {
+export function sendRecentlyWatchedFolder(data: ISendRecentlyWatchedFolder) {
   if (settingsWindow === null) return;
   settingsWindow.webContents.send(IPC_CALLS.SEND_RECENTLY_WATCHED, data);
-};
+}
 
 async function initApp() {
   // TODO: if the window has not been created and a folder has been
@@ -169,9 +169,9 @@ async function initApp() {
 app.on("ready", initApp);
 
 // Quit app
-export const quitApp = () => {
+export function quitApp() {
   app.quit();
-};
+}
 
 // Clean before quitting
 app.on("before-quit", () => {
@@ -333,3 +333,20 @@ ipcMain.on(IPC_CALLS.SEND_LANGUAGE_TO_RENDERER, () => {
   settingsWindow?.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
   filtersWindow?.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
 });
+
+// opens the filtersWindow and sends the destination folder to be editted
+ipcMain.on(
+  IPC_CALLS.SEND_DESTINATION_FOLDER_TO_EDIT,
+  async (_: IpcMainEvent, folderId: string) => {
+    const folderToEdit = getState().destinationFolders.find(
+      (folder) => folder.id === folderId
+    );
+    if (!filtersWindow || filtersWindow.isDestroyed()) {
+      createFiltersWindow();
+    }
+    filtersWindow.webContents.send(
+      IPC_CALLS.GET_DESTINATION_FOLDER_TO_EDIT,
+      folderToEdit
+    );
+  }
+);

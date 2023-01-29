@@ -20,4 +20,6 @@ export const IPC_CALLS = {
   CHANGE_LANGUAGE: "change-language",
   GET_LANGUAGE: "get-language-from-main",
   SEND_LANGUAGE_TO_RENDERER: "send-language-to-renderer",
+  SEND_DESTINATION_FOLDER_TO_EDIT: "send-destination-folder-to-edit",
+  GET_DESTINATION_FOLDER_TO_EDIT: "get-destination-folder-to-edit",
 } as const;

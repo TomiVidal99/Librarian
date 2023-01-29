@@ -29,7 +29,7 @@ export const DestinationFolderList = ({ folders, removeFolders }: IProps) => {
     setSelectedFolders([]);
   };
   const handleEditFolder = () => {
-    console.warn("TODO");
+    window.api.editDestinationFolder(selectedFolders[0]);
   };
   return (
     <div className="destination-folders-container">
