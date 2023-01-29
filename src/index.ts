@@ -321,17 +321,15 @@ ipcMain.on(
   async (_: IpcMainEvent, lang: LanguageType) => {
     await setLanguage(lang);
     updateTrayText();
-    settingsWindow.webContents.send(
-      IPC_CALLS.GET_LANGUAGE,
-      getCurrentLanguage()
-    );
+    const currentLanguage = getCurrentLanguage();
+    settingsWindow?.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
+    filtersWindow?.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
   }
 );
 
 // send translation to the renderer
 ipcMain.on(IPC_CALLS.SEND_LANGUAGE_TO_RENDERER, () => {
   const currentLanguage = getCurrentLanguage();
-  settingsWindow.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
-  if (!filtersWindow || filtersWindow.isDestroyed()) return;
-  filtersWindow.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
+  settingsWindow?.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
+  filtersWindow?.webContents.send(IPC_CALLS.GET_LANGUAGE, currentLanguage);
 });
