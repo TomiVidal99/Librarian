@@ -15,6 +15,8 @@ export const IPC_CALLS = {
   SEND_NOTIFICATION: "send-notification",
   SEND_RECENTLY_WATCHED: "send-main-to-settings-recently-watched-folder",
   GET_DESTINATION_FOLDERS: "get-destination-folders-from-main-sync",
+  SEND_UPDATED_DESTINATION_FOLDER: "send-updated-destination-folder-to-main",
+  GET_UPDATED_DESTINATION_FOLDER: "get-updated-destination-folder-to-main",
   GET_STATE_FROM_SETTINGS_WINDOW: "get-state-from-settings-window",
   TOGGLE_AUTO_LAUNCH: "toggle-auto-launch",
   CHANGE_LANGUAGE: "change-language",

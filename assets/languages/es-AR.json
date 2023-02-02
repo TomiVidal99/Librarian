@@ -30,6 +30,7 @@
   "filterLabelRegexPlaceholder": "expresión regular",
   "cancelDestinationFolder": "cancelar",
   "addDestinationFolder": "añadir carpeta",
+  "editDestinationFolder": "actualizar carpeta",
   "duplicatedFolderWarningTitle": "carpeta duplicada",
   "duplicatedFolderWarningBody": "la carpeta '%foldername' (%folderpath) ya se agregó y no se volverá a agregar",
   "noDestinationFolderSelectedTitleAlert": "sin destino!",

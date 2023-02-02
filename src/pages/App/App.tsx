@@ -55,9 +55,9 @@ import "./App.style.scss";
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    console.log("state updated: ", state);
-  }, [state]);
+  // useEffect(() => {
+  //   console.log("state updated: ", state);
+  // }, [state]);
 
   // listens to make a recently watched folder
   useEffect(() => {
@@ -89,6 +89,18 @@ export const App = () => {
     });
   }, []);
 
+  // gets the updated destination folder
+  useEffect(() => {
+    window.api.getUpdatedDestinationFolder(
+      (updatedFolder: IDestinationFolder) => {
+        dispatch({
+          type: ACTIONS.UPDATE_DESTINATION_FOLDER,
+          payload: updatedFolder,
+        });
+      }
+    );
+  }, []);
+
   // For testing porpouses
   // useEffect(() => {
   //   dispatch({
@@ -108,9 +120,7 @@ export const App = () => {
       {location.pathname.includes("main_window") && (
         <Settings state={state} dispatch={dispatch} />
       )}
-      {location.pathname.includes("filters_window") && (
-        <Filters dispatch={dispatch} />
-      )}
+      {location.pathname.includes("filters_window") && <Filters />}
     </>
   );
 };

@@ -12,6 +12,7 @@ const MAX_RECENTLY_WATCHED_FOLDERS = 5;
 export const ACTIONS: IGlobalReducerActionsType = {
   UPDATE_LANGUAGE: "update-language",
   UPDATE_STATE: "update-state",
+  UPDATE_DESTINATION_FOLDER: "update-destination-folder",
   ADD_DESTINATION_FOLDER: "add-destination-folder",
   REMOVE_DESTINATION_FOLDERS: "remove-destination-folders",
   ADD_ORIGIN_FOLDER: "add-origin-folder",
@@ -43,6 +44,14 @@ export const reducer = (
       return updateState({
         ...state,
         language: action.payload,
+      });
+    case ACTIONS.UPDATE_DESTINATION_FOLDER:
+      return updateState({
+        ...state,
+        destinationFolders: [
+          ...state.destinationFolders.filter((f) => f.id !== action.payload.id),
+          action.payload,
+        ],
       });
     case ACTIONS.TOGGLE_AUTO_LAUNCH:
       window.api.toggleAutoLaunch(action.payload);

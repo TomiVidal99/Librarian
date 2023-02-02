@@ -64,11 +64,11 @@ const createSettingsWindow = (): void => {
     height: 600,
     width: 800,
     show: false,
-    frame: process.env.NODE_ENV === "development",
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
+  process.env.NODE_ENV === "development" && settingsWindow.setMenu(null);
 
   // and load the index.html of the app.
   settingsWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
@@ -104,11 +104,11 @@ function createFiltersWindow(): void {
   filtersWindow = new BrowserWindow({
     height: 600,
     width: 200,
-    frame: process.env.NODE_ENV === "development",
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
+  process.env.NODE_ENV === "development" && filtersWindow.setMenu(null);
 
   // and load the index.html of the app.
   filtersWindow.loadURL(FILTERS_WINDOW_WEBPACK_ENTRY);
@@ -200,16 +200,27 @@ ipcMain.handle(
   IPC_CALLS.OPEN_FOLDERS_DIALOG,
   async (
     _: IpcMainEvent,
-    multiSelection: boolean
+    {
+      multiSelection = false,
+      defaultPath = "",
+    }: {
+      multiSelection?: boolean;
+      defaultPath?: string;
+    }
+  ) =>
     // callback: (arg0: string[]) => void,
     // multiSelection: boolean
-  ) => {
-    const dir = await dialog.showOpenDialog({
-      properties: ["openDirectory", multiSelection ? "multiSelections" : null],
-    });
-    const dirPath = dir.filePaths;
-    return dirPath;
-  }
+    {
+      const dir = await dialog.showOpenDialog({
+        properties: [
+          "openDirectory",
+          multiSelection ? "multiSelections" : null,
+        ],
+        defaultPath: defaultPath,
+      });
+      const dirPath = dir.filePaths;
+      return dirPath;
+    }
 );
 
 // opens a window with a warning message
@@ -344,9 +355,22 @@ ipcMain.on(
     if (!filtersWindow || filtersWindow.isDestroyed()) {
       createFiltersWindow();
     }
-    filtersWindow.webContents.send(
-      IPC_CALLS.GET_DESTINATION_FOLDER_TO_EDIT,
-      folderToEdit
+    filtersWindow.on("ready-to-show", () => {
+      filtersWindow.webContents.send(
+        IPC_CALLS.GET_DESTINATION_FOLDER_TO_EDIT,
+        folderToEdit
+      );
+    });
+  }
+);
+
+// gets the updated destination folder and sends it to the app reducer to be updated
+ipcMain.on(
+  IPC_CALLS.SEND_UPDATED_DESTINATION_FOLDER,
+  (_: IpcMainEvent, updatedFolder: IDestinationFolder) => {
+    settingsWindow?.webContents.send(
+      IPC_CALLS.GET_UPDATED_DESTINATION_FOLDER,
+      updatedFolder
     );
   }
 );

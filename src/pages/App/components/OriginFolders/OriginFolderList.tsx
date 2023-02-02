@@ -23,7 +23,10 @@ export const OriginFolderList = ({
   const { getTranslated } = useContext(LanguageContext);
   const [selectedFolders, setSelectedFolders] = useState<string[]>([]);
   const handleAddOriginFolder = async () => {
-    const foldersPaths = await window.api.pickAFolder(true);
+    const foldersPaths = await window.api.pickAFolder({
+      multiSelection: true,
+      defaultPath: "",
+    });
     const originFolders: IOriginFolder[] = foldersPaths
       .map((folder) => createOriginFolder(folder, folders))
       .filter((folder) => {

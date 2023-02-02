@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { ACTIONS } from "@services";
-import { IDestinationFolder, IGlobalReducerAction } from "@models";
+import { IDestinationFolder } from "@models";
 import { IGlobalState, LanguageContext } from "@state";
-import { Button, Flex, Input, Section } from "@components";
+import { Button, Flex, InlineDisplay, Section } from "@components";
 import { useLanguage } from "@hooks";
 import uuid from "react-uuid";
 import { PickFiltersSection } from "./components";
@@ -11,9 +10,9 @@ import { warningAlert } from "../../../../utils/handle-alerts.utils";
 
 import "./Filters.style.scss";
 
-interface IProps {
-  dispatch: React.Dispatch<IGlobalReducerAction>;
-}
+// interface IProps {
+//   dispatch: React.Dispatch<IGlobalReducerAction>;
+// }
 
 function createInitialDestinationFolder(): IDestinationFolder {
   const folder: IDestinationFolder = {
@@ -51,31 +50,33 @@ function createInitialDestinationFolder(): IDestinationFolder {
   return folder;
 }
 
-export const Filters = ({ dispatch }: IProps): JSX.Element => {
+export const Filters = (): JSX.Element => {
   const [currentLanguage, getTranslatedText] = useLanguage();
   const [state, setState] = useState<IGlobalState | null>(null);
+  const [edittingFolder, setEdittingFolder] = useState<boolean>(false);
+  const [destinationFolder, setDestinationFolder] =
+    useState<IDestinationFolder>(createInitialDestinationFolder());
   useEffect(() => {
     // get the destination folder to edit
-    // window.api.getDestinationFolderToEdit((folderToEdit) => {
-    //
-    // })
+    window.api.getDestinationFolderToEdit((folderToEdit) => {
+      setDestinationFolder(folderToEdit);
+      setEdittingFolder(true);
+    });
   }, []);
   useEffect(() => {
     // get state from main
     window.api.getStateFromSettings((s) => {
-      console.log("getting state from settings: ", s);
+      // console.log("getting state from settings: ", s);
       setState(s);
     });
   }, []);
   useEffect(() => {
     // get state from main
     window.api.getState((s) => {
-      console.log("getting state from main: ", s);
+      // console.log("getting state from main: ", s);
       setState(s);
     });
   }, []);
-  const [destinationFolder, setDestinationFolder] =
-    useState<IDestinationFolder>(createInitialDestinationFolder());
   const handlePickedDestinationFolder = ({
     name,
     path,
@@ -113,12 +114,6 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
       }
     });
   };
-  useEffect(() => {
-    dispatch({
-      type: ACTIONS.ADD_DESTINATION_FOLDER,
-      payload: createInitialDestinationFolder(),
-    });
-  }, []);
   const handleAddDestinationFolder = () => {
     const isValid = isValidDestinationFolder({
       folder: destinationFolder,
@@ -136,7 +131,11 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
       },
     });
     if (!isValid) return;
-    window.api.sendDestinationFolder(destinationFolder);
+    if (edittingFolder) {
+      window.api.sendUpdatedDestinationFolder(destinationFolder);
+    } else {
+      window.api.sendDestinationFolder(destinationFolder);
+    }
     window.close();
   };
   const handleCancel = () => {
@@ -157,7 +156,8 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
             "addDestinationFolderDescription"
           )}
         >
-          <Input
+          <InlineDisplay
+            defaultValue={destinationFolder.path}
             type="pick"
             style="add"
             placeholder={getTranslatedText(
@@ -171,12 +171,21 @@ export const Filters = ({ dispatch }: IProps): JSX.Element => {
             setFolder={setDestinationFolder}
           />
           <Flex className="filter-page__bottom-btns">
-            <Button
-              content={getTranslatedText("addDestinationFolder")}
-              callback={handleAddDestinationFolder}
-              type="add"
-              important={true}
-            />
+            {edittingFolder ? (
+              <Button
+                content={getTranslatedText("editDestinationFolder")}
+                callback={handleAddDestinationFolder}
+                type="edit"
+                important={true}
+              />
+            ) : (
+              <Button
+                content={getTranslatedText("addDestinationFolder")}
+                callback={handleAddDestinationFolder}
+                type="add"
+                important={true}
+              />
+            )}
             <Button
               content={getTranslatedText("cancelDestinationFolder")}
               callback={handleCancel}

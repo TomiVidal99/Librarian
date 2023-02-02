@@ -23,7 +23,14 @@ declare global {
       getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;
       openFiltersWindow: () => void;
       popWarning: (arg0: string, arg1: string) => void;
-      pickAFolder: (arg0: boolean) => Promise<string[] | undefined>;
+      pickAFolder: (arg0: {
+        multiSelection?: boolean;
+        defaultPath?: string;
+      }) => Promise<string[] | undefined>;
+      getUpdatedDestinationFolder: (
+        arg0: (arg0: IDestinationFolder) => void
+      ) => void;
+      sendUpdatedDestinationFolder: (arg0: IDestinationFolder) => void;
       sendDestinationFolder: (arg0: IDestinationFolder) => void;
       recieveDestinationFolder: (
         arg0: (arg0: IDestinationFolder) => void
@@ -135,19 +142,36 @@ contextBridge.exposeInMainWorld("api", {
       }
     );
   },
+  getUpdatedDestinationFolder: (
+    callback: (arg0: IDestinationFolder) => void
+  ): void => {
+    ipcRenderer.on(
+      IPC_CALLS.GET_UPDATED_DESTINATION_FOLDER,
+      (_: IpcRendererEvent, updatedFolder) => {
+        callback(updatedFolder);
+      }
+    );
+  },
+  sendUpdatedDestinationFolder: (folder: IDestinationFolder): void => {
+    ipcRenderer.send(IPC_CALLS.SEND_UPDATED_DESTINATION_FOLDER, folder);
+  },
   sendDestinationFolder: (folder: IDestinationFolder): void => {
     ipcRenderer.send(IPC_CALLS.SEND_FOLDER_FROM_FILTERS_WINDOW, folder);
   },
   popWarning: (title: string, body: string): void => {
     ipcRenderer.send(IPC_CALLS.POP_WARNING_MESSAGE, { title, body });
   },
-  pickAFolder: async (
-    multiSelections: boolean
-  ): Promise<string[] | undefined> => {
-    const result = await ipcRenderer.invoke(
-      IPC_CALLS.OPEN_FOLDERS_DIALOG,
-      multiSelections
-    );
+  pickAFolder: async ({
+    multiSelection = false,
+    defaultPath = "",
+  }: {
+    multiSelection?: boolean;
+    defaultPath?: string;
+  }): Promise<string[] | undefined> => {
+    const result = await ipcRenderer.invoke(IPC_CALLS.OPEN_FOLDERS_DIALOG, {
+      multiSelection,
+      defaultPath: defaultPath,
+    });
     return result;
   },
 });

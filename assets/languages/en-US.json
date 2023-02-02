@@ -30,6 +30,7 @@
   "filterLabelRegexPlaceholder": "regular expression",
   "cancelDestinationFolder": "cancelar",
   "addDestinationFolder": "add folder",
+  "editDestinationFolder": "update folder",
   "duplicatedFolderWarningTitle": "duplicated folder",
   "duplicatedFolderWarningBody": "the folder '%foldername' (%folderpath) has already been added and it will not be added again",
   "noDestinationFolderSelectedTitleAlert": "no destiny!",

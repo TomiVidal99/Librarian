@@ -1,12 +1,8 @@
-import { Flex, Input } from "../../../../components";
-import {
-  FilterType,
-  IDestinationFolder,
-  IFilter,
-} from "../../../../../../models";
+import { Flex, InlineDisplay } from "@components";
+import { FilterType, IDestinationFolder, IFilter } from "@models";
 import "./PickFiltersSection.style.scss";
+import { IGlobalState, LanguageContext } from "@state";
 import { useContext } from "react";
-import { IGlobalState, LanguageContext } from "../../../../../../state";
 import { isFilterCorrect } from "../../utils";
 import uuid from "react-uuid";
 import { FilterItem } from "../FilterItem/FilterItem";
@@ -66,17 +62,17 @@ export const PickFiltersSection = ({
   return (
     <div className="pick-filters-container">
       <Flex type="column">
-        <Input
+        <InlineDisplay
           style="name"
           placeholder={getTranslated("filterLabelNamePlaceholder")}
           callbackChange={(f: string) => handleAddFilter(f, "name")}
         />
-        <Input
+        <InlineDisplay
           style="format"
           placeholder={getTranslated("filterLabelFormatPlaceholder")}
           callbackChange={(f: string) => handleAddFilter(f, "format")}
         />
-        <Input
+        <InlineDisplay
           style="regex"
           placeholder={getTranslated("filterLabelRegexPlaceholder")}
           callbackChange={(f: string) => handleAddFilter(f, "regex")}
