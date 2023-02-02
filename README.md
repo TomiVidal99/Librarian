@@ -78,6 +78,7 @@ Project is: _in progress_.
 - [ ] ADD: shift + click to select multiple items in lists.
 - [ ] ADD: theme selector (light and dark, later maybe more palettes).
 - [ ] ADD: navigation.
+- [ ] ADD: background images both in main settings page and filters.
 - [ ] MAYBE ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
 - [ ] IMPROVE: organize all ipcMain handlers better.
 
