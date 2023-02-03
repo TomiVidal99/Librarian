@@ -1,0 +1,48 @@
+.btn {
+  width: fit-content;
+  height: auto;
+
+  border: none;
+  border-radius: 2px;
+  margin: 0;
+  padding: 1em;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  background-color: var(--color-primary);
+
+  &[aria-details="important"] .btn__content {
+    font-weight: bold;
+  }
+
+  opacity: 0.9;
+  &:hover {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.btn__content {
+  font-size: var(--fs-normal);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.btn-delete {
+  background-color: var(--color-remove);
+  color: white;
+}
+.btn-add {
+  background-color: var(--color-add);
+  color: white;
+}

@@ -1,13 +1,10 @@
-| :exclamation:  Working on a 2.0 version under librarianv2 branch   |
-|-----------------------------------------|
-
 # Librarian
 
-> Desktop made with Typescript, Electron.js, React.js, Webpack and sass. The gold is to have the program organize and make backup of our data by setting everything up just once.
+Provides an UI to have organize and make backup of our data by setting everything up just once.
 
 ## Screenshots
 
-![Example screenshot](./assets/Librarian-Screenshot.png)
+![Example screenshot](./librarian-screenshot.png)
 
 <!-- If you have screenshots you'd like to share, include them here. -->
 
@@ -17,8 +14,10 @@
 - [General Info](#general-information)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
-- [Setup](#setup)
+- [Contribute](#development)
+- [Build](#build)
 - [Project Status](#project-status)
+- [To do](#todo)
 - [Contact](#contact)
 - [License](#license)
 
@@ -34,28 +33,23 @@
 
 ## Technologies Used
 
-- Typescript - 4.2.4
-- React.js - 17.0.2
-- Electron.js - 13.1.8
-- css-loader - 5.7.2 (when upgrading this package the app breaks, webpack won't compile properly)
+- Typescript - 4.5.4
+- React.js - 18.2.0
+- Electron.js - 21.3.1
 
 ## Features
 
 List the ready features here:
 
-- Organizes files.
+- [x] Sorting.
 
-## Setup
+## Contribute
 
-You can get the compiled version that matches your OS [_here_](https://drive.google.com/drive/folders/1H64d7qW_NE-Uzm5RjM3dDNjM7AF094wG?usp=sharing) <!--TODO: add compiled links-->
+`yarn start` will start the app for development if you'd like to contribute.
 
-- If you just want to make your own changes or contribute first clone this repo, inside the folder run: `yarn` and then `yarn start`
+## Build
 
-- To package for production (just in current OS run): `yarn package`
-
-<!--- To compile for all OS run: `yarn package-all`-->
-
-- To package for production (for an specific OS ) run: `yarn package --mac`
+`yarn package` will create a folder _'out'_ in which you'll find the corresponding executables for your OS.
 
 ## Project Status
 
@@ -68,9 +62,28 @@ Project is: _in progress_.
 <!--- Improvement to be done 1-->
 <!--- Improvement to be done 2-->
 
+## TODO:
+
+- [ ] FIX: translation not working on filters page.
+- [ ] FIX: title overflow.
+- [ ] FIX: add hashing to windows path names, so no conflic occurs when filtering the route.
+- [ ] FIX: the store should be handled in the state handler file, move dependencies to it and make the refactors in the functions.
+- [ ] FIX: handle case for when the file already exists.
+- [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
+- [ ] FIX: make the list and the items of the origin and destination folders it's own component.
+- [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
+- [ ] ADD: edit destination folders.
+- [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
+- [ ] ADD: recursion to the origin folders.
+- [ ] ADD: shift + click to select multiple items in lists.
+- [ ] ADD: theme selector (light and dark, later maybe more palettes).
+- [ ] ADD: navigation.
+- [ ] MAYBE ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
+- [ ] IMPROVE: organize all ipcMain handlers better.
+
 ## Contact
 
-Created by [@TomiVidal99](https://www.tomas-vidal.xyz/) - feel free to contact me!
+Created by [@TomiVidal99](https://www.tomasvidal.xyz/) - feel free to contact me!
 
 <!-- Optional -->
 

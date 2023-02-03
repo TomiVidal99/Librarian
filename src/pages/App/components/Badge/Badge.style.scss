@@ -1,0 +1,31 @@
+.badge {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1em 1.5em;
+  margin: 0;
+  border-radius: 3px;
+
+  &[aria-label="normal"] {
+    background-color: var(--color-third-darker);
+    color: var(--color-secondary)
+  }
+
+  &[aria-label="warning"] {
+    background-color: var(--color-warning);
+    color: var(--color-third-darker);
+  }
+
+}
+
+.badge__content {
+  font-size: var(--normal);
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  &::after {
+    content: ".";
+  }
+}

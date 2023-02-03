@@ -1,0 +1,14 @@
+.recently-moved-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 1em;
+  max-height: 400px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+  width: 6px;
+}
+}
+

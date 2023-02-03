@@ -1,0 +1,81 @@
+.origin-folder-container {
+  position: relative;
+  background-color: var(--color-third-darker);
+  border-radius: 3px;
+
+  font-size: var(--fs-normal);
+
+  &:hover {
+    background-color: var(--color-third-darkest);
+    transition: transform 200ms;
+    transform: scaleX(1.03);
+    & .folder__path {
+      opacity: 1;
+    }
+  }
+  &::before {
+    content: "";
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: red;
+    right: 0;
+    transition: transform 400ms;
+  }
+}
+
+.origin-folder-container[aria-selected="true"] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  &::before {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+}
+
+.origin-folder {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+
+  border-radius: 3px;
+
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: min-content;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2em;
+
+  border: none;
+  outline: none;
+  padding: 0.6em 1em;
+  margin: 0.4em 0;
+  background-color: inherit;
+  color: inherit;
+  font-size: inherit;
+
+  & > * {
+    height: calc(var(--fs-normal) + 0.35em);
+    overflow: hidden;
+  }
+
+  & > .folder__name {
+    font-size: larger;
+    text-overflow: clip;
+    text-align: left;
+  }
+
+  & > .folder__path {
+    text-align: right;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transition: opacity 0.5s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
