@@ -352,6 +352,20 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@iconify/icons-emojione-monotone@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-emojione-monotone/-/icons-emojione-monotone-1.2.4.tgz#47d33f0c8c39eedef968bfe38e19460e65396ced"
+  integrity sha512-NX9UUhjmFFTsMrK8Gm91zXII+O5Ki3XwrS2C5XStz7JQihDp7ZGiVf8QT+MaDGo/tkaJPha0B682BYsZ8oNemw==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/icons-game-icons@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-game-icons/-/icons-game-icons-1.2.1.tgz#50487b01b605f37e7ab470bae8153729539a4520"
+  integrity sha512-heO/4Veq5SOE7Ho1AiPn1HbSavl7ISIgiC7Ww6J2NNZ5mw+hVuTCzOQ77ImkWSjNKZZ4oEX6A6ibZEcK15J8Hg==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify/icons-ic@1.2.11":
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/@iconify/icons-ic/-/icons-ic-1.2.11.tgz#398c472432d6b89756fc0aaf651aac5c0d017411"
