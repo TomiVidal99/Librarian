@@ -68,7 +68,7 @@ const createSettingsWindow = (): void => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
-  process.env.NODE_ENV === "development" && settingsWindow.setMenu(null);
+  //process.env.NODE_ENV === "development" && settingsWindow.setMenu(null);
 
   // and load the index.html of the app.
   settingsWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
@@ -108,7 +108,7 @@ function createFiltersWindow(): void {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
-  process.env.NODE_ENV === "development" && filtersWindow.setMenu(null);
+  //process.env.NODE_ENV === "development" && filtersWindow.setMenu(null);
 
   // and load the index.html of the app.
   filtersWindow.loadURL(FILTERS_WINDOW_WEBPACK_ENTRY);

@@ -34,6 +34,8 @@
     "@electron-forge/maker-squirrel": "6.0.3",
     "@electron-forge/maker-zip": "6.0.3",
     "@electron-forge/plugin-webpack": "6.0.3",
+    "@iconify/icons-emojione-monotone": "^1.2.4",
+    "@iconify/icons-game-icons": "^1.2.1",
     "@iconify/icons-ic": "1.2.11",
     "@iconify/icons-material-symbols": "1.2.23",
     "@iconify/react": "4.0.0",

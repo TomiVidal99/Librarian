@@ -11,6 +11,9 @@ import {
 } from "@components";
 import { LanguageSelector } from "../../styled-components/SelectLanguage";
 import { RecentlyMovedList, ResetSettings } from "./components";
+import { Icon } from "@iconify/react";
+import bookshelfIcon from "@iconify/icons-game-icons/bookshelf";
+import booksIcon from "@iconify/icons-emojione-monotone/books";
 
 interface IProps {
   state: IGlobalState;
@@ -33,6 +36,16 @@ export const Settings = ({ state, dispatch }: IProps): JSX.Element => {
       }}
     >
       <main className="app-container">
+        <Icon
+          className="app-container__background background-top"
+          icon={booksIcon}
+          inline={true}
+        />
+        <Icon
+          className="app-container__background background-bottom"
+          icon={bookshelfIcon}
+          inline={true}
+        />
         <Section border={false}>
           <h1 className="app-title">Librarian</h1>
         </Section>

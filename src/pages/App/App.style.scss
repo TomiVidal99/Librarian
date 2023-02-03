@@ -1,9 +1,31 @@
 .app-container {
+  position: relative;
   width: 100%;
   min-height: 100vh;
   color: var(--color-secondary);
   display: flex;
   flex-direction: column;
+}
+
+.app-container__background {
+  position: absolute;
+  height: auto;
+  z-index: -100;
+  opacity: 0.125;
+}
+
+.background-top {
+  top: 20vh;
+  right: 0;
+  width: 40vw;
+  color: var(--color-third-darkest);
+}
+
+.background-bottom {
+  bottom: 0;
+  left: 0;
+  color: var(--color-primary);
+  width: 35vw;
 }
 
 .app-title {
