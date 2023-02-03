@@ -1,7 +1,7 @@
 import type { ForgeConfig } from "@electron-forge/shared-types";
 import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
-import { MakerDeb } from "@electron-forge/maker-deb";
+// import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 
@@ -14,7 +14,7 @@ const languagesPath = path.join(__dirname, "assets", "languages");
 
 const config: ForgeConfig = {
   packagerConfig: {
-    extraResource: [iconsPath, languagesPath]
+    extraResource: [iconsPath, languagesPath],
   },
   rebuildConfig: {},
   makers: [

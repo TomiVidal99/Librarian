@@ -13,7 +13,14 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@src": ["./src"],
+      "@models": ["./src/models"],
+      "@state": ["./src/state"],
+      "@utils": ["./src/utils"],
+      "@services": ["./src/services"],
+      "@hooks": ["./src/hooks"],
+      "@components": ["./src/pages/App/components"]
     }
   },
   "include": ["src/**/*"]

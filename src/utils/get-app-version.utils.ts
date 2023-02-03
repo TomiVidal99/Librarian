@@ -9,5 +9,5 @@ import { getTranslated } from ".";
 export function getFormattedTrayTitle(): string {
   const appName = getTranslated("trayTitle");
   const versionNumber = app.getVersion();
-  return `${appName} (v${versionNumber})`
+  return `${appName} (v${versionNumber})`;
 }

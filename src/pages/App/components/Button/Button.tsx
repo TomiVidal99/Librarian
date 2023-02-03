@@ -3,7 +3,7 @@ import "./Button.style.scss";
 
 interface IProps {
   content: string;
-  type?: "normal" | "delete" | "add";
+  type?: "normal" | "delete" | "add" | "edit";
   important?: boolean;
   children?: JSX.Element;
   callback: (arg0: MouseEvent<HTMLButtonElement>) => void;

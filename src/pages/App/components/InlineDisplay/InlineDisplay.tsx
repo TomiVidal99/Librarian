@@ -1,12 +1,13 @@
 import addCircleRounded from "@iconify/icons-material-symbols/add-circle-rounded";
 import { Icon } from "@iconify/react";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FilterType } from "../../../../models";
 import { getFolderName } from "../OriginFolders/utils";
 import "./InlineDisplay.style.scss";
 
 interface IProps {
   placeholder: string;
+  defaultValue?: string;
   type?: "text" | "pick";
   style?: "normal" | "add" | "remove" | FilterType;
   className?: string;
@@ -14,32 +15,40 @@ interface IProps {
   callbackChange?: (arg0: string) => void;
 }
 
-export const Input = ({
+export const InlineDisplay = ({
   className = "",
+  defaultValue = "",
   type = "text",
   style = "normal",
   placeholder,
-  callbackClick = () => new Promise((resolve, reject) => {
-    const err = "You must define a click callback";
-    reject(err);
-  }),
+  callbackClick = () =>
+    new Promise((_, reject) => {
+      const err = "You must define a click callback";
+      reject(err);
+    }),
   callbackChange = () => {
     console.error("You must define a change callback");
   },
 }: IProps): JSX.Element => {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>(defaultValue);
   const inputRef = useRef<HTMLInputElement>();
   const blurOutInput = () => {
     const curr = inputRef.current as HTMLInputElement;
     curr?.blur();
   };
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
   const handleClick = async (): Promise<void> => {
     if (type === "text") return;
-    const foldersPaths = await window.api.pickAFolder(false);
+    const foldersPaths = await window.api.pickAFolder({
+      multiSelection: false,
+      defaultPath: value,
+    });
     if (foldersPaths === undefined || foldersPaths.length === 0) return;
     const path = foldersPaths[0];
     const name = getFolderName(path);
-    callbackClick({ name, path }).then( (success) => {
+    callbackClick({ name, path }).then((success) => {
       if (!success) return;
       setValue(path);
     });

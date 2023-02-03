@@ -6,3 +6,5 @@ export * from "./Button/Button";
 export * from "./Badge/Badge";
 export * from "./InlineDisplay/InlineDisplay";
 export * from "./Flex/Flex";
+export * from "./Checkbox/Checkbox";
+export * from "./DestinationFolders/DestinationFolderList";

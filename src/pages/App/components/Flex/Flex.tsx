@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import "./Flex.style.scss"
+import "./Flex.style.scss";
 
 interface IProps {
   children: ReactNode;
@@ -8,7 +8,11 @@ interface IProps {
   type?: "row" | "column";
 }
 
-export const Flex = ({ className = "", children, type = "row" }: IProps): JSX.Element => {
+export const Flex = ({
+  className = "",
+  children,
+  type = "row",
+}: IProps): JSX.Element => {
   return (
     <div
       className={`flex-container ${

@@ -1,11 +1,10 @@
-import { IGlobalState, initialState, LanguageContext } from "../../state";
-import { useLanguage } from "../../hooks";
+import { useEffect, useReducer } from "react";
+import { IGlobalState, initialState } from "@state";
+import { ACTIONS, reducer } from "@services";
+import { IDestinationFolder } from "@models";
+import { Filters, Settings } from "./pages";
 
 import "./App.style.scss";
-import { IDestinationFolder } from "../../models";
-import { useEffect, useReducer } from "react";
-import { ACTIONS, reducer } from "../../services";
-import { Filters, Settings } from "./pages";
 
 // const ORIGIN_FOLDERS_DEFAULT: IOriginFolder[] = [
 //   {
@@ -55,11 +54,10 @@ import { Filters, Settings } from "./pages";
 
 export const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [currentLanguage, getTranslatedText] = useLanguage();
 
-  useEffect(() => {
-    console.log("state updated: ", state);
-  }, [state]);
+  // useEffect(() => {
+  //   console.log("state updated: ", state);
+  // }, [state]);
 
   // listens to make a recently watched folder
   useEffect(() => {
@@ -91,6 +89,18 @@ export const App = () => {
     });
   }, []);
 
+  // gets the updated destination folder
+  useEffect(() => {
+    window.api.getUpdatedDestinationFolder(
+      (updatedFolder: IDestinationFolder) => {
+        dispatch({
+          type: ACTIONS.UPDATE_DESTINATION_FOLDER,
+          payload: updatedFolder,
+        });
+      }
+    );
+  }, []);
+
   // For testing porpouses
   // useEffect(() => {
   //   dispatch({
@@ -106,18 +116,11 @@ export const App = () => {
   // }, []);
 
   return (
-    <LanguageContext.Provider
-      value={{
-        getLang: currentLanguage,
-        getTranslated: getTranslatedText,
-      }}
-    >
-      {
-        location.pathname.includes("main_window") && <Settings state={state} dispatch={dispatch} />
-      }
-      {
-        location.pathname.includes("filters_window") && <Filters dispatch={dispatch} />
-      }
-    </LanguageContext.Provider>
+    <>
+      {location.pathname.includes("main_window") && (
+        <Settings state={state} dispatch={dispatch} />
+      )}
+      {location.pathname.includes("filters_window") && <Filters />}
+    </>
   );
 };

@@ -10,14 +10,27 @@ import { IGlobalState } from "./state";
 declare global {
   interface Window {
     api: {
+      getDestinationFolderToEdit: (
+        arg0: (arg0: IDestinationFolder) => void
+      ) => void;
+      editDestinationFolder: (arg0: string) => void;
       sendLanguageToRenderer: () => void;
-      getLanguage: (arg0: (arg0: LanguageType, arg1: ILanguage) => void) => void;
+      getLanguage: (
+        arg0: (arg0: LanguageType, arg1: ILanguage) => void
+      ) => void;
       changeLanguage: (arg0: LanguageType) => void;
       toggleAutoLaunch: (arg0: boolean) => void;
       getStateFromSettings: (arg0: (arg0: IGlobalState) => void) => void;
       openFiltersWindow: () => void;
       popWarning: (arg0: string, arg1: string) => void;
-      pickAFolder: (arg0: boolean) => Promise<string[] | undefined>;
+      pickAFolder: (arg0: {
+        multiSelection?: boolean;
+        defaultPath?: string;
+      }) => Promise<string[] | undefined>;
+      getUpdatedDestinationFolder: (
+        arg0: (arg0: IDestinationFolder) => void
+      ) => void;
+      sendUpdatedDestinationFolder: (arg0: IDestinationFolder) => void;
       sendDestinationFolder: (arg0: IDestinationFolder) => void;
       recieveDestinationFolder: (
         arg0: (arg0: IDestinationFolder) => void
@@ -38,6 +51,19 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  getDestinationFolderToEdit: (
+    callback: (arg0: IDestinationFolder) => void
+  ): void => {
+    ipcRenderer.on(
+      IPC_CALLS.GET_DESTINATION_FOLDER_TO_EDIT,
+      (_: IpcRendererEvent, folderToEdit) => {
+        callback(folderToEdit);
+      }
+    );
+  },
+  editDestinationFolder: (folderId: string): void => {
+    ipcRenderer.send(IPC_CALLS.SEND_DESTINATION_FOLDER_TO_EDIT, folderId);
+  },
   sendLanguageToRenderer: (): void => {
     ipcRenderer.send(IPC_CALLS.SEND_LANGUAGE_TO_RENDERER);
   },
@@ -46,7 +72,7 @@ contextBridge.exposeInMainWorld("api", {
   ): void => {
     ipcRenderer.on(
       IPC_CALLS.GET_LANGUAGE,
-      (event: IpcRendererEvent, [language, translation]) => {
+      (_: IpcRendererEvent, [language, translation]) => {
         callback(language, translation);
       }
     );
@@ -60,7 +86,7 @@ contextBridge.exposeInMainWorld("api", {
   getStateFromSettings: (callback: (arg0: IGlobalState) => void): void => {
     ipcRenderer.on(
       IPC_CALLS.GET_STATE_FROM_SETTINGS_WINDOW,
-      (event: IpcRendererEvent, state: IGlobalState) => {
+      (_: IpcRendererEvent, state: IGlobalState) => {
         callback(state);
       }
     );
@@ -73,7 +99,7 @@ contextBridge.exposeInMainWorld("api", {
   ): void => {
     ipcRenderer.on(
       IPC_CALLS.SEND_RECENTLY_WATCHED,
-      (event: IpcRendererEvent, data: ISendRecentlyWatchedFolder) => {
+      (_: IpcRendererEvent, data: ISendRecentlyWatchedFolder) => {
         callback(data);
       }
     );
@@ -101,7 +127,7 @@ contextBridge.exposeInMainWorld("api", {
   getState: (callback: (arg0: IGlobalState) => void): void => {
     ipcRenderer.on(
       IPC_CALLS.GET_STATE_FROM_MAIN,
-      (event: IpcRendererEvent, state: IGlobalState) => {
+      (_: IpcRendererEvent, state: IGlobalState) => {
         callback(state);
       }
     );
@@ -111,10 +137,23 @@ contextBridge.exposeInMainWorld("api", {
   ): void => {
     ipcRenderer.on(
       IPC_CALLS.RECIEVE_FOLDER_FROM_MAIN,
-      (event: IpcRendererEvent, folder: IDestinationFolder) => {
+      (_: IpcRendererEvent, folder: IDestinationFolder) => {
         callback(folder);
       }
     );
+  },
+  getUpdatedDestinationFolder: (
+    callback: (arg0: IDestinationFolder) => void
+  ): void => {
+    ipcRenderer.on(
+      IPC_CALLS.GET_UPDATED_DESTINATION_FOLDER,
+      (_: IpcRendererEvent, updatedFolder) => {
+        callback(updatedFolder);
+      }
+    );
+  },
+  sendUpdatedDestinationFolder: (folder: IDestinationFolder): void => {
+    ipcRenderer.send(IPC_CALLS.SEND_UPDATED_DESTINATION_FOLDER, folder);
   },
   sendDestinationFolder: (folder: IDestinationFolder): void => {
     ipcRenderer.send(IPC_CALLS.SEND_FOLDER_FROM_FILTERS_WINDOW, folder);
@@ -122,13 +161,17 @@ contextBridge.exposeInMainWorld("api", {
   popWarning: (title: string, body: string): void => {
     ipcRenderer.send(IPC_CALLS.POP_WARNING_MESSAGE, { title, body });
   },
-  pickAFolder: async (
-    multiSelections: boolean
-  ): Promise<string[] | undefined> => {
-    const result = await ipcRenderer.invoke(
-      IPC_CALLS.OPEN_FOLDERS_DIALOG,
-      multiSelections
-    );
+  pickAFolder: async ({
+    multiSelection = false,
+    defaultPath = "",
+  }: {
+    multiSelection?: boolean;
+    defaultPath?: string;
+  }): Promise<string[] | undefined> => {
+    const result = await ipcRenderer.invoke(IPC_CALLS.OPEN_FOLDERS_DIALOG, {
+      multiSelection,
+      defaultPath: defaultPath,
+    });
     return result;
   },
 });

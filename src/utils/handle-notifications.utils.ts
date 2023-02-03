@@ -28,4 +28,4 @@ export function sendNotification(data: INotification): void {
     });
   }
   noti.show();
-};
+}

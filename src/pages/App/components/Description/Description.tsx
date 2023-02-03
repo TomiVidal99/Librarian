@@ -8,9 +8,7 @@ export const Description = () => {
   return (
     <div className="description-container">
       <p className="description__content capitalize">
-        {
-          getTranslated("description")
-        }
+        {getTranslated("description")}
       </p>
     </div>
   );

@@ -24,9 +24,7 @@ export const Select = <T extends string>({
   const toggleOpenSelect = (): void => {
     listRef?.current?.classList.toggle("closed");
   };
-  const handleClick = (
-    event: MouseEvent<HTMLButtonElement>
-  ): void => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     const option = (event.target as HTMLButtonElement).innerHTML;
     setSelectedOptions(availableOptions.indexOf(option as T));
     selectedOptionsCallback(option as T);
@@ -35,10 +33,7 @@ export const Select = <T extends string>({
   return (
     <div ref={listRef} className="select-container closed">
       <div className="select">
-        <button
-          onClick={toggleOpenSelect}
-          className="select__btn"
-        >
+        <button onClick={toggleOpenSelect} className="select__btn">
           <div>{availableOptions[selectedOption] as string}</div>
           <Icon inline={true} icon={arrowDropDownRounded} />
         </button>
@@ -47,10 +42,7 @@ export const Select = <T extends string>({
             if (availableOptions.indexOf(_option) == selectedOption) return;
             return (
               <li className="select__option" key={_option as string}>
-                <button
-                  className="select__btn"
-                  onClick={handleClick}
-                >
+                <button className="select__btn" onClick={handleClick}>
                   {_option as string}
                 </button>
               </li>

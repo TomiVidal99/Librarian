@@ -1,7 +1,9 @@
 {
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-useless-escape": 0,
+    "no-case-declarations": 0
   },
   "env": {
     "browser": true,
@@ -17,5 +19,12 @@
     "plugin:import/electron",
     "plugin:import/typescript"
   ],
-  "parser": "@typescript-eslint/parser"
+  "parser": "@typescript-eslint/parser",
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": ["./tsconfig.json"]
+      }
+    }
+  }
 }

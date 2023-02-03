@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ILanguage, LanguageType} from "../utils";
+import { ILanguage, LanguageType } from "../utils";
 
 const DEFAULT_LANGUAGE: LanguageType = "en-US";
 
@@ -10,7 +10,8 @@ function parseTranslation(text: string): string {
 }
 
 export const useLanguage = (): [LanguageType, (arg0: string) => string] => {
-  const [currentLanguage, setCurrentLanguage] = useState<LanguageType>(DEFAULT_LANGUAGE);
+  const [currentLanguage, setCurrentLanguage] =
+    useState<LanguageType>(DEFAULT_LANGUAGE);
   const [translation, setTranslation] = useState<ILanguage>({});
 
   // get language and translation from main
@@ -20,7 +21,7 @@ export const useLanguage = (): [LanguageType, (arg0: string) => string] => {
       setTranslation(newTranslation);
     });
     window.api.sendLanguageToRenderer();
-  }, [])
+  }, []);
 
   function getTranslatedText(key: string): string {
     return parseTranslation(translation[key] || DEFAULT_TRANSLATION);

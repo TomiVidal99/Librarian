@@ -46,10 +46,11 @@ List the ready features here:
 ## Contribute
 
 `yarn start` will start the app for development if you'd like to contribute.
+`yarn package` will make some excutables to run tests
 
 ## Build
 
-`yarn package` will create a folder _'out'_ in which you'll find the corresponding executables for your OS.
+`yarn make` will create a folder _'out'_ in which you'll find the corresponding executables for your OS.
 
 ## Project Status
 
@@ -64,13 +65,12 @@ Project is: _in progress_.
 
 ## TODO:
 
-- [ ] FIX: translation not working on filters page.
 - [ ] FIX: title overflow.
 - [ ] FIX: add hashing to windows path names, so no conflic occurs when filtering the route.
-- [ ] FIX: the store should be handled in the state handler file, move dependencies to it and make the refactors in the functions.
 - [ ] FIX: handle case for when the file already exists.
 - [ ] FIX: in general settings (and some other elements) there should be tooltips, to further explain what's up.
 - [ ] FIX: make the list and the items of the origin and destination folders it's own component.
+- [ ] ADD: check when adding regex if it's valid.
 - [ ] ADD: think a way to handle recentlyMoved folder, like: how to remove them, how many should you store, etc.
 - [ ] ADD: edit destination folders.
 - [ ] ADD: frontend to activate/deactivate file organization when just launched (all files that already exists inside folders).
@@ -78,6 +78,7 @@ Project is: _in progress_.
 - [ ] ADD: shift + click to select multiple items in lists.
 - [ ] ADD: theme selector (light and dark, later maybe more palettes).
 - [ ] ADD: navigation.
+- [ ] ADD: background images both in main settings page and filters.
 - [ ] MAYBE ANIMATION: to the items in the list, so the name originally it's centered and the moves to the left as the path appears.
 - [ ] IMPROVE: organize all ipcMain handlers better.
 

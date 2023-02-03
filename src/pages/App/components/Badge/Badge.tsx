@@ -6,7 +6,11 @@ interface IProps {
   children?: JSX.Element;
 }
 
-export const Badge = ({ content, children, type = "normal" }: IProps): JSX.Element => {
+export const Badge = ({
+  content,
+  children,
+  type = "normal",
+}: IProps): JSX.Element => {
   return (
     <div aria-label={type} className="badge">
       <p className="badge__content">{content}</p>

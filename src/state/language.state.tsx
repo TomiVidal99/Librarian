@@ -8,7 +8,7 @@ declare interface ILanguageContext {
 
 export const defaultValue: ILanguageContext = {
   getLang: "en-US",
-  getTranslated: () => "",
+  getTranslated: () => "DEFAULT TRANSLATION",
 };
 
 export const LanguageContext = createContext(defaultValue);

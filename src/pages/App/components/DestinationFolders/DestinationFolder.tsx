@@ -1,6 +1,6 @@
 import { IDestinationFolder } from "../../../../models";
 
-import "./DestinationFolder.style.scss"
+import "./DestinationFolder.style.scss";
 
 interface IProps {
   folder: IDestinationFolder;
@@ -27,7 +27,11 @@ export const DestinationFolder = ({
         <span className="destination-folder__name">{folder.name}</span>
         <span className="destination-folder__path">{folder.path}</span>
         <ul className="destination-folder__filters">
-          {folder.filters.map( ({id, content, type}) => <li aria-label={type} key={id}>{content}</li>)}
+          {folder.filters.map(({ id, content, type }) => (
+            <li aria-label={type} key={id}>
+              {content}
+            </li>
+          ))}
         </ul>
       </button>
     </li>

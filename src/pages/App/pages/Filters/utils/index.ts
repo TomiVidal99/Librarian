@@ -1,2 +1,2 @@
-export * from "./check-filter-syntax.utils"
-export * from "./check-destination-folder.utils"
+export * from "./check-filter-syntax.utils";
+export * from "./check-destination-folder.utils";
