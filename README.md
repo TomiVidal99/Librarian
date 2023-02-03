@@ -47,10 +47,11 @@ List the ready features here:
 ## Contribute
 
 `yarn start` will start the app for development if you'd like to contribute.
+`yarn package` will make some excutables to run tests
 
 ## Build
 
-`yarn package` will create a folder _'out'_ in which you'll find the corresponding executables for your OS.
+`yarn make` will create a folder _'out'_ in which you'll find the corresponding executables for your OS.
 
 ## Project Status
 
