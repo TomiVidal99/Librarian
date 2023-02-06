@@ -10,6 +10,7 @@ import { IGlobalState } from "./state";
 declare global {
   interface Window {
     api: {
+      getBasename: (arg0: string) => Promise<string>;
       getDestinationFolderToEdit: (
         arg0: (arg0: IDestinationFolder) => void
       ) => void;
@@ -51,6 +52,20 @@ declare global {
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
+  getBasename: async (filepath: string): Promise<string> => {
+    //const is_windows = os.platform() === "win32";
+    try {
+      const filename = await ipcRenderer.invoke(
+        IPC_CALLS.GET_CURRENT_OS_IS_WINDOWS,
+        filepath
+      );
+      // console.log({ filepath, filename });
+      return filename;
+    } catch (err) {
+      if (err) throw err;
+    }
+    return "";
+  },
   getDestinationFolderToEdit: (
     callback: (arg0: IDestinationFolder) => void
   ): void => {

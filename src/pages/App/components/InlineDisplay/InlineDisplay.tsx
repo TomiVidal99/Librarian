@@ -47,7 +47,7 @@ export const InlineDisplay = ({
     });
     if (foldersPaths === undefined || foldersPaths.length === 0) return;
     const path = foldersPaths[0];
-    const name = getFolderName(path);
+    const name = getFolderName({ filepath: path });
     callbackClick({ name, path }).then((success) => {
       if (!success) return;
       setValue(path);

@@ -1,5 +1,4 @@
 import { FSWatcher, watch } from "chokidar";
-import { getFolderName } from "../pages/App/components/OriginFolders/utils";
 import { getState, startMovingFileAnimation } from ".";
 import { sendRecentlyWatchedFolder } from "../";
 import path from "path";
@@ -78,7 +77,9 @@ interface ISortArgs {
  */
 const handleNewFile = (filepath: string): void => {
   const state = getState();
-  const filename = getFolderName(filepath);
+  const filename = path.basename(filepath);
+
+  console.log({ filename, filepath });
 
   // if the user disables the files movement, don't move them
   if (!state.canMoveFiles) return;

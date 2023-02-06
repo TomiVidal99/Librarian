@@ -24,4 +24,5 @@ export const IPC_CALLS = {
   SEND_LANGUAGE_TO_RENDERER: "send-language-to-renderer",
   SEND_DESTINATION_FOLDER_TO_EDIT: "send-destination-folder-to-edit",
   GET_DESTINATION_FOLDER_TO_EDIT: "get-destination-folder-to-edit",
+  GET_CURRENT_OS_IS_WINDOWS: "get-current-os-is-windows",
 } as const;
