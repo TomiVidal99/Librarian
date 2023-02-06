@@ -56,6 +56,10 @@ export const createTray = (): void => {
     },
   ]);
 
+  if (process.platform === "win32") {
+    tray.on("double-click", toggleOpenMainWindow);
+  }
+
   tray.setContextMenu(menu);
 };
 

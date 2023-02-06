@@ -85,9 +85,13 @@ export const Filters = (): JSX.Element => {
     path: string;
   }): Promise<boolean> => {
     return new Promise((resolve) => {
-      const alreadyHasThisPath = state.destinationFolders.filter(
-        (f) => f.path === path
-      );
+      const alreadyHasThisPath = state.destinationFolders.filter((f) => {
+        if (edittingFolder) {
+          return f.path === path && f.id !== destinationFolder.id;
+        } else {
+          return f.path === path;
+        }
+      });
       if (alreadyHasThisPath.length > 0) {
         warningAlert({
           title: getTranslatedText(
