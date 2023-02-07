@@ -18,7 +18,7 @@
   "editFoldersButton": "editar carpeta",
   "removeFoldersButton": "quitar carpeta/s",
   "destinationFoldersSection": "carpetas de destino",
-  "destinationFoldersDescription": "a estas carpetas iran los archivos que se organicen, por lo que tendrán los filtros también",
+  "destinationFoldersDescription": "a estas carpetas irán los archivos que se organicen, por lo que tendrán los filtros también",
   "generalSettingsSection": "configuraciones generales",
   "addDestinationFolderSection": "nueva carpeta de destino",
   "addDestinationFolderDescription": "agregá una nueva carpeta de destino a la cual irán los archivos que pasen los filtros que configures abajo",
