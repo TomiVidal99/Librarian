@@ -5,6 +5,8 @@ import path from "path";
 import fs from "fs";
 import { sendNotification } from "./handle-notifications.utils";
 
+export type ValidDestinationType = "duplicated" | "error" | undefined;
+
 const WATCH_OPTIONS = {
   ignored: /(^|[\/\\])\../, // ignore dotfiles
   ignoreInitial: true, // TODO: make this an option in the frontend
@@ -68,6 +70,90 @@ export const removeAllListeners = ({
   });
 };
 
+/**
+ * Looks for duplicated files on the destination.
+ * @returns {ValidDestinationType}
+ */
+async function checkValidDestination({
+  destinationPath,
+}: {
+  destinationPath: string;
+}): Promise<ValidDestinationType> {
+  return new Promise((resolve) => {
+    fs.open(destinationPath, "r", (err) => {
+      if (err) {
+        resolve("duplicated");
+      }
+      resolve(undefined);
+    });
+  });
+}
+
+/**
+ * Parses a given path to an indexed copy of it.
+ * @param {string} path
+ * @param {string} description
+ * @param {number} index
+ * @returns {string} parsedPath
+ */
+function helperParseIndexDuplicated({
+  path,
+  index,
+  description,
+}: {
+  path: string;
+  index: number;
+  description: string;
+}): string {
+  return `${path} - ${description}(${index.toString()})`;
+}
+
+type DestinationAndIndexType = [string, number];
+/**
+ * Returns the destination filepath with an index corresponding to the amount of repeated files in the same directory.
+ * @param {destinationPath} string - destination path.
+ * @param {copyDescription} string - description before the index, i.e: 'copy (1)', 'copy' it's the description.
+ * @param {currentIndex} number - the amount of times that the file it's repeated.
+ * @return {DestinationAndIndexType} Promise<[newDestinationPath, index]>
+ */
+async function getDestinationFilepathWithIndex({
+  destinationPath,
+  copyDescription,
+  currentIndex,
+}: {
+  destinationPath: string;
+  copyDescription: string;
+  currentIndex: number;
+}): Promise<DestinationAndIndexType> {
+  // TODO: refactor this to make it async
+  const maxDuplicatedNumber = 100;
+  return new Promise((resolve) => {
+    const data: DestinationAndIndexType = [
+      helperParseIndexDuplicated({
+        path: destinationPath,
+        description: copyDescription,
+        index: 0,
+      }),
+      0,
+    ];
+    // while (data[0] === "" && data[1] < maxDuplicatedNumber) {
+    const result = fs.openSync(destinationPath, "r");
+    console.log({ result });
+    // if () {
+    //   getDestinationFilepathWithIndex({
+    //     destinationPath,
+    //     copyDescription,
+    //     currentIndex: currentIndex++,
+    //   }).then((args) => {
+    //     data = args;
+    //   });
+    // }
+    // const newDestinationPath = `${destinationPath} - ${copyDescription}(${currentIndex})`;
+    // resolve([newDestinationPath, data[1]]);
+    // }
+  });
+}
+
 interface ISortArgs {
   filename: string;
   filter: string;
@@ -98,13 +184,22 @@ const handleNewFile = (filepath: string): void => {
       const shouldMove = actions[filter.type](args);
       if (!shouldMove) return;
       const destinationPath = `${folder.path}/${filename}`;
-      // console.log(
-      //   `moving ${filepath} to ${destinationPath}, (filter: ${filter.type})`
+      // TODO: check if there's any existing file in the destination location
+      // checkValidDestination({ destinationPath }).then(
+      //   (isValid: ValidDestinationType) => {
+      //     if (isValid === "error") {
+      //       throw isValid;
+      //     } else if (isValid === "duplicated") {
+      //       // handle duplicated file case.
+      //       // check how to handle this on settings.
+      //       console.error("TODO: this is not implemented yet");
+      //       getDestinationFilepathWithIndex({destinationPath, copyDescription: "copy", currentIndex: 0}).then(([newDestinationPath]) => {
+      //         destinationPath = newDestinationPath;
+      //       })
+      //     }
+      //   }
       // );
-      // TODO: create tray animation
       fs.rename(filepath, destinationPath, (err) => {
-        // TODO: add error notification
-        //if (err) throw err;
         if (err) {
           console.error(err);
           sendNotification({
