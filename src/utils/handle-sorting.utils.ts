@@ -5,6 +5,8 @@ import path from "path";
 import fs from "fs";
 import { sendNotification } from "./handle-notifications.utils";
 
+export type ValidDestinationType = "duplicated" | "error" | "ok";
+
 const WATCH_OPTIONS = {
   ignored: /(^|[\/\\])\../, // ignore dotfiles
   ignoreInitial: true, // TODO: make this an option in the frontend
@@ -68,6 +70,67 @@ export const removeAllListeners = ({
   });
 };
 
+/**
+ * Parses a given path to an indexed copy of it.
+ * @param {string} path
+ * @param {string} description
+ * @param {number} index
+ * @returns {string} parsedPath
+ */
+function helperParseIndexDuplicated({
+  name,
+  format,
+  index,
+  description,
+}: {
+  name: string;
+  format: string;
+  index: number;
+  description: string;
+}): string {
+  return `${name} - ${description} (${index.toString()}).${format}`;
+}
+
+type DestinationAndIndexType = [string, number];
+/**
+ * Returns the destination filepath with an index corresponding to the amount of repeated files in the same directory.
+ * TODO: refactor this to make it async
+ * @return {DestinationAndIndexType} Promise<[newDestinationPath, index]>
+ */
+function getDestinationFilepathWithIndex({
+  basepath,
+  name,
+  format,
+  description,
+  index,
+}: {
+  basepath: string;
+  name: string;
+  format: string;
+  description: string;
+  index: number;
+}): DestinationAndIndexType {
+  const defaultData = { name, format, description, index, basepath };
+  const maxDuplicatedNumber = 500;
+  let data: DestinationAndIndexType = [
+    helperParseIndexDuplicated(defaultData),
+    index,
+  ];
+  let foundFlag = false;
+  while (!foundFlag && data[1] < maxDuplicatedNumber) {
+    const fileIsDuplicated = fs.existsSync(path.join(basepath, data[0]));
+    if (fileIsDuplicated) {
+      data = getDestinationFilepathWithIndex({
+        ...defaultData,
+        index: index + 1,
+      });
+    } else {
+      foundFlag = true;
+    }
+  }
+  return data;
+}
+
 interface ISortArgs {
   filename: string;
   filter: string;
@@ -78,8 +141,6 @@ interface ISortArgs {
 const handleNewFile = (filepath: string): void => {
   const state = getState();
   const filename = path.basename(filepath);
-
-  console.log({ filename, filepath });
 
   // if the user disables the files movement, don't move them
   if (!state.canMoveFiles) return;
@@ -99,14 +160,25 @@ const handleNewFile = (filepath: string): void => {
       };
       const shouldMove = actions[filter.type](args);
       if (!shouldMove) return;
-      const destinationPath = `${folder.path}/${filename}`;
-      // console.log(
-      //   `moving ${filepath} to ${destinationPath}, (filter: ${filter.type})`
-      // );
-      // TODO: create tray animation
+      let destinationPath = path.join(folder.path, filename);
+      // TODO: check if there's any existing file in the destination location
+      const fileIsDuplicated = fs.existsSync(destinationPath);
+      if (fileIsDuplicated) {
+        // TODO: setup this with settings.
+        // TODO: allow the user to change the parse format of the duplicated indexed copy.
+        // handle duplicated file case.
+        // check how to handle this on settings.
+        const [name, format] = filename.split(".");
+        const [newDestinationPathName] = getDestinationFilepathWithIndex({
+          name,
+          format,
+          description: "copy",
+          index: 1,
+          basepath: folder.path,
+        });
+        destinationPath = path.join(folder.path, newDestinationPathName);
+      }
       fs.rename(filepath, destinationPath, (err) => {
-        // TODO: add error notification
-        //if (err) throw err;
         if (err) {
           console.error(err);
           sendNotification({

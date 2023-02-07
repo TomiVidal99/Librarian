@@ -146,6 +146,15 @@ async function initApp() {
   // the recently moved folder won't be created.
   //createSettingsWindow();
 
+  // required to display notifications on windows
+  if (process.platform === "win32") {
+    app.setAppUserModelId(
+      process.env.NODE_ENV === "development"
+        ? process.execPath
+        : "com.vidal-tomas.librarian"
+    );
+  }
+
   initializeStore();
 
   await setLanguage(getState().language);
