@@ -5,7 +5,7 @@ import path from "path";
 import fs from "fs";
 import { sendNotification } from "./handle-notifications.utils";
 
-export type ValidDestinationType = "duplicated" | "error" | undefined;
+export type ValidDestinationType = "duplicated" | "error" | "ok";
 
 const WATCH_OPTIONS = {
   ignored: /(^|[\/\\])\../, // ignore dotfiles
@@ -71,25 +71,6 @@ export const removeAllListeners = ({
 };
 
 /**
- * Looks for duplicated files on the destination.
- * @returns {ValidDestinationType}
- */
-async function checkValidDestination({
-  destinationPath,
-}: {
-  destinationPath: string;
-}): Promise<ValidDestinationType> {
-  return new Promise((resolve) => {
-    fs.open(destinationPath, "r", (err) => {
-      if (err) {
-        resolve("duplicated");
-      }
-      resolve(undefined);
-    });
-  });
-}
-
-/**
  * Parses a given path to an indexed copy of it.
  * @param {string} path
  * @param {string} description
@@ -97,61 +78,57 @@ async function checkValidDestination({
  * @returns {string} parsedPath
  */
 function helperParseIndexDuplicated({
-  path,
+  name,
+  format,
   index,
   description,
 }: {
-  path: string;
+  name: string;
+  format: string;
   index: number;
   description: string;
 }): string {
-  return `${path} - ${description}(${index.toString()})`;
+  return `${name} - ${description} (${index.toString()}).${format}`;
 }
 
 type DestinationAndIndexType = [string, number];
 /**
  * Returns the destination filepath with an index corresponding to the amount of repeated files in the same directory.
- * @param {destinationPath} string - destination path.
- * @param {copyDescription} string - description before the index, i.e: 'copy (1)', 'copy' it's the description.
- * @param {currentIndex} number - the amount of times that the file it's repeated.
+ * TODO: refactor this to make it async
  * @return {DestinationAndIndexType} Promise<[newDestinationPath, index]>
  */
-async function getDestinationFilepathWithIndex({
-  destinationPath,
-  copyDescription,
-  currentIndex,
+function getDestinationFilepathWithIndex({
+  basepath,
+  name,
+  format,
+  description,
+  index,
 }: {
-  destinationPath: string;
-  copyDescription: string;
-  currentIndex: number;
-}): Promise<DestinationAndIndexType> {
-  // TODO: refactor this to make it async
-  const maxDuplicatedNumber = 100;
-  return new Promise((resolve) => {
-    const data: DestinationAndIndexType = [
-      helperParseIndexDuplicated({
-        path: destinationPath,
-        description: copyDescription,
-        index: 0,
-      }),
-      0,
-    ];
-    // while (data[0] === "" && data[1] < maxDuplicatedNumber) {
-    const result = fs.openSync(destinationPath, "r");
-    console.log({ result });
-    // if () {
-    //   getDestinationFilepathWithIndex({
-    //     destinationPath,
-    //     copyDescription,
-    //     currentIndex: currentIndex++,
-    //   }).then((args) => {
-    //     data = args;
-    //   });
-    // }
-    // const newDestinationPath = `${destinationPath} - ${copyDescription}(${currentIndex})`;
-    // resolve([newDestinationPath, data[1]]);
-    // }
-  });
+  basepath: string;
+  name: string;
+  format: string;
+  description: string;
+  index: number;
+}): DestinationAndIndexType {
+  const defaultData = { name, format, description, index, basepath };
+  const maxDuplicatedNumber = 500;
+  let data: DestinationAndIndexType = [
+    helperParseIndexDuplicated(defaultData),
+    index,
+  ];
+  let foundFlag = false;
+  while (!foundFlag && data[1] < maxDuplicatedNumber) {
+    const fileIsDuplicated = fs.existsSync(path.join(basepath, data[0]));
+    if (fileIsDuplicated) {
+      data = getDestinationFilepathWithIndex({
+        ...defaultData,
+        index: index + 1,
+      });
+    } else {
+      foundFlag = true;
+    }
+  }
+  return data;
 }
 
 interface ISortArgs {
@@ -183,22 +160,24 @@ const handleNewFile = (filepath: string): void => {
       };
       const shouldMove = actions[filter.type](args);
       if (!shouldMove) return;
-      const destinationPath = `${folder.path}/${filename}`;
+      let destinationPath = path.join(folder.path, filename);
       // TODO: check if there's any existing file in the destination location
-      // checkValidDestination({ destinationPath }).then(
-      //   (isValid: ValidDestinationType) => {
-      //     if (isValid === "error") {
-      //       throw isValid;
-      //     } else if (isValid === "duplicated") {
-      //       // handle duplicated file case.
-      //       // check how to handle this on settings.
-      //       console.error("TODO: this is not implemented yet");
-      //       getDestinationFilepathWithIndex({destinationPath, copyDescription: "copy", currentIndex: 0}).then(([newDestinationPath]) => {
-      //         destinationPath = newDestinationPath;
-      //       })
-      //     }
-      //   }
-      // );
+      const fileIsDuplicated = fs.existsSync(destinationPath);
+      if (fileIsDuplicated) {
+        // TODO: setup this with settings.
+        // TODO: allow the user to change the parse format of the duplicated indexed copy.
+        // handle duplicated file case.
+        // check how to handle this on settings.
+        const [name, format] = filename.split(".");
+        const [newDestinationPathName] = getDestinationFilepathWithIndex({
+          name,
+          format,
+          description: "copy",
+          index: 1,
+          basepath: folder.path,
+        });
+        destinationPath = path.join(folder.path, newDestinationPathName);
+      }
       fs.rename(filepath, destinationPath, (err) => {
         if (err) {
           console.error(err);
