@@ -79,8 +79,6 @@ const handleNewFile = (filepath: string): void => {
   const state = getState();
   const filename = path.basename(filepath);
 
-  console.log({ filename, filepath });
-
   // if the user disables the files movement, don't move them
   if (!state.canMoveFiles) return;
 
