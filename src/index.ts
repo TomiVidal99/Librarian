@@ -68,6 +68,7 @@ const createSettingsWindow = (): void => {
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
+    icon: path.join(__dirname, "assets", "icons", "512x512.png"),
   });
   //process.env.NODE_ENV === "development" && settingsWindow.setMenu(null);
 
@@ -84,6 +85,8 @@ const createSettingsWindow = (): void => {
     event.preventDefault();
     settingsWindow.hide();
   });
+
+  settingsWindow.removeMenu(); // TODO: valid only for windows and linux
 };
 // toggle open or closed the mainWindow when the tray it's double clicked
 // or when the option in the drop down menu it's clicked
@@ -108,6 +111,7 @@ function createFiltersWindow(): void {
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
+    icon: path.join(__dirname, "assets", "icons", "512x512.png"),
   });
   //process.env.NODE_ENV === "development" && filtersWindow.setMenu(null);
 
@@ -125,6 +129,8 @@ function createFiltersWindow(): void {
 
   // Open the DevTools.
   // filtersWindow.webContents.openDevTools();
+
+  filtersWindow.removeMenu(); // TODO: valid only for windows and linux
 }
 
 export interface ISendRecentlyWatchedFolder {
