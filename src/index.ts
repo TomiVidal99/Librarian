@@ -68,6 +68,7 @@ const createSettingsWindow = (): void => {
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
+    icon: path.join(__dirname, "assets", "icons", "512x512.png"),
   });
   //process.env.NODE_ENV === "development" && settingsWindow.setMenu(null);
 
@@ -110,6 +111,7 @@ function createFiltersWindow(): void {
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
+    icon: path.join(__dirname, "assets", "icons", "512x512.png"),
   });
   //process.env.NODE_ENV === "development" && filtersWindow.setMenu(null);
 

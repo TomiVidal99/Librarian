@@ -7,6 +7,22 @@
   "build": {
     "appId": "com.vidal-tomas.librarian"
   },
+  "packagerConfig": {
+    "icon": "assets/icons/256x256.ico"
+  },
+  "windowsStoreConfig": {
+    "packageName": "Librarian",
+    "packageDisplayName": "Librarian",
+    "packageDescription": "Organize your files automagically",
+    "iconUrl": "https://assets/icons/256x256.ico",
+    "backgroundColor": "#FFFFFF"
+  },
+  "makerZip": {
+    "icon": "assets/icons/512x512.png"
+  },
+  "makerSquirrel": {
+    "iconUrl": "https://assets/icons/256x256.ico "
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "NODE_ENV=production electron-forge package",
