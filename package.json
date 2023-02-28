@@ -1,7 +1,7 @@
 {
   "name": "librarian",
   "productName": "librarian",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Organizes files in your system automatically",
   "main": ".webpack/main",
   "build": {
