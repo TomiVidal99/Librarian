@@ -1,6 +1,6 @@
 # Librarian
 
-Provides an UI to have organize and make backup of our data by setting everything up just once.
+Facilitates data management through an intuitive user interface, allowing users to efficiently organize and create backups with a one-time setup. Simplify data handling with ease and ensure secure storage through seamless configuration.
 
 ## Screenshots
 
